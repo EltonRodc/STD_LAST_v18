@@ -1,0 +1,45 @@
+.active{
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  color: #fff;
+}
+
+.sidenav_list{
+  font-size: 13px;
+  font-weight: 500;
+  color: #9298a0;
+}
+.sidenav_list_item{
+  cursor: pointer;
+  margin-top: 5px;
+}
+.sidenav_list_item:hover{
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  color: #fff;
+}
+.sidenav_list_item_name{
+  display: flex;
+  align-items: end;
+}
+
+.rotate-transition {
+  transition: transform 0.3s ease;
+}
+
+.active_padre{
+  color: #fff;
+}
+
+.submenu {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+.submenu-open {
+  height: auto;
+  opacity: 1;
+  overflow: visible;
+}

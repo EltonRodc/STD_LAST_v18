@@ -1,0 +1,24 @@
+
+<div class="sidenav_list p-6">
+  <div class="p-2 sidenav_list_item relative" [class.active_padre]="isRegistroActive" (click)="toggleRegistroSubMenu()">
+    <div class="flex">
+      <mat-icon fontIcon="receipt_long"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Registro</div>
+    </div>
+    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2" style="color: #9298a0;">
+      <svg [style.transform]="registroSubMenuOpen ? 'rotate(0deg)' : 'rotate(-90deg)'" class="fill-current h-4 w-4 rotate-transition" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+      </svg>
+    </div>
+  </div>
+  <div [class.submenu-open]="registroSubMenuOpen" class="submenu">
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="operador/registro/entrada-pvd" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Entrada PVD</div>
+    </div>
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="operador/registro/entrada-rcc" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Entrada RCC</div>
+    </div>
+  </div>
+</div>

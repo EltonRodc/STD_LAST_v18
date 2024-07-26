@@ -1,0 +1,83 @@
+
+<div class="sidenav_list p-6">
+
+  <div class="p-2 sidenav_list_item relative" [class.active_padre]="isRegistroActive" (click)="toggleRegistroSubMenu()">
+    <div class="flex">
+      <mat-icon fontIcon="edit" style="font-size: 18px; display: flex; align-items: center;"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Registro</div>
+    </div>
+    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2" style="color: #9298a0;">
+      <svg [style.transform]="registroSubMenuOpen ? 'rotate(0deg)' : 'rotate(-90deg)'" class="fill-current h-4 w-4 rotate-transition" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+      </svg>
+    </div>
+  </div>
+
+  <div [class.submenu-open]="registroSubMenuOpen" class="submenu">
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="jefe/registro/doc-int-of" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Doc. Interno Oficina</div>
+    </div>
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="jefe/registro/doc-sal-of" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Doc. de Salida Oficina</div>
+    </div>
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="jefe/registro/doc-int-prof" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Doc. Interno a Profesionales</div>
+    </div>
+  </div>
+
+
+  <div class="p-2 sidenav_list_item relative" [class.active_padre]="isConsultaActive" (click)="toggleConsultaSubMenu()">
+    <div class="flex">
+      <mat-icon fontIcon="search" style="font-size: 18px; display: flex; align-items: center;"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Consulta</div>
+    </div>
+    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2" style="color: #9298a0;">
+      <svg [style.transform]="registroSubMenuOpen ? 'rotate(0deg)' : 'rotate(-90deg)'" class="fill-current h-4 w-4 rotate-transition" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+      </svg>
+    </div>
+  </div>
+
+  <div [class.submenu-open]="consultaSubMenuOpen" class="submenu">
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="jefe/consulta/plazos-venc" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Plazos Vencidos</div>
+    </div>
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="jefe/consulta/doc-int-of" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Doc. Interno Oficina</div>
+    </div>
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="jefe/consulta/doc-sal-of" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Doc. de Salida Oficina (Courier)</div>
+    </div>
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="jefe/consulta/ent-gen" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Entradas Generales (Seguimiento)</div>
+    </div>
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="jefe/consulta/doc-int-gen" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Doc. Internos Generales (L)</div>
+    </div>
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="jefe/consulta/ctrl-carg" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Control de Cargos (L)</div>
+    </div>
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="jefe/consulta/ctrl-carg-ofi" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Control de Cargos Oficina (L)</div>
+    </div>
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="jefe/consulta/rem-nat" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Remitente Per Natural</div>
+    </div>
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="jefe/consulta/cons-alert" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Consulta de Alertas</div>
+    </div>
+  </div>
+
+</div>

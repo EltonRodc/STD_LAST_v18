@@ -1,0 +1,424 @@
+<div class="p-3" >
+  <div style="background-color: #fff" class="rounded p-4" >
+    <div class="font-extrabold text-2xl mt-2 mb-2">Registro Documentos Salida</div>
+    <mat-stepper linear #stepper>
+      <mat-step [stepControl]="myFormValido" [editable]="isEditable" color="warn">
+        <ng-template matStepLabel>Crear Documento</ng-template>
+        <form [formGroup]="myFormDocumentoSalida  " (ngSubmit)="agregarDocumento()">
+          <mat-card class="w-full mt-2" appearance="outlined">
+            <mat-card-content>
+              <div class="mb-2 font-bold text-lg" style="color: #b91c1b;">Datos del Documento Interno</div>
+
+              <div class="flex gap-4 mt-3">
+
+                <div class="basis-1 sm:basis-1/3">
+                  <label class="block mb-2 text-sm font-normal text-gray-700">Tipo Documento*</label>
+                  <select class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codTipoDoc" (change)="seleccionarTipoDocumento($event)">
+                    <option value>Seleccione</option>
+                    @for (documento of listTipoDocumento; track $index) {
+                      <option [value]="documento.cCodTipoDoc">{{documento.cDescTipoDoc}}</option>
+                    }
+                  </select>
+                  @if (myFormDocumentoSalida.controls['codTipoDoc'].getError('required') && myFormDocumentoSalida.controls['codTipoDoc'].touched) {
+                    <span class="text-red-500 text-xs italic">Tipo Documento requerido</span>
+                  }
+                </div>
+
+                <div class="basis-1 sm:basis-1/3">
+                  <label class="block mb-2 text-sm font-normal text-gray-700">Correlativo</label>
+                  <div class="flex">
+                    <input type="text" class="rounded-none rounded-s-lg bg-gray-200 border border-gray-300  font-normal text-gray-700 text-sm  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed" formControlName="nroCorrelativo" readonly>
+
+                    <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300  rounded-e-lg">
+                      <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5"/>
+                      </svg>
+                    </span>
+
+                  </div>
+                </div>
+
+                <div class="basis-1 sm:basis-1/3">
+                  <label class="block mb-2 text-sm font-normal text-gray-700">Requiere Respuesta</label>
+                  <select class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="flgRpta">
+                    <option value="0">No</option>
+                    <option value="1">Si</option>
+
+                  </select>
+                </div>
+
+              </div>
+
+              <div class="flex gap-4 mt-3">
+                <div class="basis-1 sm:basis-1/3">
+                  <label class="block mb-2 text-sm font-normal text-gray-700">Asunto*</label>
+                  <textarea  rows="2" class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="asunto"></textarea>
+                  @if (myFormDocumentoSalida.controls['asunto'].getError('required') && myFormDocumentoSalida.controls['asunto'].touched) {
+                    <span class="text-red-500 text-xs italic">Asunto requerido</span>
+                  }
+                </div>
+
+                <div class="basis-1 sm:basis-1/3">
+                  <label class="block mb-2 text-sm font-normal text-gray-700">Observaciones</label>
+                  <textarea  rows="2" class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="observaciones" ></textarea>
+                </div>
+
+                <div class="basis-1 sm:basis-1/3">
+                  <label class="block mb-2 text-sm font-normal text-gray-700">Archivo Físico</label>
+                  <textarea  rows="2" class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="archivoFisico"></textarea>
+                </div>
+              </div>
+
+
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="w-full mt-4" appearance="outlined">
+            <mat-card-content>
+              <div class="mb-2 font-bold text-lg" style="color: #b91c1b;">Destino</div>
+
+              <div class="flex gap-4 mt-3">
+
+                <div class="basis-1 sm:basis-1/3">
+
+                  <label class="block mb-2 text-sm font-normal text-gray-700">Institución</label>
+                  <div class="flex">
+                    <input type="text" class="rounded-none rounded-s-lg bg-gray-200 border border-gray-300  font-normal text-gray-700 text-sm  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed" formControlName="nomInstitucion" readonly>
+                    <span style="cursor: pointer;" (click)="selInstitucion()" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border rounded-e-0 border-gray-300  rounded-e-lg hover:bg-gray-200">
+                      <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+                      </svg>
+                    </span>
+                  </div>
+                  @if (myFormDocumentoSalida.controls['codRemitente'].getError('required') && myFormDocumentoSalida.controls['codRemitente'].touched) {
+                    <span class="text-red-500 text-xs italic">Institución requerido</span>
+                  }
+
+                </div>
+
+                <div class="basis-1 sm:basis-1/3">
+                  <label class="block mb-2 text-sm font-normal text-gray-700">Destinatario</label>
+                  <input type="text" class="rounded-lg bg-gray-50 border border-gray-300  font-normal text-gray-700 text-sm  focus:ring-red-700 focus:border-red-700 block w-full p-2.5" formControlName="nomRemite" >
+                  @if (myFormDocumentoSalida.controls['nomRemite'].getError('required') && myFormDocumentoSalida.controls['nomRemite'].touched) {
+                    <span class="text-red-500 text-xs italic">Destinatario requerido</span>
+                  }
+                </div>
+
+
+                <div class="basis-1 sm:basis-1/3">
+                  <label class="block mb-2 text-sm font-normal text-gray-700">Domicilio</label>
+                  <input type="text" class="rounded-lg bg-gray-50 border border-gray-300  font-normal text-gray-700 text-sm  focus:ring-red-700 focus:border-red-700 block w-full p-2.5" formControlName="remitenteDireccion" >
+                </div>
+
+              </div>
+
+              <div class="flex gap-4 mt-3">
+
+                <div class="basis-1 sm:basis-1/3">
+                  <label class="block mb-2 text-sm font-normal text-gray-700">Ubicación Predeterminada</label>
+                  <input type="text" class="rounded-lg bg-gray-200 border border-gray-300  font-normal text-gray-700 text-sm  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed" formControlName="ubicacionPredeterminada" readonly>
+                </div>
+
+                <div class="basis-1 sm:basis-1/3">
+                  <label class="block mb-2 text-sm font-normal text-gray-700">Pais</label>
+                  <select class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="paisProcedencia">
+                    <option value>Seleccione</option>
+                    @for (pais of listaPaisesSalida; track $index) {
+                      <option [value]="pais.id_Pais">{{pais.cDescripcion}}</option>
+                    }
+                  </select>
+                </div>
+
+                <div class="basis-1 sm:basis-1/3">
+                  <label class="block mb-2 text-sm font-normal text-gray-700">Departamento</label>
+                  <select class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="remitenteDepartamento">
+                    <option value>Seleccione</option>
+                    @for (departamento of listaDepartamentos; track $index) {
+                      <option [value]="departamento.cCodDepartamento">{{departamento.cNomDepartamento}}</option>
+                    }
+                  </select>
+                </div>
+
+              </div>
+
+              <div class="flex gap-4 mt-3">
+
+                <div class="basis-1 sm:basis-1/3">
+                  <label class="block mb-2 text-sm font-normal text-gray-700">Provincia</label>
+                  <select class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="remitenteProvincia">
+                    <option value>Seleccione</option>
+                    @for (provincia of listaProvincias; track $index) {
+                      <option [value]="provincia.idProvincia">{{provincia.cNomProvincia}}</option>
+                    }
+                  </select>
+                </div>
+                <div class="basis-1 sm:basis-1/3">
+                  <label class="block mb-2 text-sm font-normal text-gray-700">Distrito</label>
+                  <select class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="remitenteDistrito">
+                    <option value>Seleccione</option>
+                    @for (distrito of listaDistritos; track $index) {
+                      <option [value]="distrito.ubigeo">{{distrito.cNomDistrito}}</option>
+                    }
+                  </select>
+                </div>
+                <div class="basis-1 sm:basis-1/3">
+                  <label class="block mb-2 text-sm font-normal text-gray-700">Mesa Virtual</label>
+                  <input type="text" class="rounded-lg bg-gray-200 border border-gray-300  font-normal text-gray-700 text-sm  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed"  readonly>
+                </div>
+
+              </div>
+
+
+            </mat-card-content>
+          </mat-card>
+
+          <div class="mt-7" >
+            <button type="submit" mat-flat-button style="background-color: #dc2626;" >Agregar Documento</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [editable]="false" color="warn">
+        <ng-template matStepLabel>Adjuntos y Referencias</ng-template>
+
+        <div class="w-full">
+          <div class="mb-2 mt-2 font-bold text-lg" style="color: #b91c1b;">Datos del Documento</div>
+          <mat-card appearance="outlined">
+            <mat-card-content>
+              <div class="flex gap-4">
+                <div class="basis-1/2">
+                  <div class="flex gap-4">
+                    <div class="basis-1/2 font-medium text-gray-900">Trámite</div>
+                    <div class="basis-1/2 font-semibold" style="color: #007bff;"> S012400483 </div>
+                  </div>
+                </div>
+                <div class="basis-1/2">
+                  <div class="flex gap-4">
+                    <div class="basis-1/2 font-medium text-gray-900">Nro Documento</div>
+                    <div class="basis-1/2 font-medium text-gray-500"> {{detallePaso2?.cCodificacion}} </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex gap-4 mt-3">
+                <div class="basis-1/2">
+                  <div class="flex gap-4">
+                    <div class="basis-1/2 font-medium text-gray-900">Tipo de Documento</div>
+                    <div class="basis-1/2 font-medium text-gray-500"> {{detallePaso2?.cDescTipoDoc}} </div>
+                  </div>
+                </div>
+                <div class="basis-1/2">
+                  <div class="flex gap-4">
+                    <div class="basis-1/2 font-medium text-gray-900">Fecha Documento</div>
+                    <div class="basis-1/2 font-medium text-gray-500"> {{detallePaso2?.fFecDocumento | date: 'dd-MM-yyyy HH:mm'}} </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="w-full mt-3">
+                <div class="flex gap-4">
+                  <div class="basis-1/4 font-medium text-gray-900">Asunto</div>
+                  <div class="basis-3/4 font-medium text-gray-500"> {{detallePaso2?.cAsunto}} </div>
+                </div>
+              </div>
+
+              <div class="w-full mt-3">
+                <div class="flex gap-4">
+                  <div class="basis-1/4 font-medium text-gray-900">Observaciones</div>
+                  <div class="basis-3/4 font-medium text-gray-500"> {{detallePaso2?.cObservaciones}} </div>
+                </div>
+              </div>
+
+              <div class="flex gap-4 mt-3">
+                <div class="basis-1/2">
+                  <div class="flex gap-4">
+                    <div class="basis-1/2 font-medium text-gray-900">Fecha Registro</div>
+                    <div class="basis-1/2 font-medium text-gray-500"> {{detallePaso2?.fFecRegistro | date: 'dd-MM-yyyy HH:mm'}} </div>
+                  </div>
+                </div>
+                <div class="basis-1/2">
+                  <div class="flex gap-4">
+                    <div class="basis-1/2 font-medium text-gray-900"> Requiere Respuesta</div>
+                    <div class="basis-1/2 font-medium text-gray-500">
+                      @switch (detallePaso2?.nFlgRpta) {
+                        @case (0) { <div>No</div> }
+                        @case (1) { <div>Si</div> }
+                      }
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div class="w-full">
+          <div class="flex justify-between mb-2 mt-6">
+            <div class="font-bold text-lg" style="color: #b91c1b;">Referencias</div>
+            <div><button type="button" (click)="newReferencia()" mat-flat-button style="background-color: #dc2626;" ><mat-icon>add</mat-icon>Agregar</button></div>
+          </div>
+          <mat-card appearance="outlined">
+            <mat-card-content>
+              <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource2">
+
+                  <ng-container matColumnDef="documento">
+                    <th mat-header-cell *matHeaderCellDef class="font-medium" style="background-color: #f5f5f5;" > Documento </th>
+                    <td mat-cell *matCellDef="let element" class="font-medium text-gray-500 text-xs" > {{element.iCodReferencia}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="asunto">
+                    <th mat-header-cell *matHeaderCellDef class="font-medium" style="background-color: #f5f5f5;"> Asunto </th>
+                    <td mat-cell *matCellDef="let element" class="font-medium text-gray-500 text-xs"> {{element.cAsuntoReferencia}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="opcion">
+                    <th mat-header-cell *matHeaderCellDef class="font-medium" style="background-color: #f5f5f5;"> Opción </th>
+                    <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;">
+                      <button matTooltip="Eliminar Referencia" style="width: 24px;" class="text-red-500 ms-1" (click)="deleteReferencia(element.iCodReferencia)">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"></path>
+                        </svg>
+                    </button>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+
+                  <tr class="mat-row" *matNoDataRow >
+                    <td class="mat-cell p-3 text-red-500" colspan="3"  align="center" style="font-weight: 500;">No se encontraron registros </td>
+                  </tr>
+
+                </table>
+
+                <mat-paginator #paginator2 [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
+
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div class="w-full">
+          <div class="flex justify-between mb-2 mt-6">
+            <div class="font-bold text-lg" style="color: #b91c1b;">Documento Complementario</div>
+            <div><button type="button" (click)="newDocComplementario()" mat-flat-button style="background-color: #dc2626;" ><mat-icon>add</mat-icon>Agregar</button></div>
+          </div>
+
+          <mat-card appearance="outlined">
+            <mat-card-content>
+              <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource3">
+
+                  <ng-container matColumnDef="descripcion">
+                    <th mat-header-cell *matHeaderCellDef class="font-medium" style="background-color: #f5f5f5;" > Descripción </th>
+                    <td mat-cell *matCellDef="let element" class="font-medium text-gray-500 text-xs" >
+                    @switch (element.nTipo) {
+                      @case (1) {
+                        <div class="flex gap-1">
+                          <svg class="w-4 h-4 text-red-700 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M10 3v4a1 1 0 0 1-1 1H5m14-4v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1Z"/>
+                          </svg>
+                          <span>{{element.cDescripcionDigital}}</span>
+                        </div>
+
+
+                      }
+                      @case (4) {
+                        <div class="flex gap-1">
+                          <svg class="w-4 h-4 text-green-700 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M10 3v4a1 1 0 0 1-1 1H5m14-4v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1Z"/>
+                          </svg>
+                          <span>{{element.cDescripcionDigital}}</span>
+                        </div>
+                      }
+                      @case (3) {
+                        <div class="flex gap-1">
+                          <svg class="w-4 h-4 text-blue-700 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.213 9.787a3.391 3.391 0 0 0-4.795 0l-3.425 3.426a3.39 3.39 0 0 0 4.795 4.794l.321-.304m-.321-4.49a3.39 3.39 0 0 0 4.795 0l3.424-3.426a3.39 3.39 0 0 0-4.794-4.795l-1.028.961"/>
+                          </svg>
+                          <span>{{element.cDescripcionDigital}}</span>
+                        </div>
+
+
+                      }
+                    }
+                    <div>{{element.cNombreNuevo}}</div>
+                    <div>{{element.cRutaExterna}}</div>
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="folios">
+                    <th mat-header-cell *matHeaderCellDef class="font-medium" style="background-color: #f5f5f5;"> Folios </th>
+                    <td mat-cell *matCellDef="let element" class="font-medium text-gray-500 text-xs"> {{element.nFoliosDigital}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="tamanio">
+                    <th mat-header-cell *matHeaderCellDef class="font-medium" style="background-color: #f5f5f5;" > Tamaño </th>
+                    <td mat-cell *matCellDef="let element" class="font-medium text-gray-500 text-xs" > {{element.dSize}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="estado">
+                    <th mat-header-cell *matHeaderCellDef class="font-medium" style="background-color: #f5f5f5;"> Estado </th>
+                    <td mat-cell *matCellDef="let element" class="font-medium text-gray-500 text-xs">
+                      @switch (element.nEstadoDigital) {
+                        @case (1) {
+                         Activo
+                        }
+                        @case (2) {
+                          Anulado
+                        }
+                      }
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="orden">
+                    <th mat-header-cell *matHeaderCellDef class="font-medium" style="background-color: #f5f5f5;">
+                      Orden
+                      @if (listDocComplem.length > 1) {
+                        <span class="text-xs bg-red-600 rounded p-1 text-white" style="cursor: pointer;" (click)="ordenarDocComp()" >Grabar</span>
+                      }
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="font-medium text-gray-500 text-xs">
+                      @if (element.nEstadoDigital == 1) {
+                        <input class="bg-gray-50 border font-normal border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 p-1.5 " type="number" min="0" inputmode="numeric" [(ngModel)]="element.nOrden">
+                      }
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="opcion">
+                    <th mat-header-cell *matHeaderCellDef class="font-medium" style="background-color: #f5f5f5;"> Opción </th>
+                    <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;">
+                      <button (click)="deleteDocComplementario(element.iCodDigital)" matTooltip="Eliminar Doc. Complementario" style="width: 24px;" class="text-red-500 ms-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"></path>
+                        </svg>
+                    </button>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+
+                  <tr class="mat-row" *matNoDataRow >
+                    <td class="mat-cell p-3 text-red-500" colspan="6"  align="center" style="font-weight: 500;">No se encontraron registros </td>
+                  </tr>
+
+                </table>
+
+                <mat-paginator #paginator3 [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
+
+              </div>
+            </mat-card-content>
+          </mat-card>
+
+        </div>
+
+        <div class="mt-3">
+          <button type="button" (click)="enviarDocumento()" mat-flat-button style="background-color: #dc2626;" ><mat-icon>save</mat-icon>Enviar Documento</button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </div>
+</div>
