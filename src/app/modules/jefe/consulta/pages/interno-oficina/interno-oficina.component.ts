@@ -124,7 +124,7 @@ export class InternoOficinaComponent{
   onSearch() {
 
     this.isFetchingData = true;
-    console.log(this.myFormConsultaInternoOficina.value)
+    // console.log(this.myFormConsultaInternoOficina.value)
     const {fechaInicio,fechaFin,horaInicio,horaFin, si,no,nTramite,cCodificacion,asunto,observaciones,codTipoDoc,codOficina,codOficinaLogin, codTema, regini, size} = this.myFormConsultaInternoOficina.value;
 
     const fechaInicioStr = moment(fechaInicio).format('YYYY-MM-DD');
@@ -155,7 +155,7 @@ export class InternoOficinaComponent{
       Size: size,
     }
 
-    console.log(formularioEnviar)
+    // console.log(formularioEnviar)
     this.consultaService.getConsultaInternoOficina(formularioEnviar).subscribe(
       (rpta)=>{
         this.lisDocOficina = rpta;

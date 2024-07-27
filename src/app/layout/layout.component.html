@@ -5,8 +5,9 @@
       <img src="/images/logo.png" alt="logo" class="mt-1" />
     </div>
     <div style="border-top: 1px solid #ccc; border-bottom: 1px solid #ccc;" class="p-2">
-      <div style="color: #fff; display: flex; justify-content: center; font-size: 14px;font-weight: 500;">{{userName}}</div>
-      <div style="color: #9298a0; display: flex; justify-content: center;font-size: 10px;font-weight: 500;">{{nomOficina}}</div>
+      <div style="color: #fff; display: flex; justify-content: center; font-size: 14px;font-weight: 500;">{{userName}} ({{currentRole}})</div>
+      <div style="color: #9298a0; display: flex; justify-content: center;font-size: 10px;font-weight: 500;"> <span class="font-extrabold">Oficina: </span> <span class="ms-2">{{ nomOficina}}</span></div>
+      <div style="color: #9298a0; display: flex; justify-content: center;font-size: 10px;font-weight: 500;"> <span class="font-extrabold">Jefe: </span> <span class="ms-2">SONIA DIAZ GARCIA</span></div>
     </div>
     @if (isOperador) {
       <shared-sidenav-operador></shared-sidenav-operador>
@@ -39,7 +40,7 @@
           </button>
           <mat-divider></mat-divider>
           @for( perfil of listPerfiles; track perfil.iCodPerfilUsuario){
-            <button mat-menu-item>
+            <button mat-menu-item (click)="navigateToProfile(perfil)">
               <mat-icon> dialpad</mat-icon>
               <span>{{perfil.cDescPerfil}} - {{perfil.cSiglaOficina}}</span>
             </button>

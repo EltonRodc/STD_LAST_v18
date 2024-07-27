@@ -1,0 +1,21 @@
+<form autocomplete="off" [formGroup]="myFormNewPerfil" (ngSubmit)="onSubmit()">
+    @if (id_prfil) {
+        <div mat-dialog-title style="font-size: 20px; font-weight: 500; ">Nuevo Perfil</div>
+    }
+    <mat-dialog-content class="mat-typography" style="border-top: 1px solid #ccc;">
+      <div class="w-full">
+        <div class="flex flex-wrap mb-6 mt-3"> 
+
+            <div class="w-full">
+                <label class="block text-gray-700 text-md mb-2" style="font-weight: 500; font-size: 12px;"> Perfil</label>
+                <input type="text" class="custom-select border border-gray-400 py-2 px-3 rounded-full w-full" formControlName="perfil">
+            </div>
+
+        </div>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button type="button" mat-button [mat-dialog-close]="false" class="cancel-button">Cancelar</button>
+      <button type="submit" mat-button cdkFocusInitial style="background-color: red; color: #fff;">{{ 'Actualizar' }}</button>
+    </mat-dialog-actions>
+  </form>

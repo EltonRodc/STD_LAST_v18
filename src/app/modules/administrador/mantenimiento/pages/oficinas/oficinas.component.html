@@ -1,0 +1,168 @@
+<!-- <h1>Usuarios Mesa Virtual</h1> -->
+
+
+<div class="container-fluid p-5">
+  <div class="p-5" style="border: 1px solid #ccc;  background-color: #fff ; border-radius: 5px;">
+      <div style="font-size: 20px; font-weight: 800;">Mantenimiento - Oficina</div>
+       <!-- Formulario  -->
+      <form autocomplete="off" [formGroup]="myFormOficina" (ngSubmit)="onSearch()" class="mt-4">
+          <div class="w-full">
+              <div class="flex flex-wrap -mx-3">
+
+                  <div div class="w-full md:w-2/5 px-3 mb-3">
+                      <div class="relative">
+                          <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                          <mat-icon fontIcon="search" class="text-gray-400" style="font-size: 18px; display: flex; align-items: center; justify-content: center;"></mat-icon>
+                          </div>
+                          <input type="text" id="input-group-1" class="custom-input  border border-gray-400 text-gray-900 text-sm rounded-full block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Oficina" (keyup)="applyFilter($event)" #input>
+                      </div>
+                  </div>
+
+                  <div div class="w-full md:w-2/5 px-3 mb-3">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                        <mat-icon fontIcon="search" class="text-gray-400" style="font-size: 18px; display: flex; align-items: center; justify-content: center;"></mat-icon>
+                        </div>
+                        <input type="text" id="input-group-1" class="custom-input  border border-gray-400 text-gray-900 text-sm rounded-full block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Sigla" (keyup)="applyFilter2($event)" #input>
+                    </div>
+                  </div>
+
+                  <div class="w-full md:w-1/3 px-3 mb-3">
+                      <div class="relative">
+                          <select class="custom-select bg-gray-50 border border-gray-400 py-3 px-3 rounded-full w-full appearance-none text-gray-900" formControlName="CodUbicacion" (change)="onChangeUbicacion($event)" style="color: gray; font-weight: 700;">
+                              <option value="">- Ubicacion - </option>
+                              @for (item of comboListadoUbicacion; track $index) {
+                                  <option [value]="item.iCodUbicacion">{{item.cNomUbicacion}}</option>
+                              }
+                          </select>
+                          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 svg-container">
+                              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                              </svg>
+                          </div>
+                      </div>
+                   </div>
+
+                   <div class="w-full md:w-1/3 px-3 mb-3">
+                       <div class="relative">
+                           <select class="custom-select bg-gray-50 border border-gray-400 py-3 px-3 rounded-full w-full appearance-none text-gray-900" formControlName="Nivel" (change)="onChangeTipo($event)" style="color: gray; font-weight: 700;">
+                               <option value="0">- Tipo - </option>
+                               @for (item of comboListadoTipo; track $index) {
+                                   <option [value]="item.cCodTipoOficina">{{item.cDesTipoOficina}}</option>
+                               }
+                           </select>
+                           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 svg-container">
+                               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                   <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                               </svg>
+                           </div>
+                       </div>
+                    </div>
+
+                    <div class="w-full md:w-1/5 px-3 mb-3">
+                      <div class="relative">
+                          <select class="custom-select bg-gray-50 border border-gray-400 py-3 px-3 rounded-full w-full appearance-none text-gray-900" formControlName="FlgEstado" (change)="estado($event)">
+                              <option value="">- Estado - </option>
+                              <option value="1">ACTIVO</option>
+                              <option value="0">INACTIVO</option>
+                          </select>
+                          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 svg-container">
+                              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                              </svg>
+                          </div>
+                      </div>
+                    </div>
+
+                    <div class="w-full md:w-1/5 px-3 mb-3">
+                      <div class="relative">
+                          <select class="custom-select bg-gray-50 border border-gray-400 py-3 px-3 rounded-full w-full appearance-none text-gray-900" formControlName="FlgVisible" (change)="estado($event)">
+                              <option value="">- Visible para Derivar - </option>
+                              <option value="1">VISIBLE</option>
+                              <option value="0">NO VISIBLE</option>
+                          </select>
+                          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 svg-container">
+                              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                              </svg>
+                          </div>
+                      </div>
+                    </div>
+
+              </div>
+          </div>
+      </form>
+      <!-- Tabla -->
+      <div class="table-responsive px-1 mt-3">
+          <table mat-table [dataSource]="dataSource">
+              <ng-container matColumnDef="Oficina">
+                <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Oficina </th>
+                <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;"> {{element.cNomOficina}}  {{element.cSiglaOficina}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Ubicacion">
+                <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Ubicacion </th>
+                <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;"> {{element.cNomUbicacion}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Tipo">
+                <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Tipo </th>
+                <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;"> {{element.cDesTipoOficina}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Estado">
+                <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Estado </th>
+                <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;"> {{element.iFlgEstado}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Propiedades">
+                <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Propiedades	 </th>
+              </ng-container>
+
+              <ng-container matColumnDef="Responsable">
+                <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Responsable </th>
+                <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;"> {{element.jefe_nombres}}  {{element.jefe_apellidos}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Actualizado">
+                <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Actualizado </th>
+                <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;"> {{element.fFechaActualizacionOficina}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Opciones">
+                <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Acciones </th>
+                <td mat-cell *matCellDef="let element">
+                    <div style="display: flex; justify-content: start;">
+                      <!-- <button matTooltip="Actualizar Usuario" style="width: 24px;" class="text-yellow-500" (click)="newMensajeria(element.iCodMensajeria)">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"></path>
+                        </svg>
+                      </button>  -->
+                    </div>
+                 </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+              <tr class="mat-row" *matNoDataRow >
+                @if (isFetchingData) {
+                  <td colspan="6" >
+                      <div style="display: flex; justify-content: center;" class="p-4">
+                          <mat-spinner></mat-spinner>
+                      </div>
+                  </td>
+                }@else {
+                  <td class="mat-cell p-3 text-red-500" colspan="6"  align="center" style="font-weight: 500;">No se encontraron registros </td>
+                }
+              </tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                           showFirstLastButtons
+                           aria-label="Select page of periodic elements">
+            </mat-paginator>
+      </div>
+  </div>
+
+</div>

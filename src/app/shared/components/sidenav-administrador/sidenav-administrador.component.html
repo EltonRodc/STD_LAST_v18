@@ -1,1 +1,42 @@
-<p>sidenav-administrador works!</p>
+<div class="sidenav_list p-6">
+  <div class="p-2 sidenav_list_item relative" [class.active_padre]="isMantenimientoActive" (click)="toggleMantenimientoSubMenu()">
+    <div class="flex">
+      <mat-icon fontIcon="settings" style="font-size: 18px; display: flex; align-items: center;"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Mantenimiento</div>
+    </div>
+    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2" style="color: #9298a0;">
+      <svg [style.transform]="mantenimientoSubMenuOpen ? 'rotate(0deg)' : 'rotate(-90deg)'" class="fill-current h-4 w-4 rotate-transition" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+      </svg>
+    </div>
+  </div>
+
+  <div [class.submenu-open]="mantenimientoSubMenuOpen" class="submenu">
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="administrador/mantenimiento/cor-prof" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">M. Correlativo Profesional</div>
+    </div>
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="administrador/mantenimiento/cor-int" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">M. Correlativo Interno</div>
+    </div>
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="administrador/mantenimiento/indicaciones" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Indicaciones</div>
+    </div>
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="administrador/mantenimiento/mensajeria" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Mensajeria</div>
+    </div>
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="administrador/mantenimiento/oficinas" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Oficinas</div>
+    </div>
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="administrador/mantenimiento/perfil" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Perfil</div>
+    </div>
+  </div>
+
+
+</div>

@@ -1,12 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatDividerModule} from '@angular/material/divider';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
 import { AuthDataService } from '../core/services/auth-data.service';
 import { DataAuth } from '../core/interfaces/auth';
 import { LayoutService } from './layout.service';
@@ -32,14 +32,14 @@ import { SidenavJefeComponent } from '../shared/components/sidenav-jefe/sidenav-
     SidenavJefeComponent
   ],
   templateUrl: './layout.component.html',
-  styleUrl: './layout.component.scss'
+  styleUrls: ['./layout.component.scss']
 })
-export class LayoutComponent implements OnInit{
+export class LayoutComponent implements OnInit {
 
   public authData!: DataAuth;
   public listPerfiles: DataPerfiles[] = [];
-  public userName:string = "";
-  public nomOficina:string = "";
+  public userName: string = "";
+  public nomOficina: string = "";
   public isOperador: boolean = false;
   public isAdministrador: boolean = false;
   public isJefe: boolean = false;
@@ -49,18 +49,28 @@ export class LayoutComponent implements OnInit{
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
+  public currentRole: string = "";
+
   ngOnInit(): void {
     this.checkUrlForComponent();
+
+    // Suscribirse a los eventos de navegación para actualizar el componente
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.checkUrlForComponent();
+      }
+    });
+
     if (this.authDataService.isAuthenticated()) {
       this.authData = this.authDataService.getAuthData();
       const idUser = this.authData.idUsuario;
       this.userName = this.authData.nomUsuario;
       this.nomOficina = this.authData.nomOficina;
       this.layoutService.getPerfiles(idUser).subscribe(
-        (rpta)=> {
+        (rpta) => {
           this.listPerfiles = rpta;
         }
-      )
+      );
     } else {
       console.log('No hay datos de autenticación.');
     }
@@ -79,19 +89,31 @@ export class LayoutComponent implements OnInit{
   }
 
   checkUrlForComponent(): void {
-    const currentUrl = this.router.url; // Obtiene la URL actual
+    const currentUrl = this.router.url;
     if (currentUrl.includes('/std/operador/')) {
       this.isOperador = true;
       this.isAdministrador = false;
       this.isJefe = false;
+      this.currentRole = "Operador";
     } else if (currentUrl.includes('/std/administrador/')) {
       this.isOperador = false;
       this.isAdministrador = true;
       this.isJefe = false;
+      this.currentRole = "Administrador";
+
     } else if (currentUrl.includes('/std/jefe/')) {
       this.isOperador = false;
       this.isAdministrador = false;
       this.isJefe = true;
+      this.currentRole = "Jefe";
+
     }
+  }
+
+  navigateToProfile(profile: DataPerfiles): void {
+    const url = `/std/${profile.cDescPerfil.toLowerCase()}`;
+    this.router.navigate([url]).then(() => {
+      this.checkUrlForComponent();
+    });
   }
 }

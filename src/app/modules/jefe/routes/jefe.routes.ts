@@ -10,6 +10,10 @@ export const JEFE_ROUTES:Routes = [
     loadChildren: ()=> import('../consulta/routes/jefe-consulta.routes').then(r => r.JEFE_CONNSULTA_ROUTES)
   },
   {
+    path: "bandeja",
+    loadChildren: ()=> import('../bandeja/routes/jefe-bandeja.routes').then(r => r.JEFE_BANDEJA_ROUTES)
+  },
+  {
     path:"",
     pathMatch:"full",
     redirectTo:"registro"

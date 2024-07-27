@@ -15,6 +15,10 @@ export const LAYOUT_ROUTES:Routes = [
         loadChildren: () => import('../modules/jefe/routes/jefe.routes').then(r=>r.JEFE_ROUTES)
       },
       {
+        path:"administrador",
+        loadChildren: () => import('../modules/administrador/routes/administrador.routes').then(r=>r.ADMINISTRADOR_ROUTES)
+      },
+      {
         path:"",
         pathMatch:"full",
         redirectTo:"jefe"

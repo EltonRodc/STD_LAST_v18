@@ -29,6 +29,41 @@
   </div>
 
 
+  <div class="p-2 sidenav_list_item relative" [class.active_padre]="isBandejaActive" (click)="toggleBandejaSubMenu()">
+    <div class="flex">
+      <mat-icon fontIcon="description" style="font-size: 18px; display: flex; align-items: center;"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Bandeja</div>
+    </div>
+    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2" style="color: #9298a0;">
+      <svg [style.transform]="bandejaSubMenuOpen ? 'rotate(0deg)' : 'rotate(-90deg)'" class="fill-current h-4 w-4 rotate-transition" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+      </svg>
+    </div>
+  </div>
+
+  <div [class.submenu-open]="bandejaSubMenuOpen" class="submenu">
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="jefe/bandeja/pendientes" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Pendientes</div>
+    </div>
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="jefe/bandeja/derivados" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Derivados</div>
+    </div>
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="jefe/bandeja/archivados" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Archivados</div>
+    </div>
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="jefe/bandeja/doc-por-apr" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Doc. por Aprobar</div>
+    </div>
+    <div class="flex p-2 px-8 sidenav_list_item" routerLink="jefe/bandeja/doc-obs" routerLinkActive="active">
+      <mat-icon fontIcon="arrow_forward"></mat-icon>
+      <div class="ms-2 sidenav_list_item_name">Doc. Observados</div>
+    </div>
+  </div>
+
   <div class="p-2 sidenav_list_item relative" [class.active_padre]="isConsultaActive" (click)="toggleConsultaSubMenu()">
     <div class="flex">
       <mat-icon fontIcon="search" style="font-size: 18px; display: flex; align-items: center;"></mat-icon>
@@ -79,5 +114,6 @@
       <div class="ms-2 sidenav_list_item_name">Consulta de Alertas</div>
     </div>
   </div>
+
 
 </div>

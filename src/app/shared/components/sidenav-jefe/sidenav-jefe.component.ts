@@ -20,6 +20,9 @@ export class SidenavJefeComponent implements OnInit {
   public consultaSubMenuOpen:boolean = false;
   public isConsultaActive: boolean = false;
 
+  public bandejaSubMenuOpen:boolean = false;
+  public isBandejaActive: boolean = false;
+
   private router = inject(Router);
 
 
@@ -35,6 +38,7 @@ export class SidenavJefeComponent implements OnInit {
 
   private updateActiveState(currentUrl: string): void {
     this.isRegistroActive = currentUrl.includes('/std/jefe/registro');
+    this.isBandejaActive = currentUrl.includes('/std/jefe/bandeja');
     this.isConsultaActive = currentUrl.includes('/std/jefe/consulta');
     this.closeOtherSubMenus();
   }
@@ -43,9 +47,15 @@ export class SidenavJefeComponent implements OnInit {
     if (this.isRegistroActive) {
       this.registroSubMenuOpen = true;
       this.consultaSubMenuOpen = false;
+      this.bandejaSubMenuOpen = false;
     }else if(this.isConsultaActive){
       this.registroSubMenuOpen = false;
       this.consultaSubMenuOpen = true;
+      this.bandejaSubMenuOpen = false;
+    }else if(this.isBandejaActive){
+      this.registroSubMenuOpen = false;
+      this.consultaSubMenuOpen = false;
+      this.bandejaSubMenuOpen = true;
     }
   }
 
@@ -53,6 +63,7 @@ export class SidenavJefeComponent implements OnInit {
     this.registroSubMenuOpen = !this.registroSubMenuOpen;
     if (this.registroSubMenuOpen) {
       this.consultaSubMenuOpen = false;
+      this.bandejaSubMenuOpen = false;
     }
   }
 
@@ -60,6 +71,15 @@ export class SidenavJefeComponent implements OnInit {
     this.consultaSubMenuOpen = !this.consultaSubMenuOpen;
     if (this.consultaSubMenuOpen) {
       this.registroSubMenuOpen = false;
+      this.bandejaSubMenuOpen = false;
+    }
+  }
+
+  toggleBandejaSubMenu() {
+    this.bandejaSubMenuOpen = !this.bandejaSubMenuOpen;
+    if (this.bandejaSubMenuOpen) {
+      this.registroSubMenuOpen = false;
+      this.consultaSubMenuOpen = false;
     }
   }
 
