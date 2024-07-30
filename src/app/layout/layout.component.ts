@@ -49,7 +49,7 @@ export class LayoutComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
-  public currentRole: string = "";
+  public currentRole: string = "Jefe";
 
   ngOnInit(): void {
     this.checkUrlForComponent();
