@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { DataDocumentosAdjuntos, DataListadoComboOficina, DataListadoComboTemas, DataListadoComboTipoDocumento, DataListadoComboTpoDcmto, DataResultadoOficinaInterno, DocumentosAdjuntos, FormularioInternoOficina, ListadoComboOficina, ListadoComboTemas, ListadoComboTipoDocumento, ListadoComboTpoDcmto, ResultadoOficinaInterno } from '../interfaces/consulta';
+import { ComboDepartamento, ComboDistritos, ComboOfcnOrigen, ComboProvincias, ComboTpoDcmto, DataComboDepartamento, DataComboDistritos, DataComboOfcnOrigen, DataComboProvincias, DataComboTpoDcmto, DataDocumentosAdjuntos, DataListadoComboOficina, DataListadoComboTemas, DataListadoComboTipoDocumento, DataListadoComboTpoDcmto, DataListadoControlCargos, DataResultadoOficinaInterno, DocumentosAdjuntos, FormularioControlCargos, FormularioInternoOficina, ListadoComboOficina, ListadoComboTemas, ListadoComboTipoDocumento, ListadoComboTpoDcmto, ListadoControlCargos, ResultadoOficinaInterno } from '../interfaces/consulta';
 
 @Injectable({providedIn: 'root'})
 export class ConsultaService {
@@ -60,11 +60,11 @@ export class ConsultaService {
   }
 
   /*Consulta Salida Oficina*/
-  getListadoCombTpoDcmto():Observable<DataListadoComboTpoDcmto[]>{
-      return this.http.get<ListadoComboTpoDcmto>(`${this.api_primary}/JefeDocSalidaOficina/RegSalidaListaTpoDocumento`).pipe(
-          map ( (rpta)=> rpta.data )
-      )
-  }
+    getListadoCombTpoDcmto():Observable<DataListadoComboTpoDcmto[]>{
+        return this.http.get<ListadoComboTpoDcmto>(`${this.api_primary}/JefeDocSalidaOficina/RegSalidaListaTpoDocumento`).pipe(
+            map ( (rpta)=> rpta.data )
+        )
+    }
 
     // getConsultaSalidaOficina(formularioSalidaOficina: FormularioSalidaOficina): Observable<DataResultadoOficinaInterno[]> {
     //     const params = {
@@ -87,4 +87,67 @@ export class ConsultaService {
     //       map(rpta => rpta.data)
     //     );
     // }
+
+
+
+    /*Consulta Control Cargos*/
+    getConsultaControlCargos(formularioControlCargos: FormularioControlCargos): Observable<DataListadoControlCargos[]> {
+        const params = {
+            fDesde: formularioControlCargos.fDesde,
+            fHasta: formularioControlCargos.fHasta,
+            ChxfRespuesta: formularioControlCargos.ChxfRespuesta,
+            fEntrega: formularioControlCargos.fEntrega,
+            Codificacion: formularioControlCargos.Codificacion.toString(),
+            Nombre: formularioControlCargos.Nombre.toString(),
+            Idireccion: formularioControlCargos.Idireccion.toString(),
+            CodTipoDoc: formularioControlCargos.CodTipoDoc.toString(),
+            NumGuiaservicio: formularioControlCargos.NumGuiaservicio.toString(),
+            FlgUrgente: formularioControlCargos.FlgUrgente.toString(),
+            CodTrabajadorEnvio: formularioControlCargos.CodTrabajadorEnvio.toString(),
+            FlgLocal: formularioControlCargos.FlgLocal.toString(),
+            FlgNacional: formularioControlCargos.FlgNacional.toString(),
+            FlgInternacional: formularioControlCargos.FlgInternacional.toString(),
+            CodOficina: formularioControlCargos.CodOficina.toString(),
+            FlgEstado: formularioControlCargos.FlgEstado.toString(),
+            CodDepartamento: formularioControlCargos.CodDepartamento,
+            CodProvincia: formularioControlCargos.CodProvincia.toString(),
+            CodDistrito: formularioControlCargos.CodDistrito,
+            Columna: formularioControlCargos.Columna,
+            Idir: formularioControlCargos.Idir,
+        };
+        return this.http.get<ListadoControlCargos>(`${this.api_primary}/JefeConsultaCompartido/ListaControlCargos`, { params: params }).pipe(
+            map(rpta => rpta.data)
+        );
+    }
+
+    getListadoComboTpoDcmto():Observable<DataComboTpoDcmto[]>{
+        return this.http.get<ComboTpoDcmto>(`${this.api_primary}/CombosGenerales/ComboTpoDocumento`).pipe(
+            map ( (rpta)=> rpta.data )
+        )
+    }
+
+    getListadoComboOfcnOrigen():Observable<DataComboOfcnOrigen[]>{
+        return this.http.get<ComboOfcnOrigen>(`${this.api_primary}/AdministradorCorrelativoProfesional/MntCorrProfesionalListaOficinas`).pipe(
+            map ( (rpta)=> rpta.data )
+        )
+    }
+
+    getListadoComboDepartamento():Observable<DataComboDepartamento[]>{
+        return this.http.get<ComboDepartamento>(`${this.api_primary}/api/JefeDocSalidaOficina/RegSalidaListaDepto`).pipe(
+            map ( (rpta)=> rpta.data )
+        )
+    }
+
+    getListadoComboProvincias():Observable<DataComboProvincias[]>{
+        return this.http.get<ComboProvincias>(`${this.api_primary}/api/JefeDocSalidaOficina/RegSalidaListaPrvnc?CodDepartamento=01`).pipe(
+            map ( (rpta)=> rpta.data )
+        )
+    }
+
+    getListadoComboDistritos():Observable<DataComboDistritos[]>{
+        return this.http.get<ComboDistritos>(`${this.api_primary}/api/JefeConsultaCompartido/ListaComboDistrito?CodProvincia=01&CodDepartamento=01`).pipe(
+            map ( (rpta)=> rpta.data )
+        )
+    }
+
 }
