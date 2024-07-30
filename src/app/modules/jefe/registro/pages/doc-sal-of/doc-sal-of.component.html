@@ -1,19 +1,19 @@
 <div class="p-3" >
   <div style="background-color: #fff" class="rounded p-4" >
-    <div class="font-extrabold text-2xl mt-2 mb-2">Registro Documentos Salida</div>
+    <div class="font-extrabold text-lg mt-2 mb-2">Registro Documentos Salida</div>
     <mat-stepper linear #stepper>
       <mat-step [stepControl]="myFormValido" [editable]="isEditable" color="warn">
         <ng-template matStepLabel>Crear Documento</ng-template>
         <form [formGroup]="myFormDocumentoSalida  " (ngSubmit)="agregarDocumento()">
           <mat-card class="w-full mt-2" appearance="outlined">
             <mat-card-content>
-              <div class="mb-2 font-bold text-lg" style="color: #b91c1b;">Datos del Documento Interno</div>
+              <div class="mb-2 font-semibold text-base" style="color: #b91c1b;">Datos del Documento</div>
 
               <div class="flex gap-4 mt-3">
 
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Tipo Documento*</label>
-                  <select class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codTipoDoc" (change)="seleccionarTipoDocumento($event)">
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Tipo Documento*</label>
+                  <select class="bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codTipoDoc" (change)="seleccionarTipoDocumento($event)">
                     <option value>Seleccione</option>
                     @for (documento of listTipoDocumento; track $index) {
                       <option [value]="documento.cCodTipoDoc">{{documento.cDescTipoDoc}}</option>
@@ -25,9 +25,9 @@
                 </div>
 
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Correlativo</label>
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Correlativo</label>
                   <div class="flex">
-                    <input type="text" class="rounded-none rounded-s-lg bg-gray-200 border border-gray-300  font-normal text-gray-700 text-sm  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed" formControlName="nroCorrelativo" readonly>
+                    <input type="text" class="rounded-none rounded-s-lg bg-gray-200 border border-gray-300  font-normal text-gray-500 text-xs  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed" formControlName="nroCorrelativo" readonly>
 
                     <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300  rounded-e-lg">
                       <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -39,8 +39,8 @@
                 </div>
 
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Requiere Respuesta</label>
-                  <select class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="flgRpta">
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Requiere Respuesta</label>
+                  <select class="bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="flgRpta">
                     <option value="0">No</option>
                     <option value="1">Si</option>
 
@@ -51,21 +51,21 @@
 
               <div class="flex gap-4 mt-3">
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Asunto*</label>
-                  <textarea  rows="2" class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="asunto"></textarea>
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Asunto*</label>
+                  <textarea  rows="2" class="bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="asunto"></textarea>
                   @if (myFormDocumentoSalida.controls['asunto'].getError('required') && myFormDocumentoSalida.controls['asunto'].touched) {
                     <span class="text-red-500 text-xs italic">Asunto requerido</span>
                   }
                 </div>
 
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Observaciones</label>
-                  <textarea  rows="2" class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="observaciones" ></textarea>
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Observaciones</label>
+                  <textarea  rows="2" class="bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="observaciones" ></textarea>
                 </div>
 
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Archivo Físico</label>
-                  <textarea  rows="2" class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="archivoFisico"></textarea>
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Archivo Físico</label>
+                  <textarea  rows="2" class="bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="archivoFisico"></textarea>
                 </div>
               </div>
 
@@ -75,15 +75,15 @@
 
           <mat-card class="w-full mt-4" appearance="outlined">
             <mat-card-content>
-              <div class="mb-2 font-bold text-lg" style="color: #b91c1b;">Destino</div>
+              <div class="mb-2 font-semibold text-base" style="color: #b91c1b;">Destino</div>
 
               <div class="flex gap-4 mt-3">
 
                 <div class="basis-1 sm:basis-1/3">
 
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Institución</label>
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Institución</label>
                   <div class="flex">
-                    <input type="text" class="rounded-none rounded-s-lg bg-gray-200 border border-gray-300  font-normal text-gray-700 text-sm  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed" formControlName="nomInstitucion" readonly>
+                    <input type="text" class="rounded-none rounded-s-lg bg-gray-200 border border-gray-300  font-normal text-gray-500 text-xs  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed" formControlName="nomInstitucion" readonly>
                     <span style="cursor: pointer;" (click)="selInstitucion()" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border rounded-e-0 border-gray-300  rounded-e-lg hover:bg-gray-200">
                       <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
@@ -97,8 +97,8 @@
                 </div>
 
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Destinatario</label>
-                  <input type="text" class="rounded-lg bg-gray-50 border border-gray-300  font-normal text-gray-700 text-sm  focus:ring-red-700 focus:border-red-700 block w-full p-2.5" formControlName="nomRemite" >
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Destinatario</label>
+                  <input type="text" class="rounded-lg bg-gray-50 border border-gray-300  font-normal text-gray-500 text-xs  focus:ring-red-700 focus:border-red-700 block w-full p-2.5" formControlName="nomRemite" >
                   @if (myFormDocumentoSalida.controls['nomRemite'].getError('required') && myFormDocumentoSalida.controls['nomRemite'].touched) {
                     <span class="text-red-500 text-xs italic">Destinatario requerido</span>
                   }
@@ -106,8 +106,8 @@
 
 
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Domicilio</label>
-                  <input type="text" class="rounded-lg bg-gray-50 border border-gray-300  font-normal text-gray-700 text-sm  focus:ring-red-700 focus:border-red-700 block w-full p-2.5" formControlName="remitenteDireccion" >
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Domicilio</label>
+                  <input type="text" class="rounded-lg bg-gray-50 border border-gray-300  font-normal text-gray-500 text-xs  focus:ring-red-700 focus:border-red-700 block w-full p-2.5" formControlName="remitenteDireccion" >
                 </div>
 
               </div>
@@ -115,13 +115,13 @@
               <div class="flex gap-4 mt-3">
 
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Ubicación Predeterminada</label>
-                  <input type="text" class="rounded-lg bg-gray-200 border border-gray-300  font-normal text-gray-700 text-sm  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed" formControlName="ubicacionPredeterminada" readonly>
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Ubicación Predeterminada</label>
+                  <input type="text" class="rounded-lg bg-gray-200 border border-gray-300  font-normal text-gray-500 text-xs focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed" formControlName="ubicacionPredeterminada" readonly>
                 </div>
 
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Pais</label>
-                  <select class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="paisProcedencia">
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Pais</label>
+                  <select class="bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="paisProcedencia">
                     <option value>Seleccione</option>
                     @for (pais of listaPaisesSalida; track $index) {
                       <option [value]="pais.id_Pais">{{pais.cDescripcion}}</option>
@@ -130,8 +130,8 @@
                 </div>
 
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Departamento</label>
-                  <select class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="remitenteDepartamento">
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Departamento</label>
+                  <select class="bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="remitenteDepartamento">
                     <option value>Seleccione</option>
                     @for (departamento of listaDepartamentos; track $index) {
                       <option [value]="departamento.cCodDepartamento">{{departamento.cNomDepartamento}}</option>
@@ -144,8 +144,8 @@
               <div class="flex gap-4 mt-3">
 
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Provincia</label>
-                  <select class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="remitenteProvincia">
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Provincia</label>
+                  <select class="bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="remitenteProvincia">
                     <option value>Seleccione</option>
                     @for (provincia of listaProvincias; track $index) {
                       <option [value]="provincia.idProvincia">{{provincia.cNomProvincia}}</option>
@@ -153,8 +153,8 @@
                   </select>
                 </div>
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Distrito</label>
-                  <select class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="remitenteDistrito">
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Distrito</label>
+                  <select class="bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="remitenteDistrito">
                     <option value>Seleccione</option>
                     @for (distrito of listaDistritos; track $index) {
                       <option [value]="distrito.ubigeo">{{distrito.cNomDistrito}}</option>
@@ -162,8 +162,8 @@
                   </select>
                 </div>
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Mesa Virtual</label>
-                  <input type="text" class="rounded-lg bg-gray-200 border border-gray-300  font-normal text-gray-700 text-sm  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed"  readonly>
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Mesa Virtual</label>
+                  <input type="text" class="rounded-lg bg-gray-200 border border-gray-300  font-normal text-gray-500 text-xs  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed"  readonly>
                 </div>
 
               </div>
@@ -173,7 +173,7 @@
           </mat-card>
 
           <div class="mt-7" >
-            <button type="submit" mat-flat-button style="background-color: #dc2626;" >Agregar Documento</button>
+            <button type="submit" mat-flat-button style="background-color: #dc2626;" > <mat-icon>save</mat-icon> Crear Documento</button>
           </div>
         </form>
       </mat-step>

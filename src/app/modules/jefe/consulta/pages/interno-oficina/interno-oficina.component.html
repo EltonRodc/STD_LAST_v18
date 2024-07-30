@@ -1,24 +1,24 @@
 <div class="p-3" >
   <div style="background-color: #fff" class="rounded p-4" >
-    <div class="font-extrabold text-2xl mt-2 mb-2">Consulta - Documentos Interno de Oficina</div>
+    <div class="font-extrabold text-lg mt-2 mb-2">Consulta - Documentos Interno de Oficina</div>
 
     <form autocomplete="off" [formGroup]="myFormConsultaInternoOficina" (ngSubmit)="onSearch()" class="mt-4">
       <mat-card class="w-full mt-2" appearance="outlined">
         <mat-card-content>
-          <div class="mb-2 font-extrabold text-lg" style="color: #b91c1b;">Criterios de Búsqueda</div>
+          <div class="mb-2 font-extrabold text-base" style="color: #b91c1b;">Criterios de Búsqueda</div>
 
           <div class="flex gap-4 mt-3">
 
             <div class="basis-1 sm:basis-1/4">
-              <label class="block mb-2 text-sm font-normal text-gray-700">Nro Trámite</label>
-              <input type="text" class="bg-gray-50 border font-normal border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="nTramite"/>
+              <label class="block mb-2 text-xs font-bold text-gray-700">Nro Trámite</label>
+              <input type="text" class="bg-gray-50 border font-semibold border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="nTramite"/>
             </div>
 
             <div class="basis-1 sm:basis-1/4">
-              <label class="block mb-2 text-sm font-normal text-gray-700">Desde</label>
+              <label class="block mb-2 text-xs font-bold text-gray-700">Desde</label>
               <div class="flex">
 
-                <input type="text" [matDatepicker]="picker" class="rounded-none rounded-s-lg font-normal bg-gray-200 border border-gray-300 text-gray-700 text-sm  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed"   readonly formControlName="fechaInicio" >
+                <input type="text" [matDatepicker]="picker" class="rounded-none rounded-s-lg font-semibold bg-gray-200 border border-gray-300 text-gray-500 text-xs  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed"   readonly formControlName="fechaInicio" >
                 <button type="button" (click)="picker.open()" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border rounded-e-0 border-gray-300 hover:bg-gray-200">
                   <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path fill="currentColor" d="M6 1a1 1 0 0 0-2 0h2ZM4 4a1 1 0 0 0 2 0H4Zm7-3a1 1 0 1 0-2 0h2ZM9 4a1 1 0 1 0 2 0H9Zm7-3a1 1 0 1 0-2 0h2Zm-2 3a1 1 0 1 0 2 0h-2ZM1 6a1 1 0 0 0 0 2V6Zm18 2a1 1 0 1 0 0-2v2ZM5 11v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 11v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 15v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 15v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 11v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM5 15v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM2 4h16V2H2v2Zm16 0h2a2 2 0 0 0-2-2v2Zm0 0v14h2V4h-2Zm0 14v2a2 2 0 0 0 2-2h-2Zm0 0H2v2h16v-2ZM2 18H0a2 2 0 0 0 2 2v-2Zm0 0V4H0v14h2ZM2 4V2a2 2 0 0 0-2 2h2Zm2-3v3h2V1H4Zm5 0v3h2V1H9Zm5 0v3h2V1h-2ZM1 8h18V6H1v2Zm3 3v.01h2V11H4Zm1 1.01h.01v-2H5v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H5v2h.01v-2ZM9 11v.01h2V11H9Zm1 1.01h.01v-2H10v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM9 15v.01h2V15H9Zm1 1.01h.01v-2H10v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM14 15v.01h2V15h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM14 11v.01h2V11h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM4 15v.01h2V15H4Zm1 1.01h.01v-2H5v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H5v2h.01v-2Z"/>
@@ -26,9 +26,9 @@
                 </button>
                 <mat-datepicker #picker></mat-datepicker>
 
-                <input type="text"  class="rounded-none  font-normal bg-gray-200 border border-gray-300 text-gray-700 text-sm  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed"   readonly  [ngxTimepicker]="pickerTime" [format]="24" formControlName="horaInicio">
+                <input type="text"  class="rounded-none  font-semibold bg-gray-200 border border-gray-300 text-gray-500 text-xs  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed"   readonly  [ngxTimepicker]="pickerTime" [format]="24" formControlName="horaInicio">
                 <button type="button" (click)="pickerTime.open()" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border rounded-e-0 border-gray-300  rounded-e-lg hover:bg-gray-200">
-                  <svg class="w-6 h-6 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <svg class="w-5 h-5 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                   </svg>
                 </button>
@@ -39,10 +39,10 @@
 
 
             <div class="basis-1 sm:basis-1/4">
-              <label class="block mb-2 text-sm font-normal text-gray-700">Hasta</label>
+              <label class="block mb-2 text-xs font-bold text-gray-700">Hasta</label>
               <div class="flex">
 
-                <input type="text" [matDatepicker]="picker2" class="rounded-none rounded-s-lg font-normal bg-gray-200 border border-gray-300 text-gray-700 text-sm  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed"   readonly formControlName="fechaFin" >
+                <input type="text" [matDatepicker]="picker2" class="rounded-none rounded-s-lg font-semibold bg-gray-200 border border-gray-300 text-gray-500 text-xs  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed"   readonly formControlName="fechaFin" >
                 <button type="button" (click)="picker2.open()" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border rounded-e-0 border-gray-300 hover:bg-gray-200">
                   <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path fill="currentColor" d="M6 1a1 1 0 0 0-2 0h2ZM4 4a1 1 0 0 0 2 0H4Zm7-3a1 1 0 1 0-2 0h2ZM9 4a1 1 0 1 0 2 0H9Zm7-3a1 1 0 1 0-2 0h2Zm-2 3a1 1 0 1 0 2 0h-2ZM1 6a1 1 0 0 0 0 2V6Zm18 2a1 1 0 1 0 0-2v2ZM5 11v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 11v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 15v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 15v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 11v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM5 15v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM2 4h16V2H2v2Zm16 0h2a2 2 0 0 0-2-2v2Zm0 0v14h2V4h-2Zm0 14v2a2 2 0 0 0 2-2h-2Zm0 0H2v2h16v-2ZM2 18H0a2 2 0 0 0 2 2v-2Zm0 0V4H0v14h2ZM2 4V2a2 2 0 0 0-2 2h2Zm2-3v3h2V1H4Zm5 0v3h2V1H9Zm5 0v3h2V1h-2ZM1 8h18V6H1v2Zm3 3v.01h2V11H4Zm1 1.01h.01v-2H5v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H5v2h.01v-2ZM9 11v.01h2V11H9Zm1 1.01h.01v-2H10v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM9 15v.01h2V15H9Zm1 1.01h.01v-2H10v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM14 15v.01h2V15h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM14 11v.01h2V11h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM4 15v.01h2V15H4Zm1 1.01h.01v-2H5v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H5v2h.01v-2Z"/>
@@ -50,9 +50,9 @@
                 </button>
                 <mat-datepicker #picker2></mat-datepicker>
 
-                <input type="text"  class="rounded-none  font-normal bg-gray-200 border border-gray-300 text-gray-700 text-sm  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed"   readonly  [ngxTimepicker]="pickerTime2" [format]="24" formControlName="horaFin">
+                <input type="text"  class="rounded-none  font-semibold bg-gray-200 border border-gray-300 text-gray-500 text-xs  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed"   readonly  [ngxTimepicker]="pickerTime2" [format]="24" formControlName="horaFin">
                 <button type="button" (click)="pickerTime2.open()" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border rounded-e-0 border-gray-300  rounded-e-lg hover:bg-gray-200">
-                  <svg class="w-6 h-6 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <svg class="w-5 h-5 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                   </svg>
                 </button>
@@ -62,8 +62,8 @@
             </div>
 
             <div class="basis-1 sm:basis-1/4">
-              <label class="block mb-2 text-sm font-normal text-gray-700">Tipo Documento</label>
-              <select class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codTipoDoc">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Tipo Documento</label>
+              <select class="bg-gray-50 border border-gray-300 font-semibold text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codTipoDoc">
                 <option value="0">Seleccione</option>
                 @for (item of comboListadoTpoDcmto; track $index) {
                   <option [value]="item.codTipoDoc">{{item.descTipoDoc}}</option>
@@ -76,23 +76,23 @@
           <div class="flex gap-4 mt-3">
 
             <div class="basis-1 sm:basis-1/4">
-              <label class="block mb-2 text-sm font-normal text-gray-700">Asunto</label>
-              <input type="text" class="bg-gray-50 border font-normal border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="asunto"/>
+              <label class="block mb-2 text-xs font-bold text-gray-700">Asunto</label>
+              <input type="text" class="bg-gray-50 border font-semibold border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="asunto"/>
             </div>
 
             <div class="basis-1 sm:basis-1/4">
-              <label class="block mb-2 text-sm font-normal text-gray-700">Documento</label>
-              <input type="text" class="bg-gray-50 border font-normal border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="cCodificacion"/>
+              <label class="block mb-2 text-xs font-bold text-gray-700">Documento</label>
+              <input type="text" class="bg-gray-50 border font-semibold border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="cCodificacion"/>
             </div>
 
             <div class="basis-1 sm:basis-1/4">
-              <label class="block mb-2 text-sm font-normal text-gray-700">Observaciones</label>
-              <input type="text" class="bg-gray-50 border font-normal border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5" formControlName="observaciones"/>
+              <label class="block mb-2 text-xs font-bold text-gray-700">Observaciones</label>
+              <input type="text" class="bg-gray-50 border font-semibold border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5" formControlName="observaciones"/>
             </div>
 
             <div class="basis-1 sm:basis-1/4">
-              <label class="block mb-2 text-sm font-normal text-gray-700">Destino</label>
-              <select class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codOficina">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Destino</label>
+              <select class="bg-gray-50 border border-gray-300 font-semibold text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codOficina">
                 <option value="0">Seleccione</option>
                 @for (item of comboListadoDestino; track $index) {
                   <option [value]="item.iCodOficina">{{item.cNomOficina}}</option>
@@ -106,22 +106,22 @@
           <div class="flex gap-4 mt-3">
 
             <div class="basis-1/4">
-              <label class="block mb-2 text-sm font-normal text-gray-700">Enviado</label>
+              <label class="block mb-2 text-xs font-bold text-gray-700">Enviado</label>
               <div class="flex">
                 <div class="basis-1/2" style="display: flex; align-items: center;">
-                  <input  type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" formControlName="si">
+                  <input  type="checkbox" value="" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 focus:ring-2" formControlName="si">
                   <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Si</label>
                 </div>
                 <div class="basis-1/2" style="display: flex; align-items: center;">
-                  <input  type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" formControlName="no">
+                  <input  type="checkbox" value="" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500  focus:ring-2" formControlName="no">
                   <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">No</label>
                 </div>
               </div>
             </div>
 
             <div class="basis-1/4">
-              <label class="block mb-2 text-sm font-normal text-gray-700">Tema</label>
-              <select class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5" formControlName="codTema">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Tema</label>
+              <select class="bg-gray-50 border border-gray-300 font-semibold text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5" formControlName="codTema">
                 <option value="0">Seleccione</option>
                 @for (item of comboListadoTema; track $index) {
                   <option [value]="item.iCodTema">{{item.cDesTema}}</option>
@@ -165,17 +165,17 @@
 
             <ng-container matColumnDef="Tipo">
               <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Tipo de Documento </th>
-              <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;" align="center">
+              <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;">
                 <div class="py-2">
-                  <div class="text-center">{{element.cDescTipoDoc}}</div>
-                  <div class="text-center" style="color: #007bff;">{{element.cCodificacion}}</div>
+                  <div>{{element.cDescTipoDoc}}</div>
+                  <div  style="color: #007bff;">{{element.cCodificacion}}</div>
                   @if (element.nFlgTipoDerivo === 1 ) {
                     <div text-center>(Tipo Derivado)</div>
                   }@else if(element.nFlgEnvio === 0) {
-                    <div class="text-red-700 text-center">(Sin envio)</div>
+                    <div class="text-red-700">(Sin envio)</div>
                   }
                   @if (element.fechA_DOCUMENTO == null && element.cPeriodoregistro<2022) {
-                    <div class="text-red-700 text-center">(Por Aprobar)</div>
+                    <div class="text-red-700">(Por Aprobar)</div>
                   }
                 </div>
               </td>
@@ -185,9 +185,9 @@
               <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Asunto </th>
               <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;" align="center">
                 <div class="py-2">
-                  <div class="text-center">{{element.casunto}}</div>
+                  <div >{{element.casunto}}</div>
                   <div style="border-top: 1px solid #acacac;" class="mt-1 pb-1"></div>
-                  <div class="text-center">{{element.cObservaciones}}</div>
+                  <div >{{element.cObservaciones}}</div>
                 </div>
               </td>
             </ng-container>
@@ -195,7 +195,7 @@
             <ng-container matColumnDef="Oficina">
               <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Oficina Destino </th>
               <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;" align="center">
-              <div class="text-center" style="color: #007bff;">{{element.destino}}</div>
+              <div style="color: #007bff;">{{element.destino}}</div>
               </td>
             </ng-container>
 

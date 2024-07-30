@@ -1,6 +1,6 @@
 <div class="p-3" >
   <div style="background-color: #fff" class="rounded p-4" >
-    <div class="font-extrabold text-2xl mt-2 mb-2">Documento Interno de Oficina</div>
+    <div class="font-extrabold text-lg mt-2 mb-2">Documento Interno de Oficina</div>
     <mat-stepper linear #stepper>
       <mat-step [stepControl]="myFormValido" [editable]="isEditable" color="warn">
         <ng-template matStepLabel>Crear Documento</ng-template>
@@ -8,11 +8,11 @@
 
           <mat-card class="w-full mt-2" appearance="outlined">
             <mat-card-content>
-              <div class="mb-2 font-bold text-lg" style="color: #b91c1b;">Datos del Documento Interno</div>
+              <div class="mb-2 font-semibold text-base" style="color: #b91c1b;">Datos del Documento Interno</div>
               <div class="flex gap-4 mt-3">
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Tipo de Documento*</label>
-                  <select class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codTema">
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Tipo de Documento*</label>
+                  <select class="bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codTema">
                     <option value>Seleccione</option>
                     @for (tema of listTemas; track $index) {
                       <option [value]="tema.icodtema">{{tema.cdestema}}</option>
@@ -23,12 +23,12 @@
                   }
                 </div>
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">CUI</label>
-                  <input type="text" class="bg-gray-50 border font-normal border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="cui" />
+                  <label class="block mb-2 text-xs font-medium text-gray-700">CUI</label>
+                  <input type="text" class="bg-gray-50 border font-normal border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="cui" />
                 </div>
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Tipo Documental*</label>
-                  <select  class="bg-gray-50 border  border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codTipoDoc" (change)="seleccionarTipoDocumento($event)">
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Tipo Documental*</label>
+                  <select  class="bg-gray-50 border  border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codTipoDoc" (change)="seleccionarTipoDocumento($event)">
                     <option value>Seleccione</option>
                     @for (tipoDoc of listTipoDocumental; track $index) {
                       <option [value]="tipoDoc.cCodTipoDoc">{{tipoDoc.cDescTipoDoc}}</option>
@@ -42,9 +42,9 @@
               <div class="flex gap-4 mt-3">
 
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Correlativo</label>
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Correlativo</label>
                   <div class="flex">
-                    <input type="text" class="rounded-none rounded-s-lg bg-gray-200 border border-gray-300  font-normal text-gray-700 text-sm  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed" formControlName="nroCorrelativo" readonly>
+                    <input type="text" class="rounded-none rounded-s-lg bg-gray-200 border border-gray-300  font-normal text-gray-500 text-xs  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed" formControlName="nroCorrelativo" readonly>
 
                     <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300  rounded-e-lg">
                       <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -56,9 +56,9 @@
                 </div>
 
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Plazo Máximo</label>
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Plazo Máximo</label>
                   <div class="flex">
-                    <input type="text" [matDatepicker]="picker" class="rounded-none rounded-s-lg font-normal bg-gray-200 border border-gray-300 text-gray-700 text-sm  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed" formControlName="fechaPlazoMaximo"  readonly >
+                    <input type="text" [matDatepicker]="picker" class="rounded-none rounded-s-lg font-normal bg-gray-200 border border-gray-300 text-gray-500 text-xs  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed" formControlName="fechaPlazoMaximo"  readonly >
 
                     <button type="button" (click)="picker.open()" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border rounded-e-0 border-gray-300 hover:bg-gray-200">
                       <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -76,27 +76,27 @@
                 </div>
 
                 <div class="basis-1 sm:basis-1/3" style="display: flex; align-items: end;">
-                  <div class="text-xs text-red-700 font-medium " >* Es la fecha que como maximo deberia terminar el tramite de todo el expediente (Dato opcional).</div>
+                  <div class="text-xs text-red-700 font-normal " >* Es la fecha que como maximo deberia terminar el tramite de todo el expediente (Dato opcional).</div>
                 </div>
 
               </div>
               <div class="flex gap-4 mt-3">
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Asunto*</label>
-                  <textarea  rows="2" class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="asunto"></textarea>
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Asunto*</label>
+                  <textarea  rows="2" class="bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="asunto"></textarea>
                   @if (myFormDocumentoInterno.controls['asunto'].getError('required') && myFormDocumentoInterno.controls['asunto'].touched) {
                     <span class="text-red-500 text-xs italic">Asunto requerido</span>
                   }
                 </div>
 
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Observaciones</label>
-                  <textarea  rows="2" class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="observaciones" ></textarea>
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Observaciones</label>
+                  <textarea  rows="2" class="bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="observaciones" ></textarea>
                 </div>
 
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Archivo Físico</label>
-                  <textarea  rows="2" class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="archivoFisico"></textarea>
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Archivo Físico</label>
+                  <textarea  rows="2" class="bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="archivoFisico"></textarea>
                 </div>
               </div>
             </mat-card-content>
@@ -105,19 +105,19 @@
 
           <mat-card class="w-full mt-4" appearance="outlined">
             <mat-card-content>
-              <div class="mb-2 font-extrabold text-lg" style="color: #b91c1b;">Datos Adicionales</div>
+              <div class="mb-2 font-extrabold text-base" style="color: #b91c1b;">Datos Adicionales</div>
               <div class="flex gap-4 mt-3">
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Tipo</label>
-                  <select  class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="tipoDerivacion" (change)="verificarTipo($event)">
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Tipo</label>
+                  <select  class="bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="tipoDerivacion" (change)="verificarTipo($event)">
                     <option value="1">A responsable de oficina</option>
                     <option value="2">A trabajador</option>
                   </select>
                 </div>
 
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Seleccione Oficina*</label>
-                  <select  class="bg-gray-50 border border-gray-300 font-normal  text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codOficinaDeriv" (change)="selectOficina($event)">
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Seleccione Oficina*</label>
+                  <select  class="bg-gray-50 border border-gray-300 font-normal  text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codOficinaDeriv" (change)="selectOficina($event)">
                     <option value>Seleccione</option>
                     @for (oficina of listOficinas; track $index) {
                       <option [value]="oficina.iCodOficina">{{oficina.cNomOficina}}</option>
@@ -129,8 +129,8 @@
                 </div>
 
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Trabajador/Responsable*</label>
-                  <select  class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codTrabajadorDerivar">
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Trabajador/Responsable*</label>
+                  <select  class="bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codTrabajadorDerivar">
                     @for (trabajador of listaTrabajadorResponsable; track $index) {
                       <option [value]="trabajador.iCodTrabajador">{{trabajador.cApellidosTrabajador }} {{ trabajador.cNombresTrabajador}} </option>
                     }
@@ -142,8 +142,8 @@
               </div>
               <div class="flex gap-4 mt-3">
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Indicacion</label>
-                  <select  class= " bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codIndicacionDeriv">
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Indicacion</label>
+                  <select  class= " bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codIndicacionDeriv">
                     @for (indicacion of listIndicaciones; track $index) {
                       <option [value]="indicacion.iCodIndicacion"> {{indicacion.cIndicacion}} </option>
                     }
@@ -151,8 +151,8 @@
                 </div>
 
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Prioridad</label>
-                  <select  class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="prioridad">
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Prioridad</label>
+                  <select  class="bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="prioridad">
                     <option value="Alta">Alta</option>
                     <option value="Media">Media</option>
                     <option value="Baja">Baja</option>
@@ -160,8 +160,8 @@
                 </div>
 
                 <div class="basis-1 sm:basis-1/3">
-                  <label class="block mb-2 text-sm font-normal text-gray-700">Confidencialidad</label>
-                  <select  class="bg-gray-50 border border-gray-300 font-normal text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="confidencialidad">
+                  <label class="block mb-2 text-xs font-medium text-gray-700">Confidencialidad</label>
+                  <select  class="bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="confidencialidad">
                     <option value="1">Normal</option>
                     <option value="2">Reservada</option>
                   </select>
@@ -172,24 +172,24 @@
           </mat-card>
 
           <div class="mt-7" >
-            <button type="submit" mat-flat-button style="background-color: #dc2626;" >Agregar Documento</button>
+            <button type="submit" mat-flat-button style="background-color: #dc2626;" > <mat-icon>save</mat-icon> Crear Documento</button>
           </div>
 
         </form>
       </mat-step>
       <mat-step [editable]="false" color="warn">
-        <ng-template matStepLabel>Adjuntos y Referencias</ng-template>
+        <ng-template matStepLabel>  Adjuntos y Referencias</ng-template>
         <div class="w-full">
 
-          <div class="mb-2 mt-2 font-bold text-lg" style="color: #b91c1b;">Datos del Documento</div>
+          <div class="mb-2 mt-2 font-extrabold text-base" style="color: #b91c1b;">Datos del Documento</div>
 
           <mat-card appearance="outlined">
             <mat-card-content>
               <div class="flex gap-4">
                 <div class="basis-1/2">
                   <div class="flex gap-4">
-                    <div class="basis-1/2 font-medium text-gray-900">Expediente</div>
-                    <div class="basis-1/2 font-semibold" style="color: #007bff;"> {{detalleRegistroPaso1?.cCodificacionI}} </div>
+                    <div class="basis-1/2 font-medium text-gray-900 text-sm">Expediente</div>
+                    <div class="basis-1/2 font-semibold text-sm" style="color: #007bff;"> {{detalleRegistroPaso1?.cCodificacionI}} </div>
                   </div>
                 </div>
                 <div class="basis-1/2">
@@ -284,7 +284,7 @@
 
         <div class="w-full">
           <div class="flex justify-between mb-2 mt-6">
-            <div class="font-bold text-lg" style="color: #b91c1b;">Referencias</div>
+            <div class="font-extrabold text-base" style="color: #b91c1b;">Referencias</div>
             <div><button type="button" (click)="newReferencia()" mat-flat-button style="background-color: #dc2626;" ><mat-icon>add</mat-icon>Agregar</button></div>
           </div>
           <mat-card appearance="outlined">
@@ -331,7 +331,7 @@
 
         <div class="w-full">
           <div class="flex justify-between mb-2 mt-6">
-            <div class="font-bold text-lg" style="color: #b91c1b;">Documento Complementario</div>
+            <div class="font-extrabold text-base" style="color: #b91c1b;">Documento Complementario</div>
             <div><button type="button" (click)="newDocComplementario()" mat-flat-button style="background-color: #dc2626;" ><mat-icon>add</mat-icon>Agregar</button></div>
           </div>
 
@@ -446,7 +446,7 @@
 
         <div class="w-full">
           <div class="flex justify-between mb-2 mt-6">
-            <div class="font-bold text-lg" style="color: #b91c1b;">Lista envios a Oficinas</div>
+            <div class="font-extrabold text-base" style="color: #b91c1b;">Lista envios a Oficinas</div>
             <div><button type="button" (click)="newOficina()" mat-flat-button style="background-color: #dc2626;" ><mat-icon>add</mat-icon>Agregar</button></div>
           </div>
 
