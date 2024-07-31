@@ -1,5 +1,6 @@
+import { Value } from './../../../../../core/interfaces/auth';
 import { Component, inject, ViewChild } from '@angular/core';
-import { DataComboTpoDcmto, DataListadoComboTipoDocumento, DataListadoControlCargos, FormularioControlCargos } from '../../interfaces/consulta';
+import { DataComboDepartamento, DataComboDistritos, DataComboOfcnOrigen, DataComboProvincias, DataComboTpoDcmto, DataListadoComboTipoDocumento, DataListadoControlCargos, FormularioControlCargos } from '../../interfaces/consulta';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -35,12 +36,16 @@ export class ControlCargosComponent  {
   public isFetchingData: boolean = false;
   public lisCntrCargo: DataListadoControlCargos[] =[];
   public comboListadoTipoDcmto:DataComboTpoDcmto[]=[];
+  public comboListadoOficnOrigen:DataComboOfcnOrigen[]=[];
+  public comboListadoDepartamento:DataComboDepartamento[]=[];
+  public comboListadoProvincias:DataComboProvincias[]=[];
+  public comboListadoDistritos:DataComboDistritos[]=[];
 
   public myFormControlCargos:FormGroup = this.fb.group({
-      fechaInicio : [""],
-      fechaFin : [""],
-      horaInicio:[""],
-      horaFin:[""],
+      fDesde : [""],
+      fHasta : [""],
+      // horaInicio:[""],
+      // horaFin:[""],
       ChxfRespuesta: [0],
       fEntrega : [0],
       Codificacion : [""],
@@ -98,15 +103,19 @@ export class ControlCargosComponent  {
   }
   
   ngOnInit(): void {
-
+    
     this.getListadoComboTpoDcmto();
+    this.getListadoComboOfcnOrigen();
+    this.getListadoComboDepartamento();
+    // this.getListadoComboProvincias();
+    this.getListadoComboDistritos();
 
     this.myFormControlCargos.patchValue({
-      fechaInicio: moment().toDate(),
-      fechaFin: moment().toDate(),
-      horaInicio:"00:00",
-      horaFin: "23:59",
-      CodOficinaLogin:143
+      fDesde: moment().toDate(),
+      fHasta: moment().toDate(),
+      // horaInicio:"00:00",
+      // // horaFin: "23:59",
+      // CodOficinaLogin:143
     })
 
     this.onSearch();
@@ -119,25 +128,26 @@ export class ControlCargosComponent  {
   onSearch() {
     this.isFetchingData = true;
     // console.log(this.myFormConsultaInternoOficina.value)
-    const {fechaInicio,fechaFin,horaInicio,horaFin,ChxfRespuesta,fEntrega,Codificacion,Nombre,Idireccion,CodTipoDoc,NumGuiaservicio,FlgUrgente ,CodTrabajadorEnvio,FlgLocal,FlgNacional,FlgInternacional,CodOficina,FlgEstado,CodDepartamento,CodProvincia,CodDistrito,Columna,Idir} = this.myFormControlCargos.value;
+    const {fDesde,fHasta,horaInicio,horaFin,ChxfRespuesta,fEntrega,Codificacion,Nombre,Idireccion,CodTipoDoc,NumGuiaservicio,FlgUrgente ,CodTrabajadorEnvio,FlgLocal,FlgNacional,FlgInternacional,CodOficina,FlgEstado,CodDepartamento,CodProvincia,CodDistrito,Columna,Idir} = this.myFormControlCargos.value;
 
-    const fechaInicioStr = moment(fechaInicio).format('YYYY-MM-DD');
-    const fechaFinStr = moment(fechaFin).format('YYYY-MM-DD');
-    const fDesde = `${fechaInicioStr}T${horaInicio}`;
-    const fHasta = `${fechaFinStr}T${horaFin}`;
-    const cCodificacion = Codificacion ? Codificacion : "%%";
-    const cNombre = Nombre ? Nombre : "%%";
-    const cDireccion = Idireccion ? Idireccion : "%%";
-    const cNumGuiaservicio = NumGuiaservicio ? NumGuiaservicio : "%%";
-    const cDepartamento = CodDepartamento ? CodDepartamento : "%%";
-    const cProvincia = CodProvincia ? CodProvincia : "%%";
-    const cDistrito = CodDistrito ? CodDistrito : "%%";
-    const cColumna  = Columna  ? Columna  : "%%";
-    const cIdir  = Idir  ? Idir  : "%%";
+    const fechaInicioStr = moment(fDesde).format('DD/MM/YYYY');
+    const fechaFinStr = moment(fHasta).format('DD/MM/YYYY');
+    console.log(fechaInicioStr)
+    // const fDesde = `${fechaInicioStr}T${horaInicio}`; 
+    // const fHasta = `${fechaFinStr}T${horaFin}`;
+    const cCodificacion = Codificacion 
+    const cNombre = Nombre 
+    const cDireccion = Idireccion 
+    const cNumGuiaservicio = NumGuiaservicio
+    const cDepartamento = CodDepartamento 
+    const cProvincia = CodProvincia
+    const cDistrito = CodDistrito
+    const cColumna  = Columna 
+    const cIdir  = Idir 
 
     const formularioEnviar:FormularioControlCargos = {
-      fDesde: fDesde,
-      fHasta: fHasta,
+      fDesde: fechaInicioStr,
+      fHasta: fechaFinStr,
       ChxfRespuesta: parseInt(ChxfRespuesta),
       fEntrega: parseInt(fEntrega),
       Codificacion: cCodificacion,
@@ -159,15 +169,12 @@ export class ControlCargosComponent  {
       Idir: cIdir,
     }
 
-    // console.log(formularioEnviar)
+    console.log(formularioEnviar)
     this.consultaService.getConsultaControlCargos(formularioEnviar).subscribe(
       (rpta)=>{
         this.lisCntrCargo = rpta;
         this.dataSource.data = this.lisCntrCargo;
         this.isFetchingData = false;
-        var arrayICodTramite = this.lisCntrCargo.map(function(objeto) {
-          return objeto.iCodTramite;
-        });
       }
     )
   }
@@ -180,5 +187,50 @@ export class ControlCargosComponent  {
       }
     )
   }
+
+  getListadoComboOfcnOrigen(){
+    this.consultaService.getListadoComboOfcnOrigen().subscribe(
+      (rpta)=>{
+        this.comboListadoOficnOrigen = rpta;
+      }
+    )
+  }
+
+  getListadoComboDepartamento(){
+    this.consultaService.getListadoComboDepartamento().subscribe(
+      (rpta)=>{
+        this.comboListadoDepartamento = rpta;
+      }
+    )
+  }
+
+  getListadoComboProvincias(event:any){
+  
+    const codProvincia=event.target.value
+    // console.log(codProvincia)
+    if(codProvincia){
+      this.consultaService.getListadoComboProvincias(codProvincia).subscribe(
+        (rpta)=>{
+          this.comboListadoProvincias = rpta;
+        }
+      )
+    } 
+  }
+
+  getListadoComboDistritos(){
+    this.consultaService.getListadoComboDistritos().subscribe(
+      (rpta)=>{
+        this.comboListadoDistritos = rpta;
+      }
+    )
+  }
+
+
+
+
+
+
+
+
 
 }

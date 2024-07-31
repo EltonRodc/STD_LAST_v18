@@ -133,19 +133,21 @@ export class ConsultaService {
     }
 
     getListadoComboDepartamento():Observable<DataComboDepartamento[]>{
-        return this.http.get<ComboDepartamento>(`${this.api_primary}/api/JefeDocSalidaOficina/RegSalidaListaDepto`).pipe(
+        return this.http.get<ComboDepartamento>(`${this.api_primary}/JefeDocSalidaOficina/RegSalidaListaDepto`).pipe(
             map ( (rpta)=> rpta.data )
         )
     }
 
-    getListadoComboProvincias():Observable<DataComboProvincias[]>{
-        return this.http.get<ComboProvincias>(`${this.api_primary}/api/JefeDocSalidaOficina/RegSalidaListaPrvnc?CodDepartamento=01`).pipe(
+    getListadoComboProvincias(CodDepartamento:string):Observable<DataComboProvincias[]>{
+        const params = new HttpParams()
+        .set('CodDepartamento',CodDepartamento)
+        return this.http.get<ComboProvincias>(`${this.api_primary}/JefeDocSalidaOficina/RegSalidaListaPrvnc`,{params}).pipe(
             map ( (rpta)=> rpta.data )
         )
     }
 
     getListadoComboDistritos():Observable<DataComboDistritos[]>{
-        return this.http.get<ComboDistritos>(`${this.api_primary}/api/JefeConsultaCompartido/ListaComboDistrito?CodProvincia=01&CodDepartamento=01`).pipe(
+        return this.http.get<ComboDistritos>(`${this.api_primary}/JefeConsultaCompartido/ListaComboDistrito`).pipe(
             map ( (rpta)=> rpta.data )
         )
     }
