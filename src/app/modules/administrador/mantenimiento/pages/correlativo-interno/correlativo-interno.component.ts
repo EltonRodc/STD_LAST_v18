@@ -1,3 +1,5 @@
+import { DeleteCoInterno } from './../../../../jefe/consulta/interfaces/consulta-interno-oficina.interface';
+import { CorrelativoProfesionalService } from './../../services/correlativo-profesional.service';
 import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,8 +10,10 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CorrelativoInternoService } from '../../services/correlativo-interno.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DataListCoInterno, DataOficinaCoInterno } from '../../interfaces/correlativo-interno.interface';
+import { DataListCoInterno, DataOficinaCoInterno, UpdateCoInterno } from '../../interfaces/correlativo-interno.interface';
 import { MatCardModule } from '@angular/material/card';
+import { CorrelativoInternoNuevoComponent } from '../../components/correlativo-interno-nuevo/correlativo-interno-nuevo.component';
+import { ConfirmacionDialogComponent } from '../../components/confirmacion-dialog/confirmacion-dialog.component';
 
 @Component({
   selector: 'app-correlativo-interno',
@@ -32,6 +36,7 @@ export class CorrelativoInternoComponent implements OnInit, AfterViewInit{
   public listaCoInterno : DataListCoInterno [] = [];
   public isFetchingData: boolean = false;
   public buttonUpdate: boolean = false;
+  recuperarAnio: number = new Date().getFullYear();
 
   public myFormCoInterno:FormGroup = this.fb.group({
       CodOficina : [0],
@@ -114,6 +119,7 @@ export class CorrelativoInternoComponent implements OnInit, AfterViewInit{
       (rpta) => {
         this.listaCoInterno = rpta;
         this.dataSource.data = this.listaCoInterno;
+        this.buttonUpdate = this.dataSource.data.length >0;
         this.isFetchingData = false;
         // console.log(this.listaCoInterno);
       }
@@ -132,6 +138,91 @@ export class CorrelativoInternoComponent implements OnInit, AfterViewInit{
         this.isFetchingData = false;
       }
     )
+  }
+
+  editarRegistro(){
+    const dataToUpdate:UpdateCoInterno[] = [];
+    this.listaCoInterno.forEach(item => {
+      const {nCorrelativo, cCodTipoDoc, iCodOficina} = item;
+      dataToUpdate.push({
+        correlativo: nCorrelativo,
+        codTipoDoc: cCodTipoDoc,
+        codOficina: iCodOficina,
+        numAño: this.recuperarAnio,
+      });
+  // console.log(dataToUpdate)
+      this.correlativoInternoService.editarCoInterno(dataToUpdate)
+      .subscribe(
+        response => {
+          this._snackBar.open('Los datos se han actualizado correctamente', 'Cerrar', {
+            duration: 3000,
+            horizontalPosition: "end",
+            verticalPosition: "top",
+          });
+          this.correlativoInternoService.getCorrelativoInterno(this.myFormCoInterno.value.iCodOficina, this.myFormCoInterno.value.NumAño ).subscribe(
+            (rpta)=>{
+              this.listaCoInterno = rpta;
+              this.dataSource.data = this.listaCoInterno;
+              this.buttonUpdate = this.dataSource.data.length >0;
+              this.isFetchingData = false;
+            }
+          )
+        },
+        error => {
+          console.error('Error al actualizar los datos:', error);
+        }
+      );
+    });
+  }
+
+  newCoInterno(){
+    const dialogRef = this.dialog.open(CorrelativoInternoNuevoComponent, {
+      minWidth:600,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const message = result.action === 'add' ? 'Se agregó con éxito' : 'Se actualizó con éxito';
+        this._snackBar.open(message, 'Cerrar', {
+          duration: 3000,
+          horizontalPosition: "end",
+          verticalPosition: "top",
+        });
+        this.correlativoInternoService.getCorrelativoInterno(this.myFormCoInterno.value.CodOficina,this.myFormCoInterno.value.NumAño ).subscribe(
+          (rpta)=>{
+            this.listaCoInterno = rpta;
+            this.dataSource.data = this.listaCoInterno;
+            this.buttonUpdate = this.dataSource.data.length >0;
+            this.isFetchingData = false;
+          }
+        )
+      }
+    });
+  }
+
+  deleteOfiCoInterno(id: number,cCodTipoDoc:number): void {
+   console.log(id,cCodTipoDoc)  
+    const dialogRef = this.dialog.open(ConfirmacionDialogComponent,{
+      data: "¿Está seguro de eliminar este Correlativo Interno?"
+    });
+    dialogRef.afterClosed().subscribe(confirmado => {
+      if (confirmado) {
+        this.correlativoInternoService.deleteOficinaInterno(cCodTipoDoc,id).subscribe(
+          response => {
+            this._snackBar.open('Se eliminó registro', 'Cerrar', {
+              duration: 3000,
+              verticalPosition: 'top',
+              horizontalPosition: 'end',
+            });
+            this.listaCoInterno = this.listaCoInterno.filter(item => item.iCodOficina !== id);
+            this.dataSource.data = this.listaCoInterno;
+          },
+          error => {
+            console.error('Error al eliminar la referencia:', error);
+          }
+        );
+      }
+    })
+
   }
 
   applyFilter(event: Event) {

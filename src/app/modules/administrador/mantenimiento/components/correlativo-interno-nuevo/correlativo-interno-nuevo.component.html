@@ -1,0 +1,50 @@
+<form autocomplete="off" [formGroup]="myFormNewCoInterno" (ngSubmit)="onSubmit()">
+    <div mat-dialog-title style="font-size: 20px; font-weight: 500; ">Nuevo Correlativo Interno</div>
+    <mat-dialog-content class="mat-typography" style="border-top: 1px solid #ccc;">
+
+      <div class="w-full">
+        <label class="block mb-2 text-xs font-medium text-gray-700 mt-3">Oficina*</label>
+        <select class="bg-gray-50 border border-gray-300 font-medium text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codOficina" (change)="filtrarTipoDocCoProfesional($event)">
+          <option value>- Seleccione - </option>
+          @for (item of oficinasCoInterno; track $index) {
+            <option [value]="item.iCodOficina">{{item.cNomOficina}}</option>
+          }
+        </select>
+        @if (myFormNewCoInterno.controls['codOficina'].getError('required') && myFormNewCoInterno.controls['codOficina'].touched) {
+          <span class="text-red-500 text-xs italic">Oficina requerida</span>
+        }
+      </div>
+      <div class="w-full">
+        <label class="block mb-2 text-xs font-medium text-gray-700 mt-3">Tipo Documento*</label>
+        <select class="bg-gray-50 border border-gray-300 font-medium text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codTipoDoc">
+          @if(tipoDocumental.length === 0){
+              <option value>- Seleccione - </option>
+          }@else {
+            @for (item of tipoDocumental; track $index) {
+              <option [value]="item.cCodTipoDoc">{{item.cDescTipoDoc }}</option>
+            }
+         }
+        </select>
+        @if (myFormNewCoInterno.controls['codTipoDoc'].getError('required') && myFormNewCoInterno.controls['codTipoDoc'].touched) {
+          <span class="text-red-500 text-xs italic">Tipo Documento requerido</span>
+        }
+      </div>
+      <div class="w-full">
+        <label class="block mb-2 text-xs font-medium text-gray-700 mt-3">Año*</label>
+        <select class="bg-gray-50 border border-gray-300 font-medium text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="numAño" >
+          @for (year of years; track $index) {
+            <option [value]="year">{{year}}</option>
+        }
+        </select>
+        @if (myFormNewCoInterno.controls['numAño'].getError('required') && myFormNewCoInterno.controls['numAño'].touched) {
+          <span class="text-red-500 text-xs italic">Año requerido</span>
+        }
+      </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button type="button" mat-button [mat-dialog-close]="false" class="cancel-button" style="color: #000;">Cancelar</button>
+        <button type="submit" mat-button cdkFocusInitial style="background-color: red; color: #fff;">Guardar</button>
+    </mat-dialog-actions>
+
+</form>
