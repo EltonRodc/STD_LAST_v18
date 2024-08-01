@@ -1,9 +1,36 @@
-<div class="container-fluid p-5">
-  <div class="p-5" style="border: 1px solid #ccc;  background-color: #fff ; border-radius: 5px;">
-      <div style="font-size: 20px; font-weight: 800;">Mantenimiento - Correlativo Interno</div>
-      <!-- Forumlario -->
+<div class="p-3">
+  <div style="background-color: #fff" class="rounded p-4" >
+    <div class="font-extrabold text-lg mt-2 mb-2">Mantenimiento - Correlativo Interno</div>
       <form autocomplete="off" [formGroup]="myFormCoInterno"  class="mt-4">
-          <div class="w-full">
+        <mat-card class="w-full mt-2" appearance="outlined">
+          <mat-card-content>
+            <div class="mb-2 font-extrabold text-base" style="color: #b91c1b;">Criterios de Búsqueda</div>
+            <div class="flex gap-4 mt-3">
+
+              <div class="basis-1 sm:basis-3/4">
+                <label class="block mb-2 text-xs font-bold text-gray-700">Oficina</label>
+                <select class="bg-gray-50 border border-gray-300 font-semibold text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="CodOficina" (change)="onSearch($event)" >
+                  <option value="0">- Seleccione - </option>
+                  @for (item of oficinasCoInterno; track $index) {
+                    <option [value]="item.iCodOficina">{{item.cNomOficina}}</option>
+                  }
+                </select>
+              </div>
+
+              <div class="basis-1 sm:basis-1/4">
+                <label class="block mb-2 text-xs font-bold text-gray-700">Periodo</label>
+                <select class="bg-gray-50 border border-gray-300 font-semibold text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="NumAño" (change)="listarCoInternoAnio($event)">
+                  @for (year of years; track $index) {
+                    <option [value]="year">{{year}}</option>
+                  }
+                </select>
+              </div>
+
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+          <!-- <div class="w-full">
               <div class="flex flex-wrap -mx-3">
                   <div class="w-full md:w-2/5 px-3 mb-3">
                       <div class="relative">
@@ -37,14 +64,14 @@
                   </div>
 
                   <div class="w-full md:w-1/5 px-3 " align="end">
-                      <!-- <button class="mt-1" type="button" mat-flat-button style="background-color: #f43f5e;" (click)="newCoProfesional()"> <mat-icon>add</mat-icon> Agregar</button> -->
+
                   </div>
               </div>
-          </div>
+          </div> -->
+          <!-- <button class="mt-1" type="button" mat-flat-button style="background-color: #f43f5e;" (click)="newCoProfesional()"> <mat-icon>add</mat-icon> Agregar</button> -->
       </form>
-
-      <!-- Tabla -->
-      <div class="table-responsive px-1 mt-3">
+      <mat-card class="mt-4" appearance="outlined">
+        <div class="table-responsive px-3 mt-3">
           <table mat-table [dataSource]="dataSource">
               <ng-container matColumnDef="tipo_doc">
                   <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Tipo Doc </th>
@@ -53,7 +80,7 @@
               <ng-container matColumnDef="numero">
                   <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> N. </th>
                   <!-- <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;"> {{element.nCorrelativo}} </td> -->
-                  <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;"> <input type="number" class="custom-input bg-gray-50 border border-gray-400 rounded-md p-1" [(ngModel)]="element.nCorrelativo"  min="0" inputmode="numeric"> </td>
+                  <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;"> <input type="number" class="bg-gray-50 border font-medium border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5" [(ngModel)]="element.nCorrelativo"  min="0" inputmode="numeric"> </td>
 
               </ng-container>
               <ng-container matColumnDef="eliminar">
@@ -92,5 +119,7 @@
           </mat-paginator>
 
       </div>
+      </mat-card>
+
   </div>
 </div>

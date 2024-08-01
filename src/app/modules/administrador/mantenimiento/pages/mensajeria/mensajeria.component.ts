@@ -10,6 +10,8 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MensajeriaNuevoEditComponent } from '../../components/mensajeria-nuevo-edit/mensajeria-nuevo-edit.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-mensajeria',
@@ -20,7 +22,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatButtonModule,
     MatPaginator,
     MatTableModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatCardModule,
+    DatePipe
   ],
   templateUrl: './mensajeria.component.html',
 })

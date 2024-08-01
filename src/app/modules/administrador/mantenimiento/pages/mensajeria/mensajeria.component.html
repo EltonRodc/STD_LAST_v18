@@ -1,134 +1,129 @@
-<!-- <h1>Usuarios Mesa Virtual</h1> -->
-
-
-<div class="container-fluid p-5">
-  <div class="p-5" style="border: 1px solid #ccc;  background-color: #fff ; border-radius: 5px;">
-      <div style="font-size: 20px; font-weight: 800;">Mantenimiento - Mensajeria</div>
-       <!-- Formulario  -->
+<div class="p-3">
+  <div style="background-color: #fff" class="rounded p-4" >
+    <div class="font-extrabold text-lg mt-2 mb-2">Mantenimiento - Mensajeria</div>
       <form autocomplete="off" [formGroup]="myFormMensajeria" (ngSubmit)="onSearch()" class="mt-4">
-          <div class="w-full">
-              <div class="flex flex-wrap -mx-3">
+        <mat-card class="w-full mt-2" appearance="outlined">
+          <mat-card-content>
+            <div class="mb-2 font-extrabold text-base" style="color: #b91c1b;">Criterios de Búsqueda</div>
+            <div class="flex gap-4 mt-3">
 
-                  <div class="w-full md:w-1/5 px-3 mb-3">
-                      <div class="relative">
-                          <select class="custom-select bg-gray-50 border border-gray-400 py-3 px-3 rounded-full w-full appearance-none text-gray-900" formControlName="EstadoMensaje" (change)="estado($event)">
-                              <option value="1">ACTIVO</option>
-                              <option value="0">INACTIVO</option>
-                          </select>
-                          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 svg-container">
-                              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-                              </svg>
-                          </div>
-                      </div>
-                  </div>
-
-                  <div class="w-full md:w-1/3 px-3 mb-3"  align="end">
-                    <button class="mt-1" type="button" mat-flat-button style="background-color: #f43f5e;" (click)="newMensajeria(0)"> <mat-icon>add</mat-icon> Agregar</button>
-                  </div>
-
+              <div class="basis-1 sm:basis-3/4">
+                <label class="block mb-2 text-xs font-bold text-gray-700">Estado</label>
+                <select class="bg-gray-50 border border-gray-300 font-semibold text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="EstadoMensaje" (change)="estado($event)">
+                  <option value="1">ACTIVO</option>
+                  <option value="0">INACTIVO</option>
+                </select>
               </div>
-          </div>
+              <div class="basis-1 sm:basis-1/4" style="display: flex; align-items: end; justify-content: end;">
+                <button class="mt-1" type="button" mat-flat-button style="background-color: #f43f5e;" (click)="newMensajeria(0)"> <mat-icon>add</mat-icon> Agregar</button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
       </form>
-      <!-- Tabla -->
-      <div class="table-responsive px-1 mt-3">
+      <mat-card class="mt-4" appearance="outlined">
+        <div class="table-responsive px-3 mt-3">
           <table mat-table [dataSource]="dataSource">
-              <ng-container matColumnDef="fecha">
-                <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Fecha </th>
-                <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;"> {{element.fFechaRegistro}} </td>
-              </ng-container>
+            <ng-container matColumnDef="fecha">
+              <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Fecha </th>
+              <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;">
+                <div>{{element.fFechaRegistro | date: 'dd-MM-yyyy'}}</div>
+                <div>{{element.fFechaRegistro | date: 'HH:mm'}}</div>
+              </td>
+            </ng-container>
 
-              <ng-container matColumnDef="contenido">
-                <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Contenido </th>
-                <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;"> {{element.cContenido}} </td>
-              </ng-container>
+            <ng-container matColumnDef="contenido">
+              <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Contenido </th>
+              <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;"> {{element.cContenido}} </td>
+            </ng-container>
 
-              <ng-container matColumnDef="nivel">
-                <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Nivel </th>
-                <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;">
-                  @switch (element.nNivel) {
-                      @case ("1") {
-                          Global (A todos)
-                      }
-                      @case ("2") {
-                          Oficina
-                      }
-                      @case ("3") {
-                          Usuario
-                      }
-                     }
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="prioridad">
-                <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Prioridad </th>
-                <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;">
-                   @switch (element.nPrioridad) {
+            <ng-container matColumnDef="nivel">
+              <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Nivel </th>
+              <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;">
+                @switch (element.nNivel) {
                     @case ("1") {
-                      Alta
+                        Global (A todos)
                     }
                     @case ("2") {
-                      Media
+                        Oficina
                     }
                     @case ("3") {
-                      Baja
+                        Usuario
                     }
                    }
-              </ng-container>
+              </td>
+            </ng-container>
 
-              <ng-container matColumnDef="trabajador">
-                <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Trabajador </th>
-                <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;"> {{element.cNombresTrabajador}} {{ element.cApellidosTrabajador}}</td>
-              </ng-container>
+            <ng-container matColumnDef="prioridad">
+              <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Prioridad </th>
+              <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;">
+                 @switch (element.nPrioridad) {
+                  @case ("1") {
+                    Alta
+                  }
+                  @case ("2") {
+                    Media
+                  }
+                  @case ("3") {
+                    Baja
+                  }
+                 }
+            </ng-container>
 
-              <ng-container matColumnDef="estado">
-                <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Estado </th>
-                <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;">
-                  @switch (element.nEstadoMensaje) {
-                      @case ("1") {
-                          Activo
-                      }
-                      @case ("2") {
-                          Inactivo
-                      }
-                     }
-                </td>
-              </ng-container>
+            <ng-container matColumnDef="trabajador">
+              <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Trabajador </th>
+              <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;"> {{element.cNombresTrabajador}} {{ element.cApellidosTrabajador}}</td>
+            </ng-container>
 
-              <ng-container matColumnDef="opciones">
-                <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Acciones </th>
-                <td mat-cell *matCellDef="let element">
-                    <div style="display: flex; justify-content: start;">
-                      <button matTooltip="Actualizar Usuario" style="width: 24px;" class="text-yellow-500" (click)="newMensajeria(element.iCodMensajeria)">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"></path>
-                        </svg>
-                      </button>
+            <ng-container matColumnDef="estado">
+              <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Estado </th>
+              <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;">
+                @switch (element.nEstadoMensaje) {
+                    @case ("1") {
+                        Activo
+                    }
+                    @case ("2") {
+                        Inactivo
+                    }
+                   }
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="opciones">
+              <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Acciones </th>
+              <td mat-cell *matCellDef="let element">
+                  <div style="display: flex; justify-content: start;">
+                    <button matTooltip="Actualizar Usuario" style="width: 24px;" class="text-yellow-500" (click)="newMensajeria(element.iCodMensajeria)">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"></path>
+                      </svg>
+                    </button>
+                  </div>
+               </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <tr class="mat-row" *matNoDataRow >
+              @if (isFetchingData) {
+                <td colspan="6" >
+                    <div style="display: flex; justify-content: center;" class="p-4">
+                        <mat-spinner></mat-spinner>
                     </div>
-                 </td>
-              </ng-container>
+                </td>
+              }@else {
+                <td class="mat-cell p-3 text-red-500" colspan="6"  align="center" style="font-weight: 500;">No se encontraron registros </td>
+              }
+            </tr>
+        </table>
 
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-              <tr class="mat-row" *matNoDataRow >
-                @if (isFetchingData) {
-                  <td colspan="6" >
-                      <div style="display: flex; justify-content: center;" class="p-4">
-                          <mat-spinner></mat-spinner>
-                      </div>
-                  </td>
-                }@else {
-                  <td class="mat-cell p-3 text-red-500" colspan="6"  align="center" style="font-weight: 500;">No se encontraron registros </td>
-                }
-              </tr>
-            </table>
-
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                           showFirstLastButtons
-                           aria-label="Select page of periodic elements">
-            </mat-paginator>
-      </div>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                         showFirstLastButtons
+                         aria-label="Select page of periodic elements">
+          </mat-paginator>
+        </div>
+      </mat-card>
   </div>
 
 </div>

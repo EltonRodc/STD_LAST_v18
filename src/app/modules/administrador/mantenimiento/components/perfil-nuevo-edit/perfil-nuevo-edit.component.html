@@ -1,21 +1,21 @@
 <form autocomplete="off" [formGroup]="myFormNewPerfil" (ngSubmit)="onSubmit()">
-    @if (id_prfil) {
+    @if (id_prfil===0) {
         <div mat-dialog-title style="font-size: 20px; font-weight: 500; ">Nuevo Perfil</div>
+    }@else {
+        <div mat-dialog-title style="font-size: 20px; font-weight: 500; ">Editar Perfil</div>
+
     }
     <mat-dialog-content class="mat-typography" style="border-top: 1px solid #ccc;">
+
       <div class="w-full">
-        <div class="flex flex-wrap mb-6 mt-3"> 
+        <label class="block mb-2 text-xs font-medium text-gray-700 mt-3">Perfil*</label>
+        <input type="text" class="mb-2 bg-gray-50 border font-medium border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5" formControlName="perfil">
 
-            <div class="w-full">
-                <label class="block text-gray-700 text-md mb-2" style="font-weight: 500; font-size: 12px;"> Perfil</label>
-                <input type="text" class="custom-select border border-gray-400 py-2 px-3 rounded-full w-full" formControlName="perfil">
-            </div>
-
-        </div>
       </div>
+
     </mat-dialog-content>
     <mat-dialog-actions align="end">
-      <button type="button" mat-button [mat-dialog-close]="false" class="cancel-button">Cancelar</button>
+      <button type="button" mat-button [mat-dialog-close]="false" class="cancel-button" style="color: #000;">Cancelar</button>
       <button type="submit" mat-button cdkFocusInitial style="background-color: red; color: #fff;">{{ 'Actualizar' }}</button>
     </mat-dialog-actions>
   </form>

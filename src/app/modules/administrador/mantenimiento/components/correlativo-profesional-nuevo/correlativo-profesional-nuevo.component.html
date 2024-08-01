@@ -1,96 +1,62 @@
 <form autocomplete="off" [formGroup]="myFormNewCoProfesional" (ngSubmit)="onSubmit()">
     <div mat-dialog-title style="font-size: 20px; font-weight: 500; ">Nuevo Correlativo Profesional</div>
     <mat-dialog-content class="mat-typography" style="border-top: 1px solid #ccc;">
-        <div class="w-full">
-            <div class="flex flex-wrap mb-6 mt-3">
-                <div class="w-full">
-                    <label class="block text-gray-700 text-md" style="font-weight: 500; font-size: 12px;"> Oficina*</label>
-                    <div class="relative">
-                        <select class="custom-select bg-gray-50 border border-gray-400 py-3 px-3 rounded-full w-full appearance-none text-gray-900" formControlName="codOficina" (change)="filtrarTrabCoProfesional($event)"   style="color: gray; font-weight: 500;">
-                            <option value>- Seleccione - </option>
-                            @for (item of oficinasCoProfesional; track $index) {
-                                <option [value]="item.iCodOficina">{{item.cNomOficina}}</option>
-                            }
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 svg-container">
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-                @if (myFormNewCoProfesional.controls['codOficina'].getError('required') && myFormNewCoProfesional.controls['codOficina'].touched) {
-                    <span class="text-red-500 text-xs italic">Oficina requerida</span>
-                }
 
-
-                <div class="w-full mt-2">
-                    <label class="block text-gray-700 text-md" style="font-weight: 500; font-size: 12px;"> Trabajador*</label>
-                    <div class="relative">
-                        <select class="custom-select bg-gray-50 border border-gray-400 py-3 px-3 rounded-full w-full appearance-none text-gray-900" formControlName="codTrabajador" (change)="filtrarTrabCoProfesionalTrabaj($event)"  style="color: gray; font-weight: 500;">
-                            @if(listTrabajadores.length === 0){
-                                <option value>- Seleccione - </option>
-                            }@else {
-                                @for (item of listTrabajadores; track $index) {
-                                    <option [value]="item.iCodTrabajador">{{item.cNombresTrabajador }} {{ item.cApellidosTrabajador}} </option>
-                                }
-                            }
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 svg-container">
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-                @if (myFormNewCoProfesional.controls['codTrabajador'].getError('required') && myFormNewCoProfesional.controls['codTrabajador'].touched) {
-                    <span class="text-red-500 text-xs italic">Trabajador requerido</span>
-                }
-
-                <div class="w-full mt-2">
-                    <label class="block text-gray-700 text-md" style="font-weight: 500; font-size: 12px;"> Año*</label>
-                    <div class="relative">
-                        <select class="custom-select bg-gray-50 border border-gray-400 py-3 px-3 rounded-full w-full appearance-none text-gray-900" formControlName="numAnio" (change)="filtrarTrabCoProfesionalAnio($event)" style="color: gray; font-weight: 500;">
-                            @for (year of years; track $index) {
-                                <option [value]="year">{{year}}</option>
-                            }
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 svg-container">
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-                @if (myFormNewCoProfesional.controls['numAnio'].getError('required') && myFormNewCoProfesional.controls['numAnio'].touched) {
-                    <span class="text-red-500 text-xs italic">Año requerido</span>
-                }
-
-                <div class="w-full mt-2">
-                    <label class="block text-gray-700 text-md" style="font-weight: 500; font-size: 12px;"> Tipo de Documento*</label>
-                    <div class="relative">
-                        <select class="custom-select bg-gray-50 border border-gray-400 py-3 px-3 rounded-full w-full appearance-none text-gray-900" formControlName="codTipoDoc" style="color: gray; font-weight: 500;">
-                            <option value>- Seleccione - </option>
-                            @for (tipoDoc of tipoDocumental; track $index) {
-                                <option [value]="tipoDoc.cCodTipoDoc">{{tipoDoc.cDescTipoDoc}}</option>
-                            }
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 svg-container">
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-                @if (myFormNewCoProfesional.controls['codTipoDoc'].getError('required') && myFormNewCoProfesional.controls['codTipoDoc'].touched) {
-                    <span class="text-red-500 text-xs italic">Tipo documento requerido</span>
-                }
-
-            </div>
-        </div>
+      <div class="w-full">
+        <label class="block mb-2 text-xs font-medium text-gray-700 mt-3">Oficina*</label>
+        <select class="bg-gray-50 border border-gray-300 font-medium text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codOficina" (change)="filtrarTrabCoProfesional($event)">
+          <option value>- Seleccione - </option>
+          @for (item of oficinasCoProfesional; track $index) {
+            <option [value]="item.iCodOficina">{{item.cNomOficina}}</option>
+          }
+        </select>
+        @if (myFormNewCoProfesional.controls['codOficina'].getError('required') && myFormNewCoProfesional.controls['codOficina'].touched) {
+          <span class="text-red-500 text-xs italic">Oficina requerida</span>
+        }
+      </div>
+      <div class="w-full">
+        <label class="block mb-2 text-xs font-medium text-gray-700 mt-3">Trabajador*</label>
+        <select class="bg-gray-50 border border-gray-300 font-medium text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codTrabajador" (change)="filtrarTrabCoProfesionalTrabaj($event)">
+          @if(listTrabajadores.length === 0){
+              <option value>- Seleccione - </option>
+          }@else {
+            @for (item of listTrabajadores; track $index) {
+              <option [value]="item.iCodTrabajador">{{item.cNombresTrabajador }} {{ item.cApellidosTrabajador}} </option>
+            }
+         }
+        </select>
+        @if (myFormNewCoProfesional.controls['codTrabajador'].getError('required') && myFormNewCoProfesional.controls['codTrabajador'].touched) {
+          <span class="text-red-500 text-xs italic">Trabajador requerido</span>
+        }
+      </div>
+      <div class="w-full">
+        <label class="block mb-2 text-xs font-medium text-gray-700 mt-3">Año*</label>
+        <select class="bg-gray-50 border border-gray-300 font-medium text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="numAnio" (change)="filtrarTrabCoProfesionalAnio($event)">
+          @for (year of years; track $index) {
+            <option [value]="year">{{year}}</option>
+        }
+        </select>
+        @if (myFormNewCoProfesional.controls['numAnio'].getError('required') && myFormNewCoProfesional.controls['numAnio'].touched) {
+          <span class="text-red-500 text-xs italic">Año requerido</span>
+        }
+      </div>
+      <div class="w-full">
+        <label class="block mb-2 text-xs font-medium text-gray-700 mt-3">Tipo de Documento*</label>
+        <select class="bg-gray-50 border border-gray-300 font-medium text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codTipoDoc">
+          <option value>- Seleccione - </option>
+          @for (tipoDoc of tipoDocumental; track $index) {
+              <option [value]="tipoDoc.cCodTipoDoc">{{tipoDoc.cDescTipoDoc}}</option>
+          }
+        </select>
+        @if (myFormNewCoProfesional.controls['codTipoDoc'].getError('required') && myFormNewCoProfesional.controls['codTipoDoc'].touched) {
+          <span class="text-red-500 text-xs italic">Tipo documento requerido</span>
+        }
+      </div>
     </mat-dialog-content>
+
     <mat-dialog-actions align="end">
-        <button type="button" mat-button [mat-dialog-close]="false" class="cancel-button">Cancelar</button>
+        <button type="button" mat-button [mat-dialog-close]="false" class="cancel-button" style="color: #000;">Cancelar</button>
         <button type="submit" mat-button cdkFocusInitial style="background-color: red; color: #fff;">Guardar</button>
-      </mat-dialog-actions>
+    </mat-dialog-actions>
+
 </form>

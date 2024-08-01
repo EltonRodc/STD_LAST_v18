@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { IndicacionNuevoEditComponent } from '../../components/indicacion-nuevo-edit/indicacion-nuevo-edit.component';
 import { ConfirmacionDialogComponent } from '../../components/confirmacion-dialog/confirmacion-dialog.component';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-indicaciones',
@@ -21,7 +22,8 @@ import { ConfirmacionDialogComponent } from '../../components/confirmacion-dialo
     MatButtonModule,
     MatPaginator,
     MatTableModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatCardModule
   ],
   templateUrl: './indicaciones.component.html',
 })
@@ -102,6 +104,7 @@ export class IndicacionesComponent {
 
   newIndicacion(id: number) {
     const dialogRef = this.dialog.open(IndicacionNuevoEditComponent, {
+      minWidth:600,
       data: { id }
     });
 

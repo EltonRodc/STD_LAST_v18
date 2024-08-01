@@ -1,21 +1,73 @@
 <form autocomplete="off" [formGroup]="myFormNewMensajeria" (ngSubmit)="onSubmit()">
-    @if (id_mensajeria) {
+    @if (id_mensajeria == 0) {
         <div mat-dialog-title style="font-size: 20px; font-weight: 500; ">Nuevo Mensajeria</div>
     }@else {
       <div mat-dialog-title style="font-size: 20px; font-weight: 500; ">Actualizar Mensajeria</div>
     }
     <mat-dialog-content class="mat-typography" style="border-top: 1px solid #ccc;">
       <div class="w-full">
-        <div class="flex flex-wrap mb-6 mt-3"> 
+        <label class="block text-xs font-medium text-gray-700 mt-3 mb-2">Contenido*</label>
+        <textarea class="bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5" formControlName="contenido"></textarea>
+        @if (myFormNewMensajeria.controls['contenido'].getError('required') && myFormNewMensajeria.controls['contenido'].touched) {
+          <span class="text-red-500 text-xs italic">Asunto requerido</span>
+        }
+      </div>
+      <div class="w-full">
+        <label class="block text-xs font-medium text-gray-700 mt-3 mb-2">Nivel*</label>
+        <select class="bg-gray-50 border border-gray-300 font-medium text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="nivel">
+          <option value="">Seleccione:</option>
+          <option value="1">Global</option>
+          <option value="2">Global (Oficinas)</option>
+          <option value="3">Oficina especifica</option>
+          <option value="4">Usuario</option>
+        </select>
+        @if (myFormNewMensajeria.controls['nivel'].getError('required') && myFormNewMensajeria.controls['nivel'].touched) {
+          <span class="text-red-500 text-xs italic">Nivel requerido</span>
+        }
+      </div>
+      <div class="w-full">
+        <label class="block text-xs font-medium text-gray-700 mt-3 mb-2">Prioridad*</label>
+        <select class="bg-gray-50 border border-gray-300 font-medium text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="prioridad">
+          <option value="">Seleccione:</option>
+          <option value="1">Alta</option>
+          <option value="2">Media</option>
+          <option value="3">Baja</option>
+        </select>
+        @if (myFormNewMensajeria.controls['prioridad'].getError('required') && myFormNewMensajeria.controls['prioridad'].touched) {
+          <span class="text-red-500 text-xs italic">Prioridad requerido</span>
+        }
+      </div>
+      <div class="w-full">
+        <label class="block text-xs font-medium text-gray-700 mt-3 mb-2">Estado*</label>
+        <select class="bg-gray-50 border border-gray-300 font-medium text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="estadoMensaje">
+          <option value="">Seleccione:</option>
+          <option value="1">Activo</option>
+          <option value="0">Inactivo</option>
+        </select>
+        @if (myFormNewMensajeria.controls['estadoMensaje'].getError('required') && myFormNewMensajeria.controls['estadoMensaje'].touched) {
+          <span class="text-red-500 text-xs italic">Estado requerido</span>
+        }
+      </div>
+      <div class="w-full">
+        <label class="block text-xs font-medium text-gray-700 mt-3 mb-2">Oficina Destino*</label>
+        <select class="bg-gray-50 border border-gray-300 font-medium text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codOficinaDestino">
+          <option value="0">Seleccione:</option>
+          @for (item of comboOfcnaDestino; track $index) {
+              <option [value]="item.iCodOficina">{{item.cNomOficina}}</option>
+          }
+        </select>
+      </div>
+      <div class="w-full">
+        <label class="block text-xs font-medium text-gray-700 mt-3 mb-2">Trabajador Destino*</label>
+        <input type="number" class="bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5" formControlName="codTrabajadorDestino" min="0">
+      </div>
 
-            <div class="w-full">
-                <label class="block text-gray-700 text-md mb-2" style="font-weight: 500; font-size: 12px;"> Contenido</label>
-                <input type="text" class="custom-select border border-gray-400 py-2 px-3 rounded-full w-full" formControlName="contenido">
-            </div>
-            <div class="w-full">
+      <div class="w-full">
+        <div class="flex flex-wrap mb-6 mt-3">
+            <!-- <div class="w-full">
                 <div class="relative">
                     <label class="block text-gray-700 text-md mb-2" style="font-weight: 500; font-size: 12px;"> Nivel </label>
-                    <select class="custom-select bg-gray-50 border border-gray-400 py-3 px-3 rounded-full w-full appearance-none text-gray-900" formControlName="nivel">
+                    <select class="custom-select bg-gray-50 border border-gray-400 py-3 px-3 rounded-full w-full appearance-none text-gray-900" formControlName="prioridad">
                         <option value="">Seleccione:</option>
                         <option value="1">Global</option>
                         <option value="2">Global (Oficinas)</option>
@@ -28,8 +80,8 @@
                         </svg>
                     </div>
                 </div>
-            </div>
-            <div class="w-full">
+            </div> -->
+            <!-- <div class="w-full">
                 <div class="relative">
                     <label class="block text-gray-700 text-md mb-2" style="font-weight: 500; font-size: 12px;"> Priorida </label>
                     <select class="custom-select bg-gray-50 border border-gray-400 py-3 px-3 rounded-full w-full appearance-none text-gray-900" formControlName="prioridad">
@@ -44,8 +96,8 @@
                         </svg>
                     </div>
                 </div>
-            </div>
-            <div class="w-full">
+            </div> -->
+            <!-- <div class="w-full">
                 <div class="relative">
                     <label class="block text-gray-700 text-md mb-2" style="font-weight: 500; font-size: 12px;"> Estado </label>
                     <select class="custom-select bg-gray-50 border border-gray-400 py-3 px-3 rounded-full w-full appearance-none text-gray-900" formControlName="estadoMensaje">
@@ -59,8 +111,8 @@
                         </svg>
                     </div>
                 </div>
-            </div>
-            <div class="w-full">
+            </div> -->
+            <!-- <div class="w-full">
                 <div class="relative">
                     <label class="block text-gray-700 text-md mb-2" style="font-weight: 500; font-size: 12px;"> Oficina Destino </label>
                     <select class="custom-select bg-gray-50 border border-gray-400 py-3 px-3 rounded-full w-full appearance-none text-gray-900" formControlName="codOficinaDestino">
@@ -75,17 +127,17 @@
                         </svg>
                     </div>
                 </div>
-            </div>
-            <div class="w-full">
+            </div> -->
+            <!-- <div class="w-full">
                 <label class="block text-gray-700 text-md mb-2" style="font-weight: 500; font-size: 12px;"> Trabajador Destino </label>
                 <input type="number" min="0" class="custom-select border border-gray-400 py-2 px-3 rounded-full w-full" formControlName="codTrabajadorDestino">
-            </div>
+            </div> -->
 
         </div>
       </div>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
-      <button type="button" mat-button [mat-dialog-close]="false" class="cancel-button">Cancelar</button>
-      <button type="submit" mat-button cdkFocusInitial style="background-color: red; color: #fff;">{{ 'Actualizar' }}</button>
+      <button type="button" mat-button [mat-dialog-close]="false" class="cancel-button" style="color: #000;">Cancelar</button>
+      <button type="submit" mat-button cdkFocusInitial style="background-color: red; color: #fff;"> {{ id_mensajeria === 0 ? 'Guardar' : 'Actualizar' }} </button>
     </mat-dialog-actions>
   </form>

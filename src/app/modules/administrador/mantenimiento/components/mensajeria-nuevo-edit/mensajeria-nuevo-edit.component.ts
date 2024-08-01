@@ -24,19 +24,20 @@ export class MensajeriaNuevoEditComponent {
 
     public myFormNewMensajeria:FormGroup = this.fb.group({
         codMensajeria: [""],
-        contenido: [""],
-        codTrabajadorDestino : [""],
-        codOficinaDestino : [""],
-        estadoMensaje : [""],
-        codTrabajadorRegistro : [""],
-        nivel : [""],
-        prioridad : [""],
+        contenido: ["",[Validators.required]],
+        codTrabajadorDestino : [0],
+        codOficinaDestino : [0],
+        estadoMensaje : ["",[Validators.required]],
+        codTrabajadorRegistro : [82],
+        nivel : ["",[Validators.required]],
+        prioridad : ["",[Validators.required]],
     })
 
     private mensajeriaService = inject(MensajeriaService);
     private dialogRef = inject(MatDialogRef<MensajeriaNuevoEditComponent>);
     constructor(private fb: FormBuilder,private _snackBar: MatSnackBar, @Inject(MAT_DIALOG_DATA) public data: any) {
       this.id_mensajeria = data.id;
+      // console.log(this.id_mensajeria)
     }
 
     ngOnInit(): void {
@@ -91,6 +92,7 @@ export class MensajeriaNuevoEditComponent {
                 nivel: nivel,
                 prioridad: prioridad
             }
+            // console.log(formularioNewMensajeria)
             this.mensajeriaService.postMensajeria(formularioNewMensajeria).subscribe(
                 ()=>{
                   this.dialogRef.close({ action: 'add' });

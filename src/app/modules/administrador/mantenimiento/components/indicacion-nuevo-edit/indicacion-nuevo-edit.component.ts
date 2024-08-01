@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PostAddIndicaciones } from '../../interfaces/indicaciones.interface';
+import { PostAddIndicaciones, PostEditIndicaciones } from '../../interfaces/indicaciones.interface';
 import { IndicacionesService } from '../../services/indicaciones.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class IndicacionNuevoEditComponent {
 
     public myFormNewIndicacion:FormGroup = this.fb.group({
         CodIndicacion: [""],
-        indicacion: [""],
+        indicacion: ["",[Validators.required]],
     })
 
     private indicacionesService = inject(IndicacionesService);
@@ -31,62 +31,56 @@ export class IndicacionNuevoEditComponent {
     private dialogRef = inject(MatDialogRef<IndicacionNuevoEditComponent>);
     constructor(private fb: FormBuilder,private _snackBar: MatSnackBar, @Inject(MAT_DIALOG_DATA) public data: any) {
       this.id_indicacion = data.id;
+      if(this.id_indicacion){
+        this.myFormNewIndicacion.patchValue({
+          CodIndicacion: this.id_indicacion
+        })
+      }
     }
 
     ngOnInit(): void {
+      this.getdetalleIndicacionEdit()
     }
 
-    // getdetalleIndicacionEdit(){
-    //   if(this.id_indicacion){
-    //     this.mantenimientoService.getDetalleIndicacion(this.id_indicacion).subscribe(
-    //       (rpta)=>{
-    //         this.myFormNewIndicacion.patchValue({
-    //           CodIndicacion: rpta.iCodIndicacion,
-    //           indicacion: rpta.cIndicacion
-    //         })
-    //       }
-    //     )
-    //   }
-    // }
+    getdetalleIndicacionEdit(){
+      if(this.id_indicacion){
+        this.indicacionesService.getDetalleIndicacion(this.id_indicacion).subscribe(
+          (rpta)=>{
+            this.myFormNewIndicacion.patchValue({
+              CodIndicacion: rpta[0].iCodIndicacion,
+              indicacion: rpta[0].cIndicacion.trim(),
+            })
+          }
+        )
+      }
+    }
 
     onSubmit() {
+
       if (this.myFormNewIndicacion.invalid) {
         this.myFormNewIndicacion.markAllAsTouched();
         this.valor_formulario = false;
         return;
         }
 
-        const { indicacion,} = this.myFormNewIndicacion.value;
+        const { CodIndicacion,indicacion} = this.myFormNewIndicacion.value;
 
         if (this.id_indicacion === 0) {
 
             const formularioNewIndicacion: PostAddIndicaciones = {
-                indicacion: indicacion,
+              indicacion: indicacion,
             }
             this.indicacionesService.postIndicaciones(formularioNewIndicacion).subscribe(
                 ()=>{
                   this.dialogRef.close({ action: 'add' });
                 }
             )
+        }else{
+          this.indicacionesService.editarIndicaciones(CodIndicacion,indicacion).subscribe(
+            (rpta)=>{
+              this.dialogRef.close({ action: 'update' });
+            }
+          )
         }
-        // else{
-        //   const formularioActualizarEnviar: any = {
-        //     codMensajeria: codMensajeria,
-        //     contenido: contenido,
-        //     codTrabajadorDestino: codTrabajadorDestino,
-        //     codOficinaDestino: codOficinaDestino,
-        //     estadoMensaje: estadoMensaje,
-        //     codTrabajadorRegistro: codTrabajadorRegistro,
-        //     nivel: nivel,
-        //     prioridad: prioridad
-        // };
-
-        // this.mantenimientoService.updateMensajeria(formularioActualizarEnviar).subscribe(
-        //   () => {
-        //     console.log(formularioActualizarEnviar)
-        //     this.dialogRef.close({ action: 'update' });
-        //   }
-        // );
-        // }
     }
 }

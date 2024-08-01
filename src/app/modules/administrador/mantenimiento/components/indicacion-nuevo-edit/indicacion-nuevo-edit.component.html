@@ -1,21 +1,20 @@
 <form autocomplete="off" [formGroup]="myFormNewIndicacion" (ngSubmit)="onSubmit()">
-    @if (id_indicacion) {
-        <div mat-dialog-title style="font-size: 20px; font-weight: 500; ">Nuevo Indicacion</div>
+    @if (id_indicacion === 0) {
+        <div mat-dialog-title style="font-size: 20px; font-weight: 500; ">Nueva Indicacion</div>
+    }@else {
+      <div mat-dialog-title style="font-size: 20px; font-weight: 500; ">Editar Indicacion</div>
     }
     <mat-dialog-content class="mat-typography" style="border-top: 1px solid #ccc;">
       <div class="w-full">
-        <div class="flex flex-wrap mb-6 mt-3"> 
-
-            <div class="w-full">
-                <label class="block text-gray-700 text-md mb-2" style="font-weight: 500; font-size: 12px;"> Indicacion</label>
-                <input type="text" class="custom-select border border-gray-400 py-2 px-3 rounded-full w-full" formControlName="indicacion">
-            </div>
-
-        </div>
+        <label class="block mb-2 text-xs font-medium text-gray-700 mt-3">Indicación*</label>
+        <input type="text" class="mb-2 bg-gray-50 border font-medium border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5" formControlName="indicacion">
+        @if (myFormNewIndicacion.controls['indicacion'].getError('required') && myFormNewIndicacion.controls['indicacion'].touched) {
+          <span class="text-red-500 text-xs italic">Indicación requerida</span>
+        }
       </div>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
-      <button type="button" mat-button [mat-dialog-close]="false" class="cancel-button">Cancelar</button>
-      <button type="submit" mat-button cdkFocusInitial style="background-color: red; color: #fff;">{{ 'Actualizar' }}</button>
+      <button type="button" mat-button [mat-dialog-close]="false" class="cancel-button" style="color: #000;">Cancelar</button>
+      <button type="submit" mat-button cdkFocusInitial style="background-color: red; color: #fff;">{{ id_indicacion === 0 ? 'Guardar' : 'Actualizar' }}</button>
     </mat-dialog-actions>
   </form>

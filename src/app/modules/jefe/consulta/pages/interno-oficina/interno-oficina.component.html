@@ -143,7 +143,7 @@
     </form>
 
     <mat-card class="mt-4" appearance="outlined">
-      <div class="table-responsive px-1 mt-3">
+      <div class="table-responsive px-3 mt-3">
         <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="N_tramite">
               <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Trámite No. </th>
@@ -169,14 +169,14 @@
                 <div class="py-2">
                   <div>{{element.cDescTipoDoc}}</div>
                   <div  style="color: #007bff;">{{element.cCodificacion}}</div>
-                  @if (element.nFlgTipoDerivo === 1 ) {
-                    <div text-center>(Tipo Derivado)</div>
-                  }@else if(element.nFlgEnvio === 0) {
-                    <div class="text-red-700">(Sin envio)</div>
-                  }
-                  @if (element.fechA_DOCUMENTO == null && element.cPeriodoregistro<2022) {
-                    <div class="text-red-700">(Por Aprobar)</div>
-                  }
+                    @if (element.nFlgTipoDerivo === 1 ) {
+                      <div text-center>(Tipo Derivado)</div>
+                    }@else if(element.nFlgEnvio === 0) {
+                      <div class="text-red-700">(Sin envio)</div>
+                    }
+                    @if (element.fechA_DOCUMENTO == null && element.cPeriodoregistro<2022) {
+                      <div class="text-red-700">(Por Aprobar)</div>
+                    }
                 </div>
               </td>
             </ng-container>
@@ -276,7 +276,7 @@
                          showFirstLastButtons
                          aria-label="Select page of periodic elements">
           </mat-paginator>
-    </div>
+      </div>
     </mat-card>
 
   </div>

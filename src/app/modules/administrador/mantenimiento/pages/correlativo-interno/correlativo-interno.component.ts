@@ -9,6 +9,7 @@ import { CorrelativoInternoService } from '../../services/correlativo-interno.se
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataListCoInterno, DataOficinaCoInterno } from '../../interfaces/correlativo-interno.interface';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-correlativo-interno',
@@ -20,7 +21,8 @@ import { DataListCoInterno, DataOficinaCoInterno } from '../../interfaces/correl
     MatButtonModule,
     MatPaginator,
     MatTableModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatCardModule
   ],
   templateUrl: './correlativo-interno.component.html',
 })

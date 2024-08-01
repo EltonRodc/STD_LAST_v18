@@ -11,6 +11,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataCoProfesional, DataListTrabajadoresCoProfes, DataOficinasCoProfesional, EditTrabajador } from '../../interfaces/correlativo-profesional.interface';
 import { CorrelativoProfesionalNuevoComponent } from '../../components/correlativo-profesional-nuevo/correlativo-profesional-nuevo.component';
 import { ConfirmacionDialogComponent } from '../../components/confirmacion-dialog/confirmacion-dialog.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-correlativo-profesional',
@@ -22,7 +24,9 @@ import { ConfirmacionDialogComponent } from '../../components/confirmacion-dialo
     MatButtonModule,
     MatPaginator,
     MatTableModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatCardModule,
+    MatTooltip
   ],
   templateUrl: './correlativo-profesional.component.html',
 })
@@ -206,6 +210,7 @@ export class CorrelativoProfesionalComponent implements OnInit, AfterViewInit {
 
   newCoProfesional(){
     const dialogRef = this.dialog.open(CorrelativoProfesionalNuevoComponent, {
+      minWidth:600,
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

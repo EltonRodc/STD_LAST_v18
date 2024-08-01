@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmacionDialogComponent } from '../../components/confirmacion-dialog/confirmacion-dialog.component';
 import { PerfilNuevoEditComponent } from '../../components/perfil-nuevo-edit/perfil-nuevo-edit.component';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-perfil',
@@ -21,7 +22,8 @@ import { PerfilNuevoEditComponent } from '../../components/perfil-nuevo-edit/per
     MatButtonModule,
     MatPaginator,
     MatTableModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatCardModule
   ],
   templateUrl: './perfil.component.html',
 
@@ -90,7 +92,6 @@ export class PerfilComponent  implements OnInit {
         this.listPrfil = rpta;
         this.dataSource.data = this.listPrfil;
         this.isFetchingData = false;
-        // console.log(this.listPrfil);
       }
     )
   }
@@ -101,8 +102,10 @@ export class PerfilComponent  implements OnInit {
   }
 
   newPerfil(id: number) {
+
     const dialogRef = this.dialog.open(PerfilNuevoEditComponent, {
-      data: { id }
+      data: { id },
+      minWidth:600
     });
 
     dialogRef.afterClosed().subscribe(result => {
