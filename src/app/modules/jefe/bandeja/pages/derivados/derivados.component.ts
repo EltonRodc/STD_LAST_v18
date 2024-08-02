@@ -268,7 +268,7 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
       window.URL.revokeObjectURL(url);
     });
 
-    console.log("Reporte de Excel generado y descargado");
+    // console.log("Reporte de Excel generado y descargado");
   }
 
 
