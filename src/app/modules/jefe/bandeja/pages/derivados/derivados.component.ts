@@ -15,7 +15,11 @@ import { getSpanishPaginatorIntl } from '../../../../../core/providers/custom-pa
 import { DataBandejaComboOficinaDestino, DataBandejaComboTipoDocumento, DataBandejaExcelDerivados, DataBandejaTablaDerivados } from '../../interfaces/bandeja-derivados.interface';
 import { BandejaDerivadosService } from '../../services/bandeja-derivados.service';
 import moment from 'moment';
+//Excel
 import * as ExcelJS from 'exceljs';
+//PDF
+import pdfMake from '../../../../../core/pdf/pdfmake-config';
+
 
 @Component({
   selector: 'app-derivados',
@@ -53,8 +57,8 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
     Entrada : [0],  //Ok
     Interno : [0],  //Ok
     Salida:[0],     //Ok
-    // fechaDesde:[moment().subtract(7, 'days').toDate()],
-    fechaDesde: [moment().subtract(2, 'years').toDate()],
+    fechaDesde:[moment().subtract(7, 'days').toDate()],
+    // fechaDesde: [moment().subtract(2, 'years').toDate()],
     fechaHasta:[moment().toDate()], //Ok
     horaInicio:["00:00"], //Ok
     horaFin:["23:59"],  //Ok
@@ -140,7 +144,7 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
     this.bandejaDerivadosService.getListadoOficinaDestino().subscribe(
       (rpta)=>{
         this.comboListadoOficDest = rpta;
-        console.log(this.comboListadoOficDest)
+        // console.log(this.comboListadoOficDest)
       }
     )
   }
@@ -196,7 +200,7 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
     worksheet.insertRow(4, headers);
 
     // Ajustar el ancho de las columnas
-    const columnWidths = [6, 6, 8, 15, 15, 20, 30, 40, 20, 15, 20, 20, 25, 15, 15, 15, 15, 15, 15];
+    const columnWidths = [6, 6, 8, 15, 15, 20, 30, 40, 20, 15, 20, 30, 25, 22, 22, 22, 22, 15, 15];
     columnWidths.forEach((width, index) => {
       worksheet.getColumn(index + 1).width = width;
     });
@@ -209,40 +213,59 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
       4: 'Jefatura'
     };
 
-      // Función para obtener el nombre de oficina a partir del código
-      // const getNombreOficina = (codigo: number) => {
-      //   const oficina = this.comboListadoOficDest.find(o => o.iCodOficina === codigo);
-      //   return oficina ? oficina.cNomOficina : 'Desconocido';
-      // };
+    // Define los estilos
+    const styleNormal = {
+      font: { name: 'Arial', sz: 12, color: { argb: 'FF000000' } } // Negro para la fecha
+    };
 
+    const styleSinAceptar = {
+      font: { name: 'Arial', sz: 10, color: { argb: 'FFFF0000' } } // Rojo para "sin Aceptar"
+
+    };
 
     if (this.listadoExcelDerivados && this.listadoExcelDerivados.length > 0) {
       this.listadoExcelDerivados.forEach(data => {
+        const fechaRecepcion = data.fFecRecepcion
+          ? moment(data.fFecRecepcion).format('DD/MM/YYYY HH:mm')
+          : 'sin Aceptar';
+
+        // Determinar el estado
+        const estado = !data.fFecRecepcion
+        ? 'Pendiente'
+        : !data.fFecFinalizar
+        ? 'En Proceso'
+        : 'Finalizado';
+
         const row = [
-          moment(data.fFecDocumento).format('DD'),          //Ok
-          moment(data.fFecDocumento).format('MM'),          //Ok
-          moment(data.fFecDocumento).format('YYYY'),        //Ok
-          tipoDocMap[data.nFlgTipoDoc] || 'Desconocido',    //Ok
-          '-----',
-          data.documento,                                   //Ok
-          data.cCodificacion,
-          data.cPrioridadDerivar,
-          data.cPrioridadDerivar,
-          data.cPrioridadDerivar,
-          data.cPrioridadDerivar,
-          data.cPrioridadDerivar,
-          data.cPrioridadDerivar,
-          data.cPrioridadDerivar,
-          data.cPrioridadDerivar,
-          data.cPrioridadDerivar,
-          data.cPrioridadDerivar,
-          data.cPrioridadDerivar,
-          data.cPrioridadDerivar,
+          moment(data.fFecDocumento).format('DD'),          // Ok Día
+          moment(data.fFecDocumento).format('MM'),          // Ok Mes
+          moment(data.fFecDocumento).format('YYYY'),        // Ok Año
+          tipoDocMap[data.nFlgTipoDoc] || 'Desconocido',    // Ok Tipo
+          '-Tramite-',                                      // Modificar Trámite
+          data.documento,                                   // Ok Tipo documento
+          data.cCodificacion,                               // Ok Nro Documento
+          '- Of Destino-',                                  // Modificar Of Destino
+          '- Responsable -',                                // Responsable
+          ',',                                              // Asignado
+          ',',                                              // Trab Archivado
+          data.cAsunto,                                     // Ok Asunto
+          '',                                               // Nombre Razon Social
+          moment(data.fFecDocumento).format('DD/MM/YYYY HH:mm'),  // Fecha Documento
+          moment(data.fFecDerivar).format('DD/MM/YYYY HH:mm'),  // Fecha Derivado
+          fechaRecepcion,                                   // Fecha Recepción
+          data.fFecFinalizar ? moment(data.fFecFinalizar).format('DD/MM/YYYY HH:mm') : '',  // Fecha Archivado
+          estado,                                               // Estado
+          '',                                               // Asignado Fin
         ];
 
-        worksheet.addRow(row);
-      });
-    }
+        // Añadir la fila al worksheet
+        const newRow = worksheet.addRow(row);
+
+        // Aplicar el estilo a la celda de Fecha Recepción (asumiendo que es la celda 15)
+        newRow.getCell(16).font = fechaRecepcion === 'sin Aceptar' ? styleSinAceptar.font : styleNormal.font;
+        });
+      }
+
 
     // Estilos básicos
     worksheet.getRow(1).font = { bold: true, size: 16 };
@@ -269,6 +292,15 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
     });
 
     // console.log("Reporte de Excel generado y descargado");
+  }
+
+  reporte_pdf(){
+    const documentDefinition = {
+      content: [
+        { text: 'Prueba PDF', fontSize: 15, bold: true },
+      ]
+    };
+    pdfMake.createPdf(documentDefinition).open();
   }
 
 
