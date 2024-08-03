@@ -58,7 +58,7 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
     Interno : [0],  //Ok
     Salida:[0],     //Ok
     fechaDesde:[moment().subtract(7, 'days').toDate()],
-    // fechaDesde: [moment().subtract(2, 'years').toDate()],
+    // fechaDesde: [moment().subtract(4, 'years').toDate()],
     fechaHasta:[moment().toDate()], //Ok
     horaInicio:["00:00"], //Ok
     horaFin:["23:59"],  //Ok
@@ -113,7 +113,7 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
     const p13 = SAceptado ? 1 : 0;
     const p14 = Columna ? Columna : "Codigo";
     const p15 = Idir ? Idir : "%%";
-
+    console.log(p4)
 
     this.bandejaDerivadosService.getListadoTablaDerivados(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15).subscribe(
         (rpta)=>{
@@ -127,7 +127,17 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
     this.bandejaDerivadosService.getListadoExcel(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15).subscribe(
       (rpta)=>{
         // console.log(rpta)
-        this.listadoExcelDerivados = rpta;
+        // this.listadoExcelDerivados = rpta;
+        this.listadoExcelDerivados = rpta.sort((a, b) => {
+          if (a.fFecDerivar > b.fFecDerivar) {
+            return -1;
+          }
+          if (a.fFecDerivar < b.fFecDerivar) {
+            return 1;
+          }
+          return 0;
+        });
+        console.log(this.listadoExcelDerivados)
       }
     )
   }
@@ -294,14 +304,162 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
     // console.log("Reporte de Excel generado y descargado");
   }
 
-  reporte_pdf(){
-    const documentDefinition = {
+  async reporte_pdf() {
+    const base64Image = await this.convertFileToBase64('/images/logopdf.png');
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getFullYear()}`;
+
+    const documentDefinition: any = {
       content: [
-        { text: 'Prueba PDF', fontSize: 15, bold: true },
-      ]
+        {
+          image: base64Image,
+          width: 180
+        },
+        {
+          text: ' ',
+        },
+        {
+          columns: [
+            {
+              text: 'REPORTE - DERIVADOS',
+              fontSize: 12,bold: true,
+            },
+            {
+              text: formattedDate,
+              alignment: 'right', fontSize: 10,bold: true,
+            }
+          ]
+        },
+        {
+          margin: [0, 3, 0, 0],
+          text: 'PRUEBA',
+          fontSize: 12,bold: true,
+        },
+        {
+          margin: [0, 10, 0, 0],
+          table: {
+            headerRows: 1,
+            // widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+            widths: ['3%', '15%', '30%', '22%', '14%', '16%'],
+            body: [
+              // Cabeceras de la tabla
+              [
+                { text: '#',style: 'tableHeader'},
+                { text: 'Trámite', style: 'tableHeader' },
+                { text: 'Asunto', style: 'tableHeader' },
+                { text: 'Destino', style: 'tableHeader' },
+                { text: 'Estado', style: 'tableHeader' },
+                { text: 'Observ / VoBo', style: 'tableHeader' }
+              ],
+            ]
+          },
+          layout: {
+            hLineColor: function() { return '#d0d0d0'; },
+            vLineColor: function() { return '#d0d0d0'; }
+          }
+        }
+      ],
+
+      styles: {
+        tableHeader: {
+          fillColor: '#D3D3D3',
+          bold: true,
+          fontSize: 10,
+          alignment: 'center',
+        },
+        tableContent : {
+          fontSize: 9,
+          margin: [0, 2, 0, 0],
+        },
+      },
+      footer: function(currentPage, pageCount, pageSize) {
+        return [
+          {
+            columns: [
+              {
+                text: 'SONIA DIAZ GARCIA',
+                alignment: 'left',
+                fontSize: 10
+              },
+              {
+                text: `Página ${currentPage} de ${pageCount}`,
+                alignment: 'right',
+                fontSize: 10
+              }
+            ],
+            margin: [40, 0]
+          }
+        ];
+      }
+
     };
+
+    const getEstado = (data: any) => {
+      if (!data.fFecRecepcion) {
+        return 'PENDIENTE';
+      } else if (!data.fFecFinalizar) {
+        return 'EN PROCESO';
+      } else {
+        return 'FINALIZADO';
+      }
+    };
+
+    const formatDate = (date: Date) => {
+      return date ? moment(date).format('DD-MM-YYYY HH:mm') : '';
+    };
+    const recepcion = (date:Date) => {
+      return date ? 'RECEPCIONADO EL:' : ''
+    }
+    const finalizado = (date:Date) => {
+      return date ? 'FINALIZADO:' : ''
+    }
+
+
+    this.listadoExcelDerivados.forEach((data, index) => {
+      documentDefinition.content[4].table.body.push([
+        { text: (index + 1).toString(),style: 'tableContent',alignment: 'center',},
+        { stack: [
+          { text: 'I012320933', alignment: 'center', color:'blue',style: 'tableContent'},
+          { text: data.documento, alignment: 'center',style: 'tableContent' },
+          { text: data.cNumDocumentoDerivar, fontSize: 8,alignment: 'center', color:'#949494',margin: [0, 2, 0, 0],},
+          { text: formatDate(data.fFecDerivar), fontSize: 8,alignment: 'center', color:'#949494',margin: [0, 2, 0, 0],}
+        ],
+        },
+        { text: data.cAsuntoDerivar ,style: 'tableContent'},
+        { stack:[
+          { text: data.iCodOficinaDerivar.toString(),style: 'tableContent',alignment: 'center',},
+          { text: data.iCodTrabajadorDerivar.toString(),style: 'tableContent',alignment: 'center',},
+        ] },
+        { text: getEstado(data) ,style: 'tableContent',alignment: 'center'},
+        {
+          stack: [
+            { text: recepcion(data.fFecRecepcion), fontSize: 7,alignment: 'center', color:'#000',margin: [0, 2, 0, 0], bold:true},
+            { text: formatDate(data.fFecRecepcion), fontSize: 7,alignment: 'center', color:'#2019e2',margin: [0, 2, 0, 0],},
+            { text: finalizado(data.fFecFinalizar), fontSize: 7,alignment: 'center', color:'#000',margin: [0, 2, 0, 0], bold:true},
+            { text: formatDate(data.fFecFinalizar), fontSize: 7,alignment: 'center', color:'#2019e2',margin: [0, 2, 0, 0],}
+          ]
+        }
+      ]);
+    });
+
     pdfMake.createPdf(documentDefinition).open();
+    // pdfMake.createPdf(documentDefinition).download('pendientes_derivados');
   }
 
+  convertFileToBase64(filePath: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        const reader = new FileReader();
+        reader.onloadend = function() {
+          resolve(reader.result as string);
+        };
+        reader.readAsDataURL(xhr.response);
+      };
+      xhr.open('GET', filePath);
+      xhr.responseType = 'blob';
+      xhr.send();
+    });
+  }
 
 }
