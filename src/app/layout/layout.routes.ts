@@ -1,5 +1,6 @@
 import { Routes } from "@angular/router";
 import { LayoutComponent } from "./layout.component";
+import { RegistroDetalleComponent } from "../shared/components/registro-detalle/registro-detalle.component";
 
 export const LAYOUT_ROUTES:Routes = [
   {
@@ -24,5 +25,9 @@ export const LAYOUT_ROUTES:Routes = [
         redirectTo:"jefe"
       }
     ]
+  },
+  {
+    path:"registro-detalle/:cod_tramite",
+    component:RegistroDetalleComponent
   }
 ]

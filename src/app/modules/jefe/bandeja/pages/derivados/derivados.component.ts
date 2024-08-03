@@ -19,6 +19,7 @@ import moment from 'moment';
 import * as ExcelJS from 'exceljs';
 //PDF
 import pdfMake from '../../../../../core/pdf/pdfmake-config';
+import { Router, RouterLink } from '@angular/router';
 
 
 @Component({
@@ -40,7 +41,8 @@ import pdfMake from '../../../../../core/pdf/pdfmake-config';
     NgxMaterialTimepickerModule,
     DatePipe,
     MatTooltipModule,
-    UpperCasePipe
+    UpperCasePipe,
+    RouterLink
   ],
   templateUrl: './derivados.component.html',
   styles: ``
@@ -79,6 +81,8 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   private bandejaDerivadosService = inject(BandejaDerivadosService)
+  private router = inject(Router);
+
   constructor(
     private fb: FormBuilder
   ){}
@@ -113,7 +117,6 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
     const p13 = SAceptado ? 1 : 0;
     const p14 = Columna ? Columna : "Codigo";
     const p15 = Idir ? Idir : "%%";
-    console.log(p4)
 
     this.bandejaDerivadosService.getListadoTablaDerivados(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15).subscribe(
         (rpta)=>{
@@ -137,7 +140,7 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
           }
           return 0;
         });
-        console.log(this.listadoExcelDerivados)
+        // console.log(this.listadoExcelDerivados)
       }
     )
   }
@@ -460,6 +463,11 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
       xhr.responseType = 'blob';
       xhr.send();
     });
+  }
+
+  redirectDetalle(cod_tramite:number){
+    //const url = this.router.serializeUrl(this.router.createUrlTree([`/std/registro-detalle/${cod_tramite}`]));
+    //window.open(url, '_blank');
   }
 
 }
