@@ -466,8 +466,9 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
   }
 
   redirectDetalle(cod_tramite:number){
-    //const url = this.router.serializeUrl(this.router.createUrlTree([`/std/registro-detalle/${cod_tramite}`]));
-    //window.open(url, '_blank');
+    const url = this.router.serializeUrl(this.router.createUrlTree([`/std/registro-detalle/${cod_tramite}`]));
+    window.open(url, '_blank');
   }
+
 
 }
