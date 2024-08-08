@@ -15,7 +15,9 @@ export class SignInComponent implements OnInit{
   private router = inject(Router);
   private login = inject(AuthService);
   private authDataService = inject(AuthDataService);
+
   ngOnInit(): void {
+
     this.route.queryParams.subscribe(params => {
       const uniqueCode = params['unique_code'];
       const sistemaId = params['id_sistemas'];
@@ -36,6 +38,7 @@ export class SignInComponent implements OnInit{
         console.error('Faltan parámetros en la URL');
       }
     });
+
   }
 
 }
