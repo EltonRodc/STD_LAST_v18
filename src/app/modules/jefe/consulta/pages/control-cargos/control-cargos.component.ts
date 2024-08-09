@@ -108,7 +108,7 @@ export class ControlCargosComponent  {
     this.getListadoComboOfcnOrigen();
     this.getListadoComboDepartamento();
     // this.getListadoComboProvincias();
-    this.getListadoComboDistritos();
+    // this.getListadoComboDistritos();
 
     this.myFormControlCargos.patchValue({
       fDesde: moment().toDate(),
@@ -169,7 +169,7 @@ export class ControlCargosComponent  {
       Idir: cIdir,
     }
 
-    console.log(formularioEnviar)
+    // console.log(formularioEnviar)
     this.consultaService.getConsultaControlCargos(formularioEnviar).subscribe(
       (rpta)=>{
         this.lisCntrCargo = rpta;
@@ -217,8 +217,11 @@ export class ControlCargosComponent  {
     } 
   }
 
-  getListadoComboDistritos(){
-    this.consultaService.getListadoComboDistritos().subscribe(
+  getListadoComboDistritos(event:any){
+
+    const codDistrito=event.target.value
+    //  console.log(codDistrito)
+    this.consultaService.getListadoComboDistritos(codDistrito).subscribe(
       (rpta)=>{
         this.comboListadoDistritos = rpta;
       }

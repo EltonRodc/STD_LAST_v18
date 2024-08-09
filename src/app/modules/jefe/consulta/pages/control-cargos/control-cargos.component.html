@@ -122,7 +122,7 @@
   
               <div class="basis-1/4">
                 <label class="block mb-2 text-xs font-bold text-gray-700">Provincia</label>
-                <select class="bg-gray-50 border border-gray-300 font-semibold text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5" formControlName="CodProvincia">
+                <select class="bg-gray-50 border border-gray-300 font-semibold text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5" formControlName="CodProvincia" (change)="getListadoComboDistritos($event)">
                   <option value="">Seleccione</option>
                   @for (item of comboListadoProvincias; track $index) {
                     <option [value]="item.idProvincia">{{item.cNomProvincia}}</option>
@@ -190,15 +190,21 @@
           <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="Fecha">
               <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Fecha </th>
-              <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;"> {{element.cDescTipoDoc}} </td>
-              <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;"> {{element.fFecRegistro}} </td>
+              <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080" align="center" >
+                <div class="py-2">
+                  <div  style="color: #007bff;">{{element.cDescTipoDoc}}</div>
+                  <div class="text-center mt-1 text-xs font-medium"> {{element.fFecRegistro | date: 'dd-MM-yyyy' }} </div>
+                  <div class="text-center " style="font-size: 11px;" > {{element.fFecRegistro | date: 'HH:mm' }} </div>
+                  <div class="text-center text-gray-800 ">{{element.iCodTrabajadorRegistro}}</div>
+                </div>
+              </td>
             </ng-container>
               <ng-container matColumnDef="Ofi_Origen">
                 <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Oficina Origen </th>
                 <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;"> {{element.cNomOficina}} </td>
                 <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;"> {{element.cNombresTrabajador}} </td>
                 <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;"> {{element.cApellidosTrabajador}} </td>
-          </ng-container>
+              </ng-container>
               <ng-container matColumnDef="Documento" >
                 <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Documento </th>
                 <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;"> {{element.cFlgUrgente}} </td>

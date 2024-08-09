@@ -115,13 +115,13 @@ export class ConsultaService {
             Columna: formularioControlCargos.Columna,
             Idir: formularioControlCargos.Idir,
         };
-        return this.http.get<ListadoControlCargos>(`${this.api_primary}/JefeConsultaCompartido/ListaControlCargos`, { params: params }).pipe(
+        return this.http.get<ListadoControlCargos>(`${this.api_primary}/JefeConsultaControlCargos/ListaControlCargos`, { params: params }).pipe(
             map(rpta => rpta.data)
         );
     }
 
     getListadoComboTpoDcmto():Observable<DataComboTpoDcmto[]>{
-        return this.http.get<ComboTpoDcmto>(`${this.api_primary}/CombosGenerales/ComboTpoDocumento`).pipe(
+        return this.http.get<ComboTpoDcmto>(`${this.api_primary}/JefeDocSalidaOficina/RegSalidaListaTpoDocumento`).pipe(
             map ( (rpta)=> rpta.data )
         )
     }
@@ -146,8 +146,10 @@ export class ConsultaService {
         )
     }
 
-    getListadoComboDistritos():Observable<DataComboDistritos[]>{
-        return this.http.get<ComboDistritos>(`${this.api_primary}/JefeConsultaCompartido/ListaComboDistrito`).pipe(
+    getListadoComboDistritos(CodProvincia:string):Observable<DataComboDistritos[]>{
+        const params = new HttpParams()
+        .set('CodProvincia',CodProvincia)
+        return this.http.get<ComboDistritos>(`${this.api_primary}/JefeDocSalidaOficina/RegSalidaListaDistr`,{params}).pipe(
             map ( (rpta)=> rpta.data )
         )
     }
