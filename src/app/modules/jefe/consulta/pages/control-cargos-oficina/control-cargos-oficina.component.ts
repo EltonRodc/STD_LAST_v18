@@ -67,7 +67,7 @@ export class ControlCargosOficinaComponent {
     CodOficinaLogin : [143],
   })
   
-  public displayedColumns: string[] = ['Fecha', 'Ofi_Origen','Documento','Asunto','Destinatario', 'Direccion', 'Fcha_aceptacion', 'Entrega', 'Estado'];
+  public displayedColumns: string[] = ['Fecha', 'Ofi_Origen','Documento','Asunto','Destinatario', 'Direccion', 'Fcha_aceptacion', 'Entrega', 'Estado', 'Acciones'];
   public dataSource = new MatTableDataSource<DataListadoControlCargosOfi>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
