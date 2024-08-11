@@ -144,49 +144,75 @@ export interface FormularioSalidaOficina {
   referencia: string,
 }
 
-// export interface ResultadoOficinaSalida {
-//     recordsTotal:    number;
-//     recordsFiltered: number;
-//     data:            DataResultadoOficinaSalida[];
-//     error:           string;
-// }
+//Consulta Doc. Salida Oficina
 
-// export interface DataResultadoOficinaSalida {
-//     iCodTramite:            number;
-//     nFlgTipoDoc:            number;
-//     nFlgTipoDerivo:         number;
-//     cDescTipoDoc:           string;
-//     cCodificacion:          string;
-//     cNomOficina:            string;
-//     fFecDocumento:          Date;
-//     casunto:                string;
-//     cObservaciones:         string;
-//     cReferencia:            string;
-//     cApellidosTrabajador:   string;
-//     cNombresTrabajador:     string;
-//     nFlgEnvio:              number;
-//     iCodTrabajadorRegistro: number;
-//     cCodTipoDoc:            number;
-//     iCodOficinaRegistro:    number;
-//     cNroDocumento:          string;
-//     nFlgAnulado:            number;
-//     trabApellidosCrea:      string;
-//     trabNombreCrea:         string;
-//     destino:                string;
-//     fechA_DOCUMENTO:        Date;
-//     nFlgPersonal:           number;
-//     nFlgClaseDoc:           number;
-//     cCodificacionI:         string;
-//     cParteDiario:           string;
-//     cDesTema:               string;
-//     iCodTema:               number;
-//     iCodTramitePrincipal:   number;
-//     cPeriodoregistro:       number;
-//     cCodificacionPrincipal: string;
-//     iCodMovimiento:         number;
-// }
+export interface ListadoDocSalida {
+  recordsTotal:    number;
+  recordsFiltered: number;
+  data:            DataListadoDocSalida[];
+  error:           string;
+}
 
+export interface DataListadoDocSalida {
+  nFlgEnvio:             number;
+  iCodTramite:           number;
+  cDescTipoDoc:          string;
+  cCodificacion:         string;
+  fFecRegistro:          string;
+  cApellidosTrabajador:  string;
+  cNombresTrabajador:    string;
+  cReferencia:           string;
+  casunto:               string;
+  cObservaciones:        string;
+  nFlgRpta:              number;
+  cRptaOK:               number;
+  nFlgClaseDoc:          number;
+  iCodOficinasolicitado: number;
+  iCodRemitente:         number;
+  cNombre:               string;
+  cCodTipoDoc:           number;
+  iCodOficinaRegistro:   number;
+  cNomRemite:            string;
+  cCodificacionI:        string;
+  nFlgAnulado:           number;
+  nFlgEstado:            number;
+}
 
+export interface FormularioDocumentoSalida {
+  fDesde:string,
+  fHasta:string,
+  RespuestasI: number,
+  RespuestaNO: number,
+  Codificacion: string,
+  Asunto : string,
+  Observaciones : string,
+  CodTipoDoc : number,
+  cNombre : string,
+  Respuesta : number,
+  RegistroPersonal : number,
+  RegistroSolicitado : number,
+  CodOficinaLogin : number,
+  Columna   : string,
+  Idir   : string,
+  NTramite   : string,
+  Referencia   : string,
+}
+
+export interface CmbSalDireccion {
+  recordsTotal:    number;
+  recordsFiltered: number;
+  data:            DataCmbSalDireccion[];
+  error:           string;
+}
+
+export interface DataCmbSalDireccion {
+  cDireccion:    string;
+  cDepartamento: string;
+  cProvincia:    string;
+  cDistrito:     string;
+}
+
+//Consulta Control Cargos
 
 export interface ListadoControlCargos {
   recordsTotal:    number;
@@ -325,4 +351,202 @@ export interface DataComboDistritos {
   cCodProvincia:    number;
   cCodDistrito:     number;
   cNomDistrito:     string;
+}
+
+//Consulta Doc. Interno General
+export interface ListadoDocInternoGeneral {
+  recordsTotal:    number;
+  recordsFiltered: number;
+  data:            DataListadoDocInternoGeneral[];
+  error:           string;
+}
+
+export interface DataListadoDocInternoGeneral {
+  iCodTramite:            number;
+  nFlgTipoDoc:            number;
+  nFlgTipoDerivo:         number;
+  cDescTipoDoc:           string;
+  cCodificacion:          string;
+  cNomOficina:            string;
+  fFecDocumento:          string;
+  casunto:                string;
+  cObservaciones:         string;
+  cReferencia:            string;
+  cApellidosTrabajador:   string;
+  cNombresTrabajador:     string;
+  nFlgEnvio:              number;
+  iCodTrabajadorRegistro: number;
+  cCodTipoDoc:            number;
+  iCodOficinaRegistro:    number;
+  cNroDocumento:          string;
+  nFlgAnulado:            number;
+  trabApellidosCrea:      string;
+  trabNombreCrea:         string;
+  destino:                string;
+  fechA_DOCUMENTO:        string;
+  nFlgPersonal:           number;
+  nFlgClaseDoc:           number;
+  cCodificacionI:         string;
+  cParteDiario:           string;
+  cDesTema:               string;
+  iCodTema:               number;
+  iCodTramitePrincipal:   number;
+  cPeriodoregistro:       number;
+  codCUI:                 string;
+  cCodificacionPrincipal: string;
+  iCodMovimiento:         number;
+}
+
+export interface FormularioDocInternoGeneral {
+  fDesde:string,
+  fHasta:string,
+  SI: string,
+  NO: string,
+  Codificacion: string,
+  NroDocumento : string,
+  Asunto : string,
+  Observaciones : string,
+  CodTipoDoc : number,
+  CodOficinaori : number,
+  CodOficinaDes : number,
+  CodTema : number,
+  Gerencia : number,
+  ParteDiario : string,
+  CUI  : string,
+  Regini  : number,
+  Size  : number,
+}
+
+//Consulta Control Cargos Oficina
+export interface ListadoControlCargosOfi {
+  recordsTotal:    number;
+  recordsFiltered: number;
+  data:            DataListadoControlCargosOfi[];
+  error:           string;
+}
+
+export interface DataListadoControlCargosOfi {
+  iCodAuto:                 number;
+  cOrdenServicio:           string;
+  cSiglaOficina:            string;
+  cDescTipoDoc:             string;
+  iCodTrabajadorEnvio:      number;
+  cNombresTrabajador:       string;
+  cApellidosTrabajador:     string;
+  fRespuesta:               string;
+  fEntrega:                 string;
+  cFlgEnvio:                string;
+  cFlgEstado:               number;
+  cRecibido:                string;
+  cNomOficina:              string;
+  cNombre:                  string;
+  cDireccion:               string;
+  cNomDepartamento:         string;
+  cNomProvincia:            string;
+  cNomDistrito:             string;
+  cFlgEnvio_copy:           string;
+  cNumGuia:                 string;
+  cNumGuiaservicio:         string;
+  fFecRegistro:             string;
+  cDepartamento:            string;
+  cProvincia:               string;
+  cDistrito:                string;
+  cObservaciones:           string;
+  iCodTramite:              number;
+  cCodTipoDoc:              number;
+  iCodRemitente:            number;
+  cCodificacion:            string;
+  casunto:                  string;
+  tRemitente:               string;
+  cNomRemite:               string;
+  iCodTrabajadorRegistro:   number;
+  iCodTrabajadorSolicitado: number;
+  codigO_PAIS:              string;
+  fechA_DOCUMENTO:          string;
+  fecha_Acepta_Mensajeria:  string;
+  cFlgUrgente:              string;
+  cCodificacionI:           string;
+  nFlgAnulado:              number;
+}
+
+export interface FormularioControlCargosOfi {
+  fDesde:string,
+  fHasta:string,
+  ChxfRespuesta: number,
+  fEntrega: number,
+  Codificacion: string,
+  Nombre : string,
+  Direccion : string,
+  CodTipoDoc : number,
+  NumGuiaservicio : string,
+  FlgUrgente : number,
+  CodTrabajadorEnvio : number,
+  FlgLocal : number,
+  FlgNacional : number,
+  FlgInternacional : number,
+  CodOficina  : number,
+  FlgEstado  : number,
+  CodDepartamento  : string,
+  CodProvincia  : string,
+  CodDistrito  : string,
+  Columna   : string,
+  Idir   : string,
+  CodOficinaLogin  : number,
+}
+
+//Consulta Plazo Vencidos
+export interface ListadoPlazoVencidos {
+  recordsTotal:    number;
+  recordsFiltered: number;
+  data:            DataListadoPlazoVencidos[];
+  error:           string;
+}
+
+export interface DataListadoPlazoVencidos {
+  iCodTramite:        number;
+  cCodificacion:      string;
+  cCodTipoDoc:        number;
+  cNroDocumento:      string;
+  casunto:            string;
+  nFlgEstado:         number;
+  iCodTupa:           number;
+  cDesTema:           string;
+  fFecRegistro:       string;
+  fFecFinalizar:      string;
+  cDescTipoDoc:       string;
+  cNomOFicina:        string;
+  nTiemporespuesta:   number;
+  fechaPlazoFinal:    string;
+  proceso:            number;
+  iCodTramiteRel:     number;
+  iCodOficinaDerivar: number;
+  proceso2:           number;
+}
+
+export interface FormularioPlazoVencidos {
+  fDesde:string,
+  fHasta:string,
+  Codificacion: string,
+  NroDocumento : string,
+  Asunto : string,
+  CodTupa : number,
+  CodTipoDoc : number,
+  CodOficinario : number,
+  CodOficinaDes : number,
+  CodTrabajadoresponsable : number,
+  CodTema : number,
+  InicioPagina : number,
+  SizePagina  : number,
+}
+
+export interface CmbTpoDcmto {
+  recordsTotal:    number;
+  recordsFiltered: number;
+  data:            DataCmbTpoDcmto[];
+  error:           string;
+}
+
+export interface DataCmbTpoDcmto {
+  cCodTipoDoc:  number;
+  cDescTipoDoc: string;
 }

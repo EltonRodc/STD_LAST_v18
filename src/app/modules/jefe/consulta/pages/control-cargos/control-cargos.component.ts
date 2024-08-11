@@ -42,10 +42,10 @@ export class ControlCargosComponent  {
   public comboListadoDistritos:DataComboDistritos[]=[];
 
   public myFormControlCargos:FormGroup = this.fb.group({
-      fDesde : [""],
-      fHasta : [""],
-      // horaInicio:[""],
-      // horaFin:[""],
+      fechaInicio : [""],
+      fechaFin : [""],
+      horaInicio:[""],
+      horaFin:[""],
       ChxfRespuesta: [0],
       fEntrega : [0],
       Codificacion : [""],
@@ -111,10 +111,10 @@ export class ControlCargosComponent  {
     // this.getListadoComboDistritos();
 
     this.myFormControlCargos.patchValue({
-      fDesde: moment().toDate(),
-      fHasta: moment().toDate(),
-      // horaInicio:"00:00",
-      // // horaFin: "23:59",
+      fechaInicio: moment().toDate(),
+      fechaFin: moment().toDate(),
+      horaInicio:"00:00",
+      horaFin: "23:59",
       // CodOficinaLogin:143
     })
 
@@ -128,13 +128,12 @@ export class ControlCargosComponent  {
   onSearch() {
     this.isFetchingData = true;
     // console.log(this.myFormConsultaInternoOficina.value)
-    const {fDesde,fHasta,horaInicio,horaFin,ChxfRespuesta,fEntrega,Codificacion,Nombre,Idireccion,CodTipoDoc,NumGuiaservicio,FlgUrgente ,CodTrabajadorEnvio,FlgLocal,FlgNacional,FlgInternacional,CodOficina,FlgEstado,CodDepartamento,CodProvincia,CodDistrito,Columna,Idir} = this.myFormControlCargos.value;
+    const {fechaInicio,fechaFin,horaInicio,horaFin,ChxfRespuesta,fEntrega,Codificacion,Nombre,Idireccion,CodTipoDoc,NumGuiaservicio,FlgUrgente ,CodTrabajadorEnvio,FlgLocal,FlgNacional,FlgInternacional,CodOficina,FlgEstado,CodDepartamento,CodProvincia,CodDistrito,Columna,Idir} = this.myFormControlCargos.value;
 
-    const fechaInicioStr = moment(fDesde).format('DD/MM/YYYY');
-    const fechaFinStr = moment(fHasta).format('DD/MM/YYYY');
-    console.log(fechaInicioStr)
-    // const fDesde = `${fechaInicioStr}T${horaInicio}`; 
-    // const fHasta = `${fechaFinStr}T${horaFin}`;
+    const fechaInicioStr = moment(fechaInicio).format('YYYY-MM-DD');
+    const fechaFinStr = moment(fechaFin).format('YYYY-MM-DD');
+    const fDesde = `${fechaInicioStr}T${horaInicio}:00.000`;
+    const fHasta = `${fechaFinStr}T${horaFin}:00.000`;
     const cCodificacion = Codificacion 
     const cNombre = Nombre 
     const cDireccion = Idireccion 
@@ -146,8 +145,8 @@ export class ControlCargosComponent  {
     const cIdir  = Idir 
 
     const formularioEnviar:FormularioControlCargos = {
-      fDesde: fechaInicioStr,
-      fHasta: fechaFinStr,
+      fDesde: fDesde,
+      fHasta: fHasta,
       ChxfRespuesta: parseInt(ChxfRespuesta),
       fEntrega: parseInt(fEntrega),
       Codificacion: cCodificacion,
@@ -228,7 +227,34 @@ export class ControlCargosComponent  {
     )
   }
 
-
+  reset(){
+    this.myFormControlCargos.patchValue({
+      fechaInicio:moment().toDate(),
+      fechaFin:moment().toDate(),
+      horaInicio:"00:00",
+      horaFin:"23:59",
+      ChxfRespuesta: 0,
+      fEntrega : 0,
+      Codificacion : "",
+      Nombre : "",
+      Idireccion : "",
+      CodTipoDoc : 0,
+      NumGuiaservicio : "",
+      FlgUrgente : 0,
+      CodTrabajadorEnvio : 0,
+      FlgLocal : 0,
+      FlgNacional : 0,
+      FlgInternacional : 0,
+      CodOficina : 0,
+      FlgEstado :0,
+      CodDepartamento : "",
+      CodProvincia : "",
+      CodDistrito : "",
+      Columna : "Fecha",
+      Idir : ""
+    })
+    this.onSearch();
+  }
 
 
 
