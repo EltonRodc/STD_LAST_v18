@@ -200,7 +200,7 @@ export class CorrelativoInternoComponent implements OnInit, AfterViewInit{
   }
 
   deleteOfiCoInterno(id: number,cCodTipoDoc:number): void {
-   console.log(id,cCodTipoDoc)  
+   console.log(id,cCodTipoDoc)
     const dialogRef = this.dialog.open(ConfirmacionDialogComponent,{
       data: "¿Está seguro de eliminar este Correlativo Interno?"
     });
