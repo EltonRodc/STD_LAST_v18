@@ -16,5 +16,5 @@ export const MY_DATE_FORMATS: MatDateFormats = {
 };
 
 export function provideDateAdapter(): Provider[] {
-  return provideMomentDateAdapter(MY_DATE_FORMATS, { useUtc: true })
+  return provideMomentDateAdapter(MY_DATE_FORMATS, { useUtc: false })
 }

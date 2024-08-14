@@ -17,6 +17,9 @@ export class SidenavOperadorComponent implements OnInit{
   public registroSubMenuOpen:boolean = false;
   public isRegistroActive: boolean = false;
 
+  public consultaSubMenuOpen:boolean = false;
+  public isConsultaActive: boolean = false;
+
   private router = inject(Router);
 
   ngOnInit(): void {
@@ -30,16 +33,25 @@ export class SidenavOperadorComponent implements OnInit{
 
   private updateActiveState(currentUrl: string): void {
     this.isRegistroActive = currentUrl.includes('/std/operador/registro');
+    this.isConsultaActive = currentUrl.includes('/std/operador/consulta');
     this.closeOtherSubMenus();
   }
 
   closeOtherSubMenus() {
     if (this.isRegistroActive) {
       this.registroSubMenuOpen = true;
+      this.consultaSubMenuOpen = false
+    }else if(this.isConsultaActive){
+      this.registroSubMenuOpen = false;
+      this.consultaSubMenuOpen = true
     }
   }
 
   toggleRegistroSubMenu() {
     this.registroSubMenuOpen = !this.registroSubMenuOpen;
   }
+  toggleConsultaSubMenu(){
+    this.consultaSubMenuOpen = !this.consultaSubMenuOpen;
+  }
+
 }

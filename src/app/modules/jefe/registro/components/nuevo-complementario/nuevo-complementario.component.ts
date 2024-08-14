@@ -103,7 +103,7 @@ export class NuevoComplementarioComponent implements OnInit, AfterViewInit{
       this.myFormDocumentoComplementario.markAllAsTouched();
       return;
     }
-    console.log(this.myFormDocumentoComplementario.value)
+    // console.log(this.myFormDocumentoComplementario.value)
     this.docIntOfService.cargaEnlaceTramite(this.myFormDocumentoComplementario.value).subscribe(
       response => {
         this.dialogRef.close({ action: 'add' });

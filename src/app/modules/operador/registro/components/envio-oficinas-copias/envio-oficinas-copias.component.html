@@ -1,0 +1,68 @@
+<div mat-dialog-title style="font-size: 20px; font-weight: 500; ">Agregar Oficina</div>
+
+  <form [formGroup]="myFormOficinaCopias" class="pb-4" (submit)="onSubmit()">
+    <mat-dialog-content class="mat-typography" style="border-top: 1px solid #ccc;">
+      <div class="w-full">
+        <label class="block mb-2 mt-2 text-sm font-medium text-gray-700">Derivar a</label>
+        <select  class="bg-gray-50 border border-gray-300 font-normal  text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codOficinaDerivar" (change)="mostrarResponsable($event)">
+          <option value>Seleccione</option>
+          @for (oficina of listOficinasDerivds; track $index) {
+            <option [value]="oficina.idOficina">{{oficina.nombreOficina}}</option>
+          }
+        </select>
+        @if (myFormOficinaCopias.controls['codOficinaDerivar'].getError('required') && myFormOficinaCopias.controls['codOficinaDerivar'].touched) {
+          <span class="text-red-500 text-xs italic">Oficina requerido</span>
+        }
+      </div>
+
+      <div class="w-full">
+        <label class="block mb-2 mt-2 text-sm font-medium text-gray-700">Responsable</label>
+        <input type="text" class="bg-gray-200 border font-normal border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed" formControlName="nombreTrabajadorDerivar" readonly/>
+      </div>
+
+      <div class="w-full">
+        <label class="block mb-2 mt-2 text-sm font-medium text-gray-700">Indicación</label>
+        <select  class="bg-gray-50 border border-gray-300 font-normal  text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="codIndicacionDerivar">
+          @for (indicacion of listIndicaciones; track $index) {
+            <option [value]="indicacion.iCodIndicacion">{{indicacion.cIndicacion}}</option>
+          }
+        </select>
+      </div>
+
+      <div class="w-full">
+        <label class="block mb-2 mt-2 text-sm font-medium text-gray-700">Enviar inmediato</label>
+        <select  class="bg-gray-50 border border-gray-300 font-normal  text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="nFlgEnvio">
+          <option value="0">No</option>
+          <option value="1">Si</option>
+        </select>
+      </div>
+
+      <div class="w-full">
+        <label class="block mb-2 mt-2 text-sm font-medium text-gray-700">Tipo</label>
+        <select  class="bg-gray-50 border border-gray-300 font-normal  text-gray-700 text-sm rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="flgTipoMovimiento">
+          <option value="0">Copia</option>
+          <option value="1">Original</option>
+        </select>
+      </div>
+
+      <div class="w-full">
+        <label class="block mb-2 mt-2 text-sm font-medium text-gray-700">Observaciones</label>
+        <textarea  rows="3" class="bg-gray-50 border border-gray-300 font-normal text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="observacionesDerivar"></textarea>
+        @if (myFormOficinaCopias.controls['observacionesDerivar'].getError('required') && myFormOficinaCopias.controls['observacionesDerivar'].touched) {
+          <span class="text-red-500 text-xs italic">Observaciones requerido</span>
+        }
+      </div>
+
+      <div class="w-full">
+        <div class="mt-4"></div>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <div align="end">
+        <button type="button" mat-stroked-button mat-dialog-close  style="color: #000;" >Cancelar</button>
+        <span class="mx-2"></span>
+        <button type="submit"  mat-flat-button style="background-color: #dc2626;" ><mat-icon>save</mat-icon>Aceptar</button>
+      </div>
+    </mat-dialog-actions>
+  </form>
+

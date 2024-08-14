@@ -1,0 +1,324 @@
+<div class="p-3">
+  <div style="background-color: #fff" class="rounded p-4">
+    <div class="font-extrabold text-lg mt-2 mb-2">Consulta - Entradas Generales (Seguimiento)</div>
+    <form autocomplete="off" [formGroup]="myFormBandejaEnlace" (ngSubmit)="onConsulta()" class="mt-4">
+      <mat-card class="w-full mt-2" appearance="outlined">
+        <mat-card-content>
+          <div class="mb-2 font-extrabold text-base" style="color: #b91c1b;">Criterios de Búsqueda</div>
+
+          <div class="flex gap-4 mt-3">
+
+            <div class="basis-1 sm:basis-1/4">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Nro Trámite</label>
+              <input type="text" class="bg-gray-50 border font-semibold border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="Codificacion"/>
+            </div>
+
+            <div class="basis-1 sm:basis-1/4">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Asunto</label>
+              <input type="text" class="bg-gray-50 border font-semibold border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="Asunto"/>
+            </div>
+
+            <div class="basis-1 sm:basis-1/4">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Tipo Documento</label>
+              <select class="bg-gray-50 border border-gray-300 font-semibold text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="CodigoTipoDocumento">
+                <option value="0">Seleccione</option>
+                @for (item of comboListadoTpoDcmto; track $index) {
+                  <option [value]="item.codTipoDoc">{{item.descTipoDoc}}</option>
+                }
+              </select>
+            </div>
+
+            <div class="basis-1 sm:basis-1/4">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Nro Documento</label>
+              <input type="text" class="bg-gray-50 border font-semibold border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="NumeroDocumento"/>
+            </div>
+
+          </div>
+
+          <div class="flex gap-4 mt-3">
+
+            <div class="basis-1 sm:basis-1/4">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Nro Referencia</label>
+              <input type="text" class="bg-gray-50 border font-semibold border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="Referencia"/>
+            </div>
+
+            <div class="basis-1 sm:basis-1/4">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Institución</label>
+              <input type="text" class="bg-gray-50 border font-semibold border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="Nombre"/>
+            </div>
+
+            <div class="basis-1 sm:basis-1/4">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Remitente</label>
+              <input type="text" class="bg-gray-50 border font-semibold border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="Remitente"/>
+            </div>
+
+            <div class="basis-1 sm:basis-1/4">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Oficina Origen</label>
+              <select class="bg-gray-50 border border-gray-300 font-semibold text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="CodigoOficinaOrigen">
+                <option value="0">Seleccione</option>
+                @for (oficina of comboOficinasPVD; track $index) {
+                  <option [value]="oficina.idOficina">{{oficina.nombreOficina}}</option>
+                }
+              </select>
+            </div>
+
+
+          </div>
+
+          <div class="flex gap-4 mt-3">
+
+            <div class="basis-1 sm:basis-1/4">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Oficina Destino</label>
+              <select class="bg-gray-50 border border-gray-300 font-semibold text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="CodigoOficinaDestino">
+                <option value="0">Seleccione</option>
+                @if (myFormBandejaEnlace.get('CodigoTipoRegistroDoc').value === '2') {
+                  @for (oficina of comboOfinasRcss; track $index) {
+                    <option [value]="oficina.iCodOficina">{{oficina.cNomOficina}}</option>
+                  }
+                }@else {
+                  @for (oficina of comboOficinasPVD; track $index) {
+                    <option [value]="oficina.idOficina">{{oficina.nombreOficina}}</option>
+                  }
+                }
+              </select>
+            </div>
+
+            <div class="basis-1 sm:basis-1/4">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Registrador</label>
+              <select class="bg-gray-50 border border-gray-300 font-semibold text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="CodigoRegistrador">
+                @for (registrador of comboRegistradores; track $index) {
+                  <option [value]="registrador.iCodTrabajador">{{registrador.cNombresTrabajador}} {{ registrador.cApellidosTrabajador}}</option>
+                }
+              </select>
+            </div>
+
+            <div class="basis-1 sm:basis-1/4">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Tema</label>
+              <select class="bg-gray-50 border border-gray-300 font-semibold text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="CodigoTema">
+                <option value="0">Seleccione</option>
+                @for (tema of listComboTemas; track $index) {
+                  <option [value]="tema.iCodTema">{{tema.cDesTema}} </option>
+                }
+              </select>
+            </div>
+
+            <div class="basis-1 sm:basis-1/4">
+              <label class="block mb-2 text-xs font-bold text-gray-700">CUI</label>
+              <input type="text" class="bg-gray-50 border font-semibold border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="CUI"/>
+            </div>
+
+          </div>
+
+          <div class="flex gap-4 mt-3">
+
+            <div class="basis-1 sm:basis-1/4">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Contrato</label>
+              <input type="text" class="bg-gray-50 border font-semibold border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="NumContrato"/>
+            </div>
+
+            <div class="basis-1 sm:basis-1/4">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Desde</label>
+              <div class="flex">
+
+                <input type="text" [matDatepicker]="picker" class="rounded-none rounded-s-lg font-semibold bg-gray-200 border border-gray-300 text-gray-500 text-xs  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed"   readonly formControlName="FechaInicio" >
+                <button type="button" (click)="picker.open()" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border rounded-e-0 border-gray-300 hover:bg-gray-200">
+                  <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill="currentColor" d="M6 1a1 1 0 0 0-2 0h2ZM4 4a1 1 0 0 0 2 0H4Zm7-3a1 1 0 1 0-2 0h2ZM9 4a1 1 0 1 0 2 0H9Zm7-3a1 1 0 1 0-2 0h2Zm-2 3a1 1 0 1 0 2 0h-2ZM1 6a1 1 0 0 0 0 2V6Zm18 2a1 1 0 1 0 0-2v2ZM5 11v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 11v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 15v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 15v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 11v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM5 15v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM2 4h16V2H2v2Zm16 0h2a2 2 0 0 0-2-2v2Zm0 0v14h2V4h-2Zm0 14v2a2 2 0 0 0 2-2h-2Zm0 0H2v2h16v-2ZM2 18H0a2 2 0 0 0 2 2v-2Zm0 0V4H0v14h2ZM2 4V2a2 2 0 0 0-2 2h2Zm2-3v3h2V1H4Zm5 0v3h2V1H9Zm5 0v3h2V1h-2ZM1 8h18V6H1v2Zm3 3v.01h2V11H4Zm1 1.01h.01v-2H5v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H5v2h.01v-2ZM9 11v.01h2V11H9Zm1 1.01h.01v-2H10v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM9 15v.01h2V15H9Zm1 1.01h.01v-2H10v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM14 15v.01h2V15h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM14 11v.01h2V11h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM4 15v.01h2V15H4Zm1 1.01h.01v-2H5v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H5v2h.01v-2Z"/>
+                  </svg>
+                </button>
+                <mat-datepicker #picker></mat-datepicker>
+
+                <input type="text"  class="rounded-none  font-semibold bg-gray-200 border border-gray-300 text-gray-500 text-xs  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed"   readonly  [ngxTimepicker]="pickerTime" [format]="24" formControlName="HoraIni">
+                <button type="button" (click)="pickerTime.open()" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border rounded-e-0 border-gray-300  rounded-e-lg hover:bg-gray-200">
+                  <svg class="w-5 h-5 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                  </svg>
+                </button>
+                <ngx-material-timepicker #pickerTime></ngx-material-timepicker>
+
+              </div>
+            </div>
+
+
+            <div class="basis-1 sm:basis-1/4">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Hasta</label>
+              <div class="flex">
+
+                <input type="text" [matDatepicker]="picker2" class="rounded-none rounded-s-lg font-semibold bg-gray-200 border border-gray-300 text-gray-500 text-xs  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed"   readonly formControlName="FechaFin" >
+                <button type="button" (click)="picker2.open()" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border rounded-e-0 border-gray-300 hover:bg-gray-200">
+                  <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill="currentColor" d="M6 1a1 1 0 0 0-2 0h2ZM4 4a1 1 0 0 0 2 0H4Zm7-3a1 1 0 1 0-2 0h2ZM9 4a1 1 0 1 0 2 0H9Zm7-3a1 1 0 1 0-2 0h2Zm-2 3a1 1 0 1 0 2 0h-2ZM1 6a1 1 0 0 0 0 2V6Zm18 2a1 1 0 1 0 0-2v2ZM5 11v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 11v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 15v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 15v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 11v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM5 15v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM2 4h16V2H2v2Zm16 0h2a2 2 0 0 0-2-2v2Zm0 0v14h2V4h-2Zm0 14v2a2 2 0 0 0 2-2h-2Zm0 0H2v2h16v-2ZM2 18H0a2 2 0 0 0 2 2v-2Zm0 0V4H0v14h2ZM2 4V2a2 2 0 0 0-2 2h2Zm2-3v3h2V1H4Zm5 0v3h2V1H9Zm5 0v3h2V1h-2ZM1 8h18V6H1v2Zm3 3v.01h2V11H4Zm1 1.01h.01v-2H5v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H5v2h.01v-2ZM9 11v.01h2V11H9Zm1 1.01h.01v-2H10v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM9 15v.01h2V15H9Zm1 1.01h.01v-2H10v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM14 15v.01h2V15h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM14 11v.01h2V11h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM4 15v.01h2V15H4Zm1 1.01h.01v-2H5v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H5v2h.01v-2Z"/>
+                  </svg>
+                </button>
+                <mat-datepicker #picker2></mat-datepicker>
+
+                <input type="text"  class="rounded-none  font-semibold bg-gray-200 border border-gray-300 text-gray-500 text-xs  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed"   readonly  [ngxTimepicker]="pickerTime2" [format]="24" formControlName="HoraFin">
+                <button type="button" (click)="pickerTime2.open()" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border rounded-e-0 border-gray-300  rounded-e-lg hover:bg-gray-200">
+                  <svg class="w-5 h-5 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                  </svg>
+                </button>
+                <ngx-material-timepicker #pickerTime2></ngx-material-timepicker>
+
+              </div>
+            </div>
+
+            <div class="basis-1 sm:basis-1/4">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Tipo Registro</label>
+              <select class="bg-gray-50 border border-gray-300 font-semibold text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 " formControlName="CodigoTipoRegistroDoc">
+                <option value="1">PVD</option>
+                <option value="2">RCC</option>
+              </select>
+            </div>
+
+
+          </div>
+
+        </mat-card-content>
+
+        <mat-card-footer class="p-4 rounded-lg flex justify-center gap-2 bg-gray-100 mt-5" >
+          <button type="submit" mat-flat-button style="background-color: #dc2626;" > <mat-icon>search</mat-icon> Buscar</button>
+          <button type="button" (click)="reset()" mat-flat-button style="background-color: #dc2626;" > <mat-icon>undo</mat-icon> Restablecer</button>
+        </mat-card-footer>
+
+
+      </mat-card>
+    </form>
+
+    <mat-card class="mt-4" appearance="outlined">
+      <div class="table-responsive px-3 mt-3">
+        <table mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="n_tramite">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Nº Trámite	 </th>
+            <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;" align="center">
+              <div class="py-2">
+                <div class="border border-blue-700 rounded-lg px-2 py-1 font-bold text-xs text-center" style=" box-shadow: 2px 3px 3px #888888; color: #000;">{{element.cCodificacion}}</div>
+                <div class="text-green-700 mt-1 text-center font-semibold"> @if (element.cParteDiario) { PD.: {{element.cParteDiario}} } </div>
+                <div class="text-center">
+                  @switch (element.nTipoPresentacion) {
+                    @case (1) { Pre.: Físico}
+                    @case (2) { Pre.: Electrónico}
+                  }
+                </div>
+                <div class="text-center">
+                  @switch (element.nDistribucion) {
+                    @case (1) { Dist.: Original}
+                    @case (2) { Dist.: Copia}
+                  }
+                </div>
+                <div class="text-center">
+                  @switch (element.nConfidencialidad) {
+                    @case (1) { Confid.: Normal}
+                    @case (2) { Confid.: <span class="text-red-700">Reservada</span> }
+                  }
+                </div>
+
+                <div style="border-top: 1px solid rgb(202, 202, 202);" ></div>
+
+                <div class="text-center flex flex-col">
+                  <span class="text-gray-950">Registrador</span>
+                  <span style="font-size: 9px;"> {{element.registradorNombres}} {{element.registradorApellidos}}</span>
+                </div>
+
+                <div class="text-center text-green-400">
+                  <span>Tema: </span>
+                  <span>{{element.cDesTema}}</span>
+                </div>
+
+                <div class="text-center text-red-500">
+                  <span>C.U.I: </span>
+                  <span>{{element.codCUI}}</span>
+                </div>
+
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="documento">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Documento</th>
+            <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500; vertical-align: top;">
+              <div class="py-2">
+                <div class="text-gray-800">{{element.cDescTipoDoc}}</div>
+                <div>{{element.cNroDocumento}}</div>
+                <div class="text-red-600 font-medium text-xs">@if (element.nFlgEnvio == 0) { PENDIENTE DE DERIVACIÓN }</div>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="remitente">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Remitente</th>
+            <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500; vertical-align: top;">
+              <div class="py-2">
+                <div  class="text-gray-800">{{element.remitente}}</div>
+                <div>{{element.cNomRemite}}</div>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="fecha_registro">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;">Fecha de registro</th>
+            <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500; vertical-align: top;">
+              <div class="py-2">
+                {{element.fFecRegistro | date: 'dd-MM-yyyy HH:mm' }}
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="oficina_derivada">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;">Oficina Derivada</th>
+            <td mat-cell *matCellDef="let element;let i=index" style="font-size: 11px; color: #808080; font-weight: 500;vertical-align: top;">
+              <div class="py-2">
+                @if (infoRegistroOficinas && infoRegistroOficinas[i] ) { {{infoRegistroOficinas[i].cNomOficina}} }
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="asunto">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;">Asunto</th>
+            <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500; vertical-align: top;">
+              <div class="py-2">
+                {{element.cAsunto}}
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;">Acciones</th>
+            <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500; vertical-align: top;">
+              <div class="py-2">
+                <div class="flex gap-2 flex-wrap">
+                  <a (click)="redirectDetalle(element.iCodTramite)" style="cursor: pointer;"  matTooltip="Ver Detalle de Trámite"><svg class="w-6 h-6 text-blue-700 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
+                    <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                  </svg>
+                  </a>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          <tr class="mat-row" *matNoDataRow >
+            @if (isFetchingData) {
+              <td colspan="6" >
+                  <div style="display: flex; justify-content: center;" class="p-4">
+                      <mat-spinner></mat-spinner>
+                  </div>
+              </td>
+            }@else {
+              <td class="mat-cell p-3 text-red-500" colspan="7"  align="center" style="font-weight: 500;">No se encontraron registros </td>
+            }
+          </tr>
+
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+          showFirstLastButtons
+          aria-label="Select page of periodic elements">
+        </mat-paginator>
+
+      </div>
+    </mat-card>
+  </div>
+</div>
