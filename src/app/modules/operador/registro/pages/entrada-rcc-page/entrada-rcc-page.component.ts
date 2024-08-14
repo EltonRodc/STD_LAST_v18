@@ -142,7 +142,7 @@ export class EntradaRccPageComponent implements OnInit{
 
   ngOnInit(): void {
     this.authData = this.authDataService.getAuthData();
-    console.log(Math.random().toString(36).slice(-8),Math.random().toString(36).slice(-8).toUpperCase())
+    // console.log(Math.random().toString(36).slice(-8),Math.random().toString(36).slice(-8).toUpperCase())
     if(this.authData){
       this.myFormRegistroRCC.patchValue({
         idUsuario : this.authData.idUsuario,

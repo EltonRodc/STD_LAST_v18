@@ -131,15 +131,6 @@ export class EntradasGeneralesComponent implements OnInit, AfterViewInit{
       (rpta)=>{
         // console.log(rpta)
         this.consultaBndjEnlace = rpta;
-
-        var arrayICodTramite = this.consultaBndjEnlace.map(function(objeto) {
-          return objeto.iCodTramite;
-        });
-        forkJoin(arrayICodTramite.map(idTramite => this.registroPvdService.getDetalleSegundoPaso(idTramite))).subscribe(
-          (respuestas) => {
-            this.infoRegistroOficinas = respuestas;
-          },
-        );
         this.dataSource.data = this.consultaBndjEnlace;
         this.isFetchingData = false;
       }
