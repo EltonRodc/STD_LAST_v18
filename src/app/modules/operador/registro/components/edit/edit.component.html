@@ -1,0 +1,122 @@
+<div class="p-3">
+  <div style="background-color: #fff" class="rounded p-4">
+    <div class="font-extrabold text-lg mt-2 mb-2">Actualizacion de Registro</div>
+    @if (detalle_edit) {
+      <mat-card class="w-full mt-2" appearance="outlined">
+        <mat-card-content>
+          <div class="mb-2 font-extrabold text-base" style="color: #b91c1b;">Datos Principales</div>
+          <div class="flex gap-4 mt-3">
+
+            <div class="basis-1 sm:basis-1/5">
+              <div class="block mb-2 text-xs font-bold text-gray-700">Nro Trámite</div>
+              <div class="text-blue-900 text-xs font-extrabold">{{detalle_edit.cCodificacion}}</div>
+            </div>
+
+            <div class="basis-1 sm:basis-1/5">
+              <div class="block mb-2 text-xs font-bold text-gray-700">Tipo</div>
+              <div class="text-gray-500 text-xs font-semibold">
+                @switch (detalle_edit.nFlgClaseDoc) {
+                  @case (2) {Entrada sin TUPA}
+                  @case (3) {Anexo}
+                }
+              </div>
+            </div>
+
+            <div class="basis-1 sm:basis-1/5">
+              <div class="block mb-2 text-xs font-bold text-gray-700">Estado</div>
+              <div class="text-xs font-extrabold">
+                @if (detalle_edit.nFlgEnvio == 1) { <span class="text-green-600">Enviado</span>}
+                @else { <div class="flex gap-2"> <span class="text-red-600">No Enviado</span> <span matTooltip="Enviar Documento" class="bg-red-600 text-white px-2 rounded" style="cursor: pointer;" (click)="enviar_doc()">Enviar</span></div> }
+              </div>
+            </div>
+
+            <div class="basis-1 sm:basis-1/5">
+              <div class="block mb-2 text-xs font-bold text-gray-700">Registrado</div>
+              <div class="text-gray-500 text-xs font-semibold">{{detalle_edit.fFecRegistro | date:'dd-MM-yyyy HH:mm' }}</div>
+            </div>
+
+            <div class="basis-1 sm:basis-1/5">
+              <div class="block mb-2 text-xs font-bold text-gray-700">Actualizado</div>
+              <div class="text-gray-500 text-xs font-semibold">{{detalle_edit.fFecActualizacion | date:'dd-MM-yyyy HH:mm' }}</div>
+            </div>
+
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+    <mat-card class="w-full mt-3" appearance="outlined">
+      <mat-card-content>
+        <div class="mb-2 font-extrabold text-base" style="color: #b91c1b;">Datos de Documento</div>
+        <form>
+          <div class="flex gap-4 mt-3">
+            <div class="basis-1 sm:basis-1/3">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Tipo Documental</label>
+              <select class="bg-gray-50 border border-gray-300 font-semibold text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5" [formControl]="dataTipoDoc">
+                @for (tipoDoc of listTipoDocumental; track $index) {
+                  <option [value]="tipoDoc.idTipoDocumental">{{tipoDoc.descripcion}}</option>
+                }
+              </select>
+            </div>
+
+            <div class="basis-1 sm:basis-1/3">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Nº Documento</label>
+              <input type="text" class="bg-gray-50 border font-normal border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5" [formControl]="dataNroDocumento"/>
+            </div>
+
+            <div class="basis-1 sm:basis-1/3" style="display: flex; justify-content: end; align-items: end;">
+              <button (click)="updateRegistro(1)" type="button" mat-flat-button style="background-color: #dc2626;" > <mat-icon>save</mat-icon> Guardar Tipo/Nro</button>
+            </div>
+
+          </div>
+        </form>
+        <form>
+          <div class="flex gap-4 mt-3">
+            <div class="basis-1 sm:basis-1/3">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Institución</label>
+              <div class="flex">
+                <input type="text" class="rounded-none rounded-s-lg font-normal bg-gray-200 border border-gray-300 text-gray-500 text-xs  focus:ring-red-700 focus:border-red-700 block w-full p-2.5 cursor-not-allowed" readonly [formControl]="dataNomInstitucion">
+                <button (click)="selInstitucion()" type="button" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border rounded-e-0 rounded-e-lg border-gray-300 hover:bg-gray-200">
+                  <svg class="w-5 h-5 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="basis-1 sm:basis-1/3">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Remite</label>
+              <input type="text" class="bg-gray-50 border font-normal border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5" [formControl]="dataRemite"/>
+            </div>
+            <div class="basis-1 sm:basis-1/3" style="display: flex; justify-content: end; align-items: end;">
+              <button (click)="updateRegistro(6)" type="button" mat-flat-button style="background-color: #dc2626;" > <mat-icon>save</mat-icon> Guardar Remitente</button>
+            </div>
+          </div>
+        </form>
+
+        <form>
+          <div class="flex gap-2 mt-3">
+            <div class="basis-1 sm:basis-2/3">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Asunto</label>
+              <input type="text" class="bg-gray-50 border font-normal border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5" [formControl]="dataAsunto"/>
+            </div>
+            <div class="basis-1 sm:basis-1/3" style="display: flex; justify-content: end; align-items: end;">
+              <button (click)="updateRegistro(4)" type="button" mat-flat-button style="background-color: #dc2626;" > <mat-icon>save</mat-icon> Actualizar Asunto</button>
+            </div>
+          </div>
+        </form>
+
+        <form>
+          <div class="flex gap-2 mt-3">
+            <div class="basis-1 sm:basis-2/3">
+              <label class="block mb-2 text-xs font-bold text-gray-700">Observaciones</label>
+              <input type="text" class="bg-gray-50 border font-normal border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5" [formControl]="dataObservaciones"/>
+            </div>
+            <div class="basis-1 sm:basis-1/3" style="display: flex; justify-content: end; align-items: end;">
+              <button (click)="updateRegistro(5)" type="button" mat-flat-button style="background-color: #dc2626;" > <mat-icon>save</mat-icon> Actualizar Observaciones</button>
+            </div>
+          </div>
+        </form>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

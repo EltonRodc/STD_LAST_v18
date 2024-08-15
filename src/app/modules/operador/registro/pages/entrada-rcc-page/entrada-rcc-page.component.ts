@@ -32,6 +32,8 @@ import { DatePipe } from '@angular/common';
 import { EntradasGeneralesService } from '../../../consulta/services/entradas-generales.service';
 import { DataOficinasRcc } from '../../../consulta/interfaces/entradas-generales.interface';
 import { SearchContratosComponent } from '../../components/search-contratos/search-contratos.component';
+import { PerfilesService } from '../../../../../core/services/perfiles.service';
+import { DatosPrincipales } from '../../../../../core/interfaces/perfiles.interface';
 
 @Component({
   selector: 'app-entrada-rcc-page',
@@ -58,6 +60,7 @@ import { SearchContratosComponent } from '../../components/search-contratos/sear
 })
 export class EntradaRccPageComponent implements OnInit{
 
+  public datosPrincipales: DatosPrincipales | null = null;
   @ViewChild('stepper') private myStepper!: MatStepper;
   public year = new Date().getFullYear();
   public authData!: DataAuth | null;
@@ -132,6 +135,7 @@ export class EntradaRccPageComponent implements OnInit{
     nombreResponsbl: [""]
   })
 
+  private perfilesService = inject(PerfilesService);
   private authDataService = inject(AuthDataService);
   private registroPvdService = inject(RegistroPvdService);
   private docIntOfService = inject(DocIntOfService);
@@ -141,12 +145,13 @@ export class EntradaRccPageComponent implements OnInit{
   constructor(private fb: FormBuilder,public dialog: MatDialog){}
 
   ngOnInit(): void {
+    this.datosPrincipales = this.perfilesService.getDatosPrincipales();
     this.authData = this.authDataService.getAuthData();
     // console.log(Math.random().toString(36).slice(-8),Math.random().toString(36).slice(-8).toUpperCase())
-    if(this.authData){
+    if(this.authData && this.datosPrincipales){
       this.myFormRegistroRCC.patchValue({
         idUsuario : this.authData.idUsuario,
-        idOficinaUsuario: this.authData.idOficina,
+        idOficinaUsuario: this.datosPrincipales.id_oficina,
         fechaDocumento: moment().toDate(),
         codigoBarra: "1145652810",
         password: Math.random().toString(36).slice(-8),

@@ -21,9 +21,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { DatePipe } from '@angular/common';
-import { forkJoin } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
+
+//Excel
+import * as ExcelJS from 'exceljs';
+//PDF
+import pdfMake from '../../../../../core/pdf/pdfmake-config';
 
 @Component({
   selector: 'app-entradas-generales',
@@ -43,6 +47,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatProgressSpinner,
     MatPaginator,
     DatePipe,
+    MatTooltipModule,
+    RouterLink,
     MatTooltipModule
   ],
   templateUrl: './entradas-generales.component.html',
@@ -60,6 +66,8 @@ export class EntradasGeneralesComponent implements OnInit, AfterViewInit{
   public infoRegistroOficinas: DataDocumentoRegistrado[] = [];
   public comboOfinasRcss: DataOficinasRcc[] = [];
 
+  public codigo_trabajador_registro: number = 0;
+
   public myFormBandejaEnlace:FormGroup =this.fb.group({
     FechaInicio: [""],                        //14 input
     FechaFin: [""],                           //15 input
@@ -69,7 +77,7 @@ export class EntradasGeneralesComponent implements OnInit, AfterViewInit{
     CodigoTupa: [0],
     CodigoTipoDocumento: [0],                 //Tercer Input
     CodigoRegistrador: [0],                   // 10 input
-    Nombre: [""],                             // Institución 6 INPUT
+    Nombre: [""],                              // Institución 6 INPUT
     Remitente: [""],                          // Institución 7 INPUT
     CodigoOficinaOrigen: [0],                 // Octavo input
     CodigoOficinaDestino: [0],                // Nueve Input
@@ -121,6 +129,7 @@ export class EntradasGeneralesComponent implements OnInit, AfterViewInit{
 
   onConsulta(){
     this.isFetchingData = true;
+    this.codigo_trabajador_registro = this.myFormBandejaEnlace.get('CodigoRegistrador').value;
     const {FechaInicio,FechaFin,Codificacion,Referencia,Asunto,CodigoTupa,CodigoTipoDocumento,CodigoRegistrador,
       Nombre,Remitente,CodigoOficinaOrigen,CodigoOficinaDestino,NumeroDocumento,CodigoTema,
       CUI,Campo,Orden,NumContrato,HoraIni,HoraFin,CodigoTipoRegistroDoc} = this.myFormBandejaEnlace.value;
@@ -213,5 +222,228 @@ export class EntradasGeneralesComponent implements OnInit, AfterViewInit{
     window.open(url, '_blank');
   }
 
+  reporte_excel(){
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('consultaEntradaGeneral_L');
+
+    // Combinación de celdas y agregación de datos
+    worksheet.mergeCells('A1:H2');
+    worksheet.getCell('A1').value = 'REPORTE - ENTRADAS GENERALES (L)';
+    worksheet.getCell('A1').alignment = { vertical: 'middle', horizontal: 'center' };
+
+    worksheet.mergeCells('A3:F3');
+    worksheet.getCell('A3').value = 'MESA DE PARTES - SEDE CENTRAL';
+
+    worksheet.mergeCells('G3:H3');
+    worksheet.getCell('G3').value = `STD, ${new Date().toLocaleDateString()}`;
+    worksheet.getCell('G3').alignment = { vertical: 'middle', horizontal: 'right' };
+
+    worksheet.mergeCells('A4:H4');
+    worksheet.getCell('A4').value = 'GENERADO POR : SONIA DIAZ GARCIA';
+
+    worksheet.mergeCells('A5:H5');
+
+    const headers = [
+      'Nº Trámite', 'Nº Parte Diario', 'Registrado por', 'Tipo Documento', 'Nº Documento', 'Institución',
+      'Atención a', 'Registrado el', 'Asunto', 'Derivado el','Oficina Derivar','Oficina Actual','Copia a Oficina',
+      'Estado','Doc. de Respuesta','Fecha','Oficina',
+    ];
+
+    worksheet.insertRow(6, headers);
+
+    // const columnWidths = [15, 18, 18, 20, 18, 30, 30, 30, 30, 30, 30, 30, 30, 30, 20, 10, 10];
+    // columnWidths.forEach((width, index) => {
+    //   worksheet.getColumn(index + 1).width = width;
+    // });
+
+    if (this.consultaBndjEnlace && this.consultaBndjEnlace.length > 0){
+      this.consultaBndjEnlace.forEach(data => {
+
+        const fechaRegistro = data.fFecRegistro
+        ? moment(data.fFecRegistro).format('DD/MM/YYYY HH:mm')
+        : 'Sin Registro';
+
+        const row =[
+          data.cCodificacion.trim(),
+          data.cParteDiario.trim(),
+          data.registradorApellidos.trim() + ' ' + data.registradorNombres.trim(),
+          data.cDescTipoDoc.trim(),
+          data.cNroDocumento.trim(),                                   //Numero de Documento
+          data.remitente.trim(),                                       //Institucion
+          data.cNomRemite.trim(),                                      //Atencion a
+          fechaRegistro.trim(),
+          data.cAsunto.trim(),
+          fechaRegistro.trim(),                                        //Fecha de Derivo
+          data.oficDerivo.trim(),                                      //Oficina Derivo
+          '',
+          '',
+          '',
+          '',
+          '',
+          '',
+        ]
+        const newRow = worksheet.addRow(row);
+        newRow.eachCell((cell) => {
+          cell.font = { size: 10 };  // Ajusta el tamaño de la fuente
+        });
+
+      })
+    }
+    worksheet.columns.forEach((column) => {
+      let maxLength = 0;
+      column.eachCell({ includeEmpty: true }, (cell) => {
+        const cellValue = cell.value ? cell.value.toString() : '';
+        maxLength = Math.max(maxLength, cellValue.length);
+      });
+      column.width = maxLength + 2; // Ajusta el ancho con un pequeño margen
+    });
+
+    //Estilos
+    worksheet.getRow(1).font = { bold: true, size: 16 };
+    worksheet.getRow(3).font = { size: 12 };
+    worksheet.getRow(4).font = { size: 12 };
+
+    worksheet.getRow(6).eachCell((cell) => {
+      cell.font = { bold: true };
+      cell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'D8D8D8' }
+      };
+      cell.alignment = { vertical: 'middle', horizontal: 'center' };
+    });
+
+    //Descargar
+    workbook.xlsx.writeBuffer().then((buffer: ArrayBuffer) => {
+      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'ConsultaEntradaGeneral_L.xlsx';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
+
+  }
+
+
+  async reporte_pdf() {
+    const base64Image = await this.convertFileToBase64('/images/logopdf.png');
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getFullYear()}`;
+
+    const documentDefinition: any = {
+      pageOrientation: 'landscape',
+      content: [
+        {
+          columns: [
+            {
+              image: base64Image,
+              width: 180
+            },
+            {
+              text: formattedDate,
+              alignment: 'right', fontSize: 10,bold: true,
+            }
+          ]
+        },
+        {
+          text: ' ',
+        },
+        {
+          text: 'Lista de Documentos por Enviar por Oficinas',
+          alignment: 'center', fontSize: 12,bold: true,
+        },
+        {
+          margin: [0, 10, 0, 0],
+          table: {
+            headerRows: 1,
+            // widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+            widths: ['15%', '15%', '20%', '15%', '20%', '15%'],
+            body: [
+              // Cabeceras de la tabla
+              [
+                { text: 'Nº Trámite',style: 'tableHeader'},
+                { text: 'Nº Documento', style: 'tableHeader' },
+                { text: 'Institución', style: 'tableHeader' },
+                { text: 'Fecha Derivo', style: 'tableHeader' },
+                { text: 'Oficina Derivo', style: 'tableHeader' },
+                { text: 'Adjunto', style: 'tableHeader' }
+              ],
+            ]
+          },
+          layout: {
+            hLineColor: function() { return '#d0d0d0'; },
+            vLineColor: function() { return '#d0d0d0'; }
+          }
+        }
+      ],
+      styles: {
+        tableHeader: {
+          fillColor: '#D3D3D3',
+          bold: true,
+          fontSize: 10,
+          alignment: 'center',
+        },
+        tableContent : {
+          fontSize: 9,
+          margin: [0, 2, 0, 0],
+        },
+      },
+      footer: function(currentPage, pageCount, pageSize) {
+        return [
+          {
+            columns: [
+              {
+                text: 'SONIA DIAZ GARCIA',
+                alignment: 'left',
+                fontSize: 10
+              },
+              {
+                text: `Página ${currentPage} de ${pageCount}`,
+                alignment: 'right',
+                fontSize: 10
+              }
+            ],
+            margin: [40, 0]
+          }
+        ];
+      },
+    }
+
+    const formatDate = (date: Date) => {
+      return date ? moment(date).format('DD-MM-YYYY HH:mm') : '';
+    };
+
+    this.consultaBndjEnlace.forEach((data, index) => {
+      documentDefinition.content[3].table.body.push([
+        { text: data.cCodificacion ,style: 'tableContent'},
+        { text: data.cNroDocumento ,style: 'tableContent'},
+        { text: data.remitente ,style: 'tableContent'},
+        { text: formatDate(data.fFecRegistro) ,style: 'tableContent'},
+        { text: data.oficDerivo ,style: 'tableContent'},
+        { text: data.archivo_Fisico ,style: 'tableContent'},
+      ])
+    })
+
+
+    pdfMake.createPdf(documentDefinition).open();
+  }
+
+  convertFileToBase64(filePath: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        const reader = new FileReader();
+        reader.onloadend = function() {
+          resolve(reader.result as string);
+        };
+        reader.readAsDataURL(xhr.response);
+      };
+      xhr.open('GET', filePath);
+      xhr.responseType = 'blob';
+      xhr.send();
+    });
+  }
 
 }

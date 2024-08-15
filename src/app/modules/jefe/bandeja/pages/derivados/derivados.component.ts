@@ -59,8 +59,9 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
     Entrada : [0],  //Ok
     Interno : [0],  //Ok
     Salida:[0],     //Ok
-    fechaDesde:[moment().subtract(7, 'days').toDate()],
-    // fechaDesde: [moment().subtract(4, 'years').toDate()],
+    // fechaDesde:[moment().subtract(7, 'days').toDate()],
+    // fechaDesde:[moment().subtract(28, 'days').toDate()],
+    fechaDesde: [moment().subtract(4, 'years').toDate()],
     fechaHasta:[moment().toDate()], //Ok
     horaInicio:["00:00"], //Ok
     horaFin:["23:59"],  //Ok
@@ -127,10 +128,13 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
         }
     )
 
-    this.bandejaDerivadosService.getListadoExcel(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15).subscribe(
+    const p6_excel = p6 === "%%" ? "" : p6;
+    const p7_excel = p7 === "%%" ? "" : p7;
+
+    this.bandejaDerivadosService.getListadoExcel(p1,p2,p3,p4,p5,p6_excel,p7_excel,p8,p9,p10,p11,p12,p13,p14,p15).subscribe(
       (rpta)=>{
         // console.log(rpta)
-        // this.listadoExcelDerivados = rpta;
+        this.listadoExcelDerivados = rpta;
         this.listadoExcelDerivados = rpta.sort((a, b) => {
           if (a.fFecDerivar > b.fFecDerivar) {
             return -1;
@@ -254,15 +258,15 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
           moment(data.fFecDocumento).format('MM'),          // Ok Mes
           moment(data.fFecDocumento).format('YYYY'),        // Ok Año
           tipoDocMap[data.nFlgTipoDoc] || 'Desconocido',    // Ok Tipo
-          '-Tramite-',                                      // Modificar Trámite
+          data.tramite,                                      // Modificar Trámite
           data.documento,                                   // Ok Tipo documento
           data.cCodificacion,                               // Ok Nro Documento
-          '- Of Destino-',                                  // Modificar Of Destino
+          data.oficinaDerivada,                                  // Modificar Of Destino
           '- Responsable -',                                // Responsable
           ',',                                              // Asignado
           ',',                                              // Trab Archivado
           data.cAsunto,                                     // Ok Asunto
-          '',                                               // Nombre Razon Social
+          data.rznSocial,                                               // Nombre Razon Social
           moment(data.fFecDocumento).format('DD/MM/YYYY HH:mm'),  // Fecha Documento
           moment(data.fFecDerivar).format('DD/MM/YYYY HH:mm'),  // Fecha Derivado
           fechaRecepcion,                                   // Fecha Recepción
@@ -422,7 +426,7 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
       documentDefinition.content[4].table.body.push([
         { text: (index + 1).toString(),style: 'tableContent',alignment: 'center',},
         { stack: [
-          { text: 'I012320933', alignment: 'center', color:'blue',style: 'tableContent'},
+          { text: data.tramite, alignment: 'center', color:'blue',style: 'tableContent'},
           { text: data.documento, alignment: 'center',style: 'tableContent' },
           { text: data.cNumDocumentoDerivar, fontSize: 8,alignment: 'center', color:'#949494',margin: [0, 2, 0, 0],},
           { text: formatDate(data.fFecDerivar), fontSize: 8,alignment: 'center', color:'#949494',margin: [0, 2, 0, 0],}
@@ -430,8 +434,10 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
         },
         { text: data.cAsuntoDerivar ,style: 'tableContent'},
         { stack:[
-          { text: data.iCodOficinaDerivar.toString(),style: 'tableContent',alignment: 'center',},
-          { text: data.iCodTrabajadorDerivar.toString(),style: 'tableContent',alignment: 'center',},
+          // { text: data.iCodOficinaDerivar.toString(),style: 'tableContent',alignment: 'center',},
+          // { text: data.iCodTrabajadorDerivar.toString(),style: 'tableContent',alignment: 'center',},
+          { text: data.oficinaDerivada,style: 'tableContent',alignment: 'center',},
+          // { text: data.iCodTrabajadorDerivar.toString(),style: 'tableContent',alignment: 'center',},
         ] },
         { text: getEstado(data) ,style: 'tableContent',alignment: 'center'},
         {

@@ -23,5 +23,5 @@ export class AuthService {
     return this.http.get<Auth>(urlWithParams, { params }).pipe(
         map ( (rpta)=> rpta.value.data[0])
     )
-}
+  }
 }

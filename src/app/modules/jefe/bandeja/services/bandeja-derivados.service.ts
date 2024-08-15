@@ -50,6 +50,7 @@ export class BandejaDerivadosService {
     return this.http.get<BandejaTablaDerivados>(urlWithParams, { params: params }).pipe(
       map ( (rpta)=> rpta.data )
     )
+
   }
 
   getListadoExcel(Entrada:number,Interno:number,Salida:number,fDesde:string,fHasta:string,Codificacion:string,Asunto:string,

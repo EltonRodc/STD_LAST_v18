@@ -91,7 +91,7 @@ export interface DataBandejaExcelDerivados {
   iCodOficinaDerivar:      number;
   fFecRecepcion:           Date | null;
   iCodMovimiento:          number;
-  fFecDocumento:           Date | null;
+  fFecDocumento:           Date;
   fFecFinalizar:           Date | null;
   iCodTrabajadorDerivar:   number;
   iCodTrabajadorDelegado:  number;
@@ -99,6 +99,9 @@ export interface DataBandejaExcelDerivados {
   cDescTipoDoc:            string;
   cNumDocumentoDerivar:    string;
   iCodTramiteDerivar:      number;
+  tramite:                 string;
+  oficinaDerivada:         string;
+  rznSocial:               string;
 }
 
 //Excel Oficina Derivada

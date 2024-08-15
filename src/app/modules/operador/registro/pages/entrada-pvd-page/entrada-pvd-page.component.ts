@@ -29,6 +29,8 @@ import { forkJoin } from 'rxjs';
 import { EnvioOficinasCopiasComponent } from '../../components/envio-oficinas-copias/envio-oficinas-copias.component';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { DatosPrincipales } from '../../../../../core/interfaces/perfiles.interface';
+import { PerfilesService } from '../../../../../core/services/perfiles.service';
 
 @Component({
   selector: 'app-entrada-pvd-page',
@@ -55,6 +57,7 @@ import { DatePipe } from '@angular/common';
 })
 export class EntradaPvdPageComponent implements OnInit{
 
+  public datosPrincipales: DatosPrincipales | null = null;
   @ViewChild('stepper') private myStepper!: MatStepper;
   public year = new Date().getFullYear();
   public authData!: DataAuth | null;
@@ -129,6 +132,7 @@ export class EntradaPvdPageComponent implements OnInit{
     nombreResponsbl: [""]
   })
 
+  private perfilesService = inject(PerfilesService);
   private authDataService = inject(AuthDataService);
   private registroPvdService = inject(RegistroPvdService);
   private docIntOfService = inject(DocIntOfService)
@@ -137,12 +141,12 @@ export class EntradaPvdPageComponent implements OnInit{
   constructor(private fb: FormBuilder,public dialog: MatDialog){}
 
   ngOnInit(): void {
+    this.datosPrincipales = this.perfilesService.getDatosPrincipales();
     this.authData = this.authDataService.getAuthData();
-
-    if(this.authData){
+    if(this.authData && this.datosPrincipales){
       this.myFormRegistroPVD.patchValue({
         idUsuario : this.authData.idUsuario,
-        idOficinaUsuario: this.authData.idOficina,
+        idOficinaUsuario: this.datosPrincipales.id_oficina,
         fechaDocumento: moment().toDate(),
         codigoBarra: "1145652810",
         password: Math.random().toString(36).slice(-8),
@@ -154,7 +158,7 @@ export class EntradaPvdPageComponent implements OnInit{
     this.getlistComboTemas();
     this.getListComboIndicaciones();
     this.getListComboOficinasDeriv();
-
+    // console.log(this.myFormRegistroPVD.value)
     // this.getDetalleDocumentoRegistrado(1334167);
     // this.getListReferencias(1334167);
     // this.listDocComplementario(1334167);
