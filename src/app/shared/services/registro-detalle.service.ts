@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { DataDetalleGeneral, DataDetalleSeguimiento, DataRemitente, DetalleGeneral, DetalleSeguimiento, Remitente } from '../interfaces/registro-detalle.interface';
+import { Adjuntos, DataAdjuntos, DataDetalleGeneral, DataDetalleSeguimiento, DataRemitente, DetalleGeneral, DetalleSeguimiento, Remitente } from '../interfaces/registro-detalle.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +33,15 @@ export class RegistroDetalleService {
       .set('CodTramite',CodTramite)
     const urlWithParams = `${this.api_secondary}/DetTramiteSegTramite/ListaSegTrmitePrincipal`;
     return this.http.get<DetalleSeguimiento>(urlWithParams, { params: params }).pipe(
+      map ( (rpta)=> rpta.data )
+    )
+  }
+
+  getDocAdjuntos(CodTramite:number):Observable<DataAdjuntos[]>{
+    const params = new HttpParams()
+      .set('CodTramite',CodTramite)
+    const urlWithParams = `${this.api_secondary}/DetTramiteDtosGenerales/ListaDtosGAdjuntos`;
+    return this.http.get<Adjuntos>(urlWithParams, { params: params }).pipe(
       map ( (rpta)=> rpta.data )
     )
   }

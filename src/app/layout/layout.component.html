@@ -1,6 +1,6 @@
 <mat-sidenav-container style="height: 100vh; display: flex;">
 
-  <mat-sidenav #sidenav [opened]="true" mode="side" style="height: 100%; max-width: 280px; background-color: #1e293b; border-radius: 0px;" >
+  <mat-sidenav #sidenav [opened]="true" mode="side" class="contenedor_sidenav">
     <div class="py-5 px-6">
       <img src="/images/logo.png" alt="logo" class="mt-1" />
     </div>
@@ -28,7 +28,7 @@
       <button mat-icon-button class="mat-mdc-button-touch-target" (click)="sidenav.toggle()" style="color: #fff;">
         <mat-icon>menu</mat-icon>
       </button>
-      <div class="flex items-center gap-2 ml-5"><img src="/images/escudo.png" class="w-8"><span class="contenedor_header">PVD | SISTEMA DE TRAMITE DOCUMENTARIO</span></div>
+      <div class="flex items-center gap-2 ml-5"><img src="/images/escudo.png" class="w-8"><span class="contenedor_header" style="font-size: 14px;">PVD | SISTEMA DE TRAMITE DOCUMENTARIO</span></div>
       <div style="flex: 1;"></div>
 
       <div style="display: flex; align-items: center;">

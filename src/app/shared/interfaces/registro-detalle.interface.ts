@@ -125,3 +125,19 @@ export interface DataDetalleSeguimiento {
   nNumFolio:                 number;
   nRequiereRpta:             number;
 }
+
+export interface Adjuntos {
+  recordsTotal:    number;
+  recordsFiltered: number;
+  data:            DataAdjuntos[];
+  error:           string;
+}
+
+export interface DataAdjuntos {
+  iCodDigital:         number;
+  cRuta:               string;
+  nTipo:               number;
+  cDescripcionDigital: string;
+  cNombreOriginal:     string;
+  cRutaExterna:        string;
+}

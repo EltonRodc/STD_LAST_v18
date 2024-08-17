@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { RegistroDetalleService } from '../../services/registro-detalle.service';
-import { DataDetalleGeneral, DataDetalleSeguimiento, DataRemitente } from '../../interfaces/registro-detalle.interface';
+import { DataAdjuntos, DataDetalleGeneral, DataDetalleSeguimiento, DataRemitente } from '../../interfaces/registro-detalle.interface';
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -23,6 +23,9 @@ export class RegistroDetalleComponent implements OnInit,AfterViewInit{
   public dataRemitente? : DataRemitente;
   public dataSeguimiento? : DataDetalleSeguimiento[] = [];
   public isFetchingData: boolean = false;
+
+  public docAjuntos: DataAdjuntos[] = [];
+
 
   private registroDetalleService = inject(RegistroDetalleService)
 
@@ -55,6 +58,7 @@ export class RegistroDetalleComponent implements OnInit,AfterViewInit{
   ngOnInit(): void {
     this.getDetalle1(this.cod_tramite);
     this.getDetalleSeguimiento(this.cod_tramite)
+    this.getDocAdjuntos(this.cod_tramite)
   }
 
   ngAfterViewInit() {
@@ -87,6 +91,26 @@ export class RegistroDetalleComponent implements OnInit,AfterViewInit{
         // console.log(this.dataSource.data)
       }
     )
+  }
+
+  getDocAdjuntos(cod){
+    this.registroDetalleService.getDocAdjuntos(cod)
+    .subscribe(
+        (rpta)=>{
+            this.docAjuntos = rpta;
+        }
+    )
+  }
+
+  imprimirAdjunto(name: string){
+    console.log(name)
+    const nombreArchivo = name.trim();
+    console.log(nombreArchivo)
+    window.open(`http://10.4.0.30:8085/Archivos/RegistroConDocumento/${nombreArchivo}`, "_blank");
+  }
+
+  redirectoLink(name:string){
+    window.open(name, "_blank")
   }
 
 }

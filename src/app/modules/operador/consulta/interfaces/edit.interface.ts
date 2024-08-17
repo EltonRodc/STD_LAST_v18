@@ -32,6 +32,7 @@ export interface DataEditRegistro {
   nTipoPresentacion:   number;
   iCodOficinaDerivar:  number;
   cIndicacion:         string;
+  cod_tpo_rgtro_dcmto: number;
 }
 
 // Post
@@ -56,5 +57,21 @@ export interface PostDatosRegistro {
 export interface PostEnviaDoc {
   codTramite: number;
   flgEnvio:   number;
+}
+
+export interface PostFechaMaximo{
+  fechaPlazoFinal:      string;
+  codTramite:           number;
+  codUsuario:           string;
+}
+
+export interface PostTema{
+  codTema:              number;
+  codTramite:           number;
+}
+
+export interface PostCui{
+  codCUI:               string;
+  codTramite:           number;
 }
 

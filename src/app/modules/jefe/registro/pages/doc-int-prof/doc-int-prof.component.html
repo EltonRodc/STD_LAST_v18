@@ -1,7 +1,7 @@
 <div class="p-3" >
   <div style="background-color: #fff" class="rounded p-4">
 
-    <div class="font-extrabold text-lg mt-2 mb-2">Doc. Interno de Oficina a Personal</div>
+    <div class="font-extrabold mt-2 mb-2" style="font-size: 16px;">Doc. Interno de Oficina a Personal</div>
 
     <mat-stepper linear #stepper>
       <mat-step [stepControl]="myFormValido" [editable]="isEditable" color="warn">
@@ -10,7 +10,7 @@
 
           <mat-card class="w-full mt-2" appearance="outlined">
             <mat-card-content>
-              <div class="mb-2 font-semibold text-base" style="color: #b91c1b;">Datos del Documento</div>
+              <div class="mb-2 font-semibold text-sm" style="color: #b91c1b;">Datos del Documento</div>
 
               <div class="flex gap-4 mt-3">
 
@@ -63,7 +63,7 @@
 
           <mat-card class="w-full mt-4" appearance="outlined">
             <mat-card-content>
-              <div class="mb-2 font-semibold text-base" style="color: #b91c1b;">Datos Adicionales</div>
+              <div class="mb-2 font-semibold text-sm" style="color: #b91c1b;">Datos Adicionales</div>
 
               <div class="flex gap-4 mt-3">
 
@@ -118,7 +118,7 @@
 
           <mat-card class="w-full mt-4" appearance="outlined">
             <mat-card-content>
-              <div class="mb-2 font-semibold text-base" style="color: #b91c1b;">Integrantes de la Oficina</div>
+              <div class="mb-2 font-semibold text-sm" style="color: #b91c1b;">Integrantes de la Oficina</div>
               <div class="table-responsive">
                 <table mat-table [dataSource]="dataSource">
 

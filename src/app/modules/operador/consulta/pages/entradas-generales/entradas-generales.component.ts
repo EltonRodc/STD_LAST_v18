@@ -28,6 +28,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import * as ExcelJS from 'exceljs';
 //PDF
 import pdfMake from '../../../../../core/pdf/pdfmake-config';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-entradas-generales',
@@ -49,7 +50,7 @@ import pdfMake from '../../../../../core/pdf/pdfmake-config';
     DatePipe,
     MatTooltipModule,
     RouterLink,
-    MatTooltipModule
+    MatMenuModule
   ],
   templateUrl: './entradas-generales.component.html',
   styles: ``

@@ -10,5 +10,13 @@ mat-sidenav-container {
   font-size: 14px;
   font-weight: 500;
 }
+.contenedor_sidenav{
+  height:100%;
+  max-width: 280px;
+  background-color: #1e293b;
+  border-radius: 0px;
+}
 
-
+.mat-drawer-inner-container::-webkit-scrollbar {
+  width: 50px ;
+}

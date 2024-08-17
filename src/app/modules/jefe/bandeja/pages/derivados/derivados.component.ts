@@ -20,6 +20,7 @@ import * as ExcelJS from 'exceljs';
 //PDF
 import pdfMake from '../../../../../core/pdf/pdfmake-config';
 import { Router, RouterLink } from '@angular/router';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @Component({
@@ -42,7 +43,8 @@ import { Router, RouterLink } from '@angular/router';
     DatePipe,
     MatTooltipModule,
     UpperCasePipe,
-    RouterLink
+    RouterLink,
+    MatMenuModule
   ],
   templateUrl: './derivados.component.html',
   styles: ``
