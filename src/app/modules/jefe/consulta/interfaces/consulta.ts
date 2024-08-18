@@ -550,3 +550,45 @@ export interface DataCmbTpoDcmto {
   cCodTipoDoc:  number;
   cDescTipoDoc: string;
 }
+
+//Consulta Alertas
+export interface ListadoAlertas {
+  recordsTotal:    number;
+  recordsFiltered: number;
+  data:            DataListadoAlertas[];
+  error:           string;
+}
+
+export interface DataListadoAlertas {
+  iCodTramite:        number;
+  cCodificacion:      string;
+  cCodTipoDoc:        number;
+  cNroDocumento:      string;
+  cAsunto:            string;
+  nFlgEstado:         number;
+  iCodTupa:           number;
+  fFecRegistro:       string;
+  fFecFinalizar:      string;
+  cDescTipoDoc:       string;
+  cNomOFicina:        string;
+  nTiempoRespuesta:   number;
+  proceso:            number;
+  iCodTramiteRel:     number;
+  iCodOficinaDerivar: number;
+  proceso2:           number;
+}
+
+export interface FormularioAlertas {
+  fDesde:string,
+  fHasta:string,
+  Codificacion: string,
+  NroDocumento : string,
+  Asunto : string,
+  CodTupa : number,
+  CodTipoDoc : number,
+  CodOficinaOri : number,
+  CodOficinaDes : number,
+  CodTrabajadoresponsable : number,
+  Columna : string,
+  Idir  : string,
+}

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { CmbSalDireccion, CmbTpoDcmto, ComboDepartamento, ComboDistritos, ComboOfcnOrigen, ComboProvincias, ComboTpoDcmto, DataCmbSalDireccion, DataCmbTpoDcmto, DataComboDepartamento, DataComboDistritos, DataComboOfcnOrigen, DataComboProvincias, DataComboTpoDcmto, DataDocumentosAdjuntos, DataListadoComboOficina, DataListadoComboTemas, DataListadoComboTipoDocumento, DataListadoComboTpoDcmto, DataListadoControlCargos, DataListadoControlCargosOfi, DataListadoDocInternoGeneral, DataListadoDocSalida, DataListadoPlazoVencidos, DataResultadoOficinaInterno, DocumentosAdjuntos, FormularioControlCargos, FormularioControlCargosOfi, FormularioDocInternoGeneral, FormularioDocumentoSalida, FormularioInternoOficina, FormularioPlazoVencidos, ListadoComboOficina, ListadoComboTemas, ListadoComboTipoDocumento, ListadoComboTpoDcmto, ListadoControlCargos, ListadoControlCargosOfi, ListadoDocInternoGeneral, ListadoDocSalida, ListadoPlazoVencidos, ResultadoOficinaInterno } from '../interfaces/consulta';
+import { CmbSalDireccion, CmbTpoDcmto, ComboDepartamento, ComboDistritos, ComboOfcnOrigen, ComboProvincias, ComboTpoDcmto, DataCmbSalDireccion, DataCmbTpoDcmto, DataComboDepartamento, DataComboDistritos, DataComboOfcnOrigen, DataComboProvincias, DataComboTpoDcmto, DataDocumentosAdjuntos, DataListadoAlertas, DataListadoComboOficina, DataListadoComboTemas, DataListadoComboTipoDocumento, DataListadoComboTpoDcmto, DataListadoControlCargos, DataListadoControlCargosOfi, DataListadoDocInternoGeneral, DataListadoDocSalida, DataListadoPlazoVencidos, DataResultadoOficinaInterno, DocumentosAdjuntos, FormularioAlertas, FormularioControlCargos, FormularioControlCargosOfi, FormularioDocInternoGeneral, FormularioDocumentoSalida, FormularioInternoOficina, FormularioPlazoVencidos, ListadoAlertas, ListadoComboOficina, ListadoComboTemas, ListadoComboTipoDocumento, ListadoComboTpoDcmto, ListadoControlCargos, ListadoControlCargosOfi, ListadoDocInternoGeneral, ListadoDocSalida, ListadoPlazoVencidos, ResultadoOficinaInterno } from '../interfaces/consulta';
 
 @Injectable({providedIn: 'root'})
 export class ConsultaService {
@@ -240,6 +240,28 @@ export class ConsultaService {
         return this.http.get<CmbTpoDcmto>(`${this.api_primary}/CombosGenerales/ComboTpoDocumento`).pipe(
             map( (rpta)=> rpta.data)
         )
+    }
+
+    /*Consulta Alertas*/
+    getConsultaAlertas(FormularioPlazoVencidos: FormularioAlertas): Observable<DataListadoAlertas[]> {
+    const params = {
+        fDesde: FormularioPlazoVencidos.fDesde,
+        fHasta: FormularioPlazoVencidos.fHasta,
+        Codificacion: FormularioPlazoVencidos.Codificacion.toString(),
+        ChxfRespuesta: FormularioPlazoVencidos.Codificacion,
+        NroDocumento: FormularioPlazoVencidos.NroDocumento.toString(),
+        Asunto: FormularioPlazoVencidos.Asunto.toString(),
+        CodTupa: FormularioPlazoVencidos.CodTupa.toString(),
+        CodTipoDoc: FormularioPlazoVencidos.CodTipoDoc.toString(),
+        CodOficinaOri: FormularioPlazoVencidos.CodOficinaOri.toString(),
+        CodOficinaDes: FormularioPlazoVencidos.CodOficinaDes.toString(),
+        CodTrabajadoresponsable: FormularioPlazoVencidos.CodTrabajadoresponsable.toString(),
+        Columna: FormularioPlazoVencidos.Columna,
+        Idir: FormularioPlazoVencidos.Idir,
+        };
+        return this.http.get<ListadoAlertas>(`${this.api_primary}/JefeConsultaAlertas/ListaAlerta`, { params: params }).pipe(
+        map(rpta => rpta.data)
+        );
     }
 
 }
