@@ -592,3 +592,30 @@ export interface FormularioAlertas {
   Columna : string,
   Idir  : string,
 }
+
+export interface CmbTupa {
+  recordsTotal:    number;
+  recordsFiltered: number;
+  data:            DataCmbTupa[];
+  error:           string;
+}
+
+export interface DataCmbTupa {
+  iCodTupa:      number;
+  iCodTupaClase: number;
+  iCodOficina:   number;
+  cNomTupa:      string;
+}
+
+export interface CmbResponsable {
+  recordsTotal:    number;
+  recordsFiltered: number;
+  data:            DataCmbResponsable[];
+  error:           string;
+}
+
+export interface DataCmbResponsable {
+  iCodTrabajador:       number;
+  cNombresTrabajador:   string;
+  cApellidosTrabajador: string;
+}

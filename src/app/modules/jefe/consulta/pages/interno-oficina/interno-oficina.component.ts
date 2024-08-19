@@ -93,7 +93,7 @@ export class InternoOficinaComponent{
       fechaFin: moment().toDate(),
       horaInicio:"00:00",
       horaFin: "23:59",
-      CodOficinaLogin: this.datosPrincipales.id_oficina,
+      codOficinaLogin: this.datosPrincipales.id_oficina,
     })
 
     this.onSearch();

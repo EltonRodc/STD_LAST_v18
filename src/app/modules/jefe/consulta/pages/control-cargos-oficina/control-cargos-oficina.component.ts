@@ -150,14 +150,14 @@ export class ControlCargosOficinaComponent {
       CodOficinaLogin: CodOficinaLogin,
     }
 
-    console.log(formularioEnviar)
+    // console.log(formularioEnviar)
     this.consultaService.getConsultaControlCargosOfi(formularioEnviar).subscribe(
       (rpta)=>{
         this.lisCntrCargoOfi = rpta;
         this.dataSource.data = this.lisCntrCargoOfi;
         this.isFetchingData = false;
-        console.log(rpta)
-        console.log(this.lisCntrCargoOfi)
+        // console.log(rpta)
+        // console.log(this.lisCntrCargoOfi)
       }
     )
   }

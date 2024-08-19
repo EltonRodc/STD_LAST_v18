@@ -126,13 +126,13 @@ export class PlazosVencidosComponent {
       SizePagina: SizePagina,
     }
 
-    console.log(formularioEnviar)
+    // console.log(formularioEnviar)
     this.consultaService.getConsultaPlazoVencidos(formularioEnviar).subscribe(
       (rpta)=>{
         this.lisPlzoVencido = rpta;
         this.dataSource.data = this.lisPlzoVencido;
         this.isFetchingData = false;
-        console.log(this.lisPlzoVencido)
+        // console.log(this.lisPlzoVencido)
       }
     )
   }
