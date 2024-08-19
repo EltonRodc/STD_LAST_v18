@@ -117,6 +117,8 @@ export class EntradasGeneralesComponent implements OnInit, AfterViewInit{
   }
 
   public displayedColumns: string[] = ['n_tramite', 'documento','remitente','fecha_registro','oficina_derivada','asunto', 'acciones'];
+  // public displayedColumns: string[] = ['prueba'];
+
   public dataSource = new MatTableDataSource<DataConsultaBandejaEnlace>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 

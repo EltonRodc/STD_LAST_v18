@@ -19,6 +19,10 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { DatePipe } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { DataComboTemas, DataDocumentoRegistrado, DataOficinasDerivadas } from '../../../../operador/registro/interfaces/registro-pvd.interface';
+import { DataConsultaBandejaEnlace, DataOficinasRcc, DataRegistrador } from '../../../../operador/consulta/interfaces/entradas-generales.interface';
+import { EntradasGeneralesService } from '../../../../operador/consulta/services/entradas-generales.service';
+import { RegistroPvdService } from '../../../../operador/registro/services/registro-pvd.service';
 
 @Component({
   selector: 'app-entradas-generales',
@@ -46,5 +50,165 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   styles: ``
 })
 export class EntradasGeneralesComponent {
+  public authData!: DataAuth | null;
+  public comboListadoTpoDcmto:DataListadoComboTipoDocumento[]=[];
+  public comboOficinasPVD : DataOficinasDerivadas[] = [];
+  public comboRegistradores: DataRegistrador[] = [];
+  public listComboTemas: DataComboTemas[] = [];
+  public consultaBndjEnlace:DataConsultaBandejaEnlace[] =[];
+  public isFetchingData: boolean = false;
+  public infoRegistroOficinas: DataDocumentoRegistrado[] = [];
+  public comboOfinasRcss: DataOficinasRcc[] = [];
+
+  public codigo_trabajador_registro: number = 0;
+
+  public myFormBandejaEnlace:FormGroup =this.fb.group({
+    FechaInicio: [""],                        //14 input
+    FechaFin: [""],                           //15 input
+    Codificacion: [""],                       //Primer input
+    Referencia: [""],                         // Quinto input
+    Asunto: [""],                             //Segundo input
+    CodigoTupa: [0],
+    CodigoTipoDocumento: [0],                 //Tercer Input
+    CodigoRegistrador: [0],                   // 10 input
+    Nombre: [""],                              // Institución 6 INPUT
+    Remitente: [""],                          // Institución 7 INPUT
+    CodigoOficinaOrigen: [0],                 // Octavo input
+    CodigoOficinaDestino: [0],                // Nueve Input
+    NumeroDocumento: [""],                    // Cuarto Input
+    CodigoTema: [0],                          //11 input
+    CUI: [""],                                // 12 INPUT
+    Campo: [""],
+    Orden: [""],
+    NumContrato: [""],                        //13 input
+    HoraIni: [""],                            //14 input
+    HoraFin: [""],                            //15 input
+    CodigoTipoRegistroDoc: [1],               // 16 input
+  })
+
+  ngOnInit(): void {
+    this.authData = this.authDataService.getAuthData();
+    if(this.authData){
+      this.myFormBandejaEnlace.patchValue({
+        CodigoRegistrador:this.authData.idUsuario,
+        FechaInicio: moment().toDate(),
+        FechaFin: moment().toDate(),
+        HoraIni:"00:00",
+        HoraFin:"23:59",
+      })
+    }
+    this.getListadoComboTpoDcmto();
+    this.getOficinas();
+    this.getListRegistradores();
+    this.getlistComboTemas();
+    this.getListComboOficnsRcc();
+    this.onConsulta();
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  public displayedColumns: string[] = ['n_tramite', 'documento','remitente','fecha_registro','oficina_derivada','asunto', 'acciones'];
+  public dataSource = new MatTableDataSource<DataConsultaBandejaEnlace>();
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  private authDataService = inject(AuthDataService);
+  private entradasGeneralesService = inject(EntradasGeneralesService);
+  private registroPvdService = inject(RegistroPvdService)
+  private consultaService = inject(ConsultaService);
+  private router = inject(Router);
+  constructor(private fb: FormBuilder,public dialog: MatDialog){}
+
+
+  onConsulta(){
+    this.isFetchingData = true;
+    this.codigo_trabajador_registro = this.myFormBandejaEnlace.get('CodigoRegistrador').value;
+    const {FechaInicio,FechaFin,Codificacion,Referencia,Asunto,CodigoTupa,CodigoTipoDocumento,CodigoRegistrador,
+      Nombre,Remitente,CodigoOficinaOrigen,CodigoOficinaDestino,NumeroDocumento,CodigoTema,
+      CUI,Campo,Orden,NumContrato,HoraIni,HoraFin,CodigoTipoRegistroDoc} = this.myFormBandejaEnlace.value;
+
+    this.entradasGeneralesService.getConsultaBandejaEnlace( this.formatFecha(FechaInicio),this.formatFecha(FechaFin),Codificacion,Referencia,Asunto,
+      CodigoTupa,CodigoTipoDocumento,CodigoRegistrador,Nombre,Remitente,CodigoOficinaOrigen,CodigoOficinaDestino,
+      NumeroDocumento,CodigoTema,CUI,Campo,Orden,NumContrato,HoraIni,HoraFin,CodigoTipoRegistroDoc).subscribe(
+      (rpta)=>{
+        // console.log(rpta)
+        this.consultaBndjEnlace = rpta;
+        this.dataSource.data = this.consultaBndjEnlace;
+        this.isFetchingData = false;
+      }
+    )
+  }
+
+  getListadoComboTpoDcmto(){
+    this.consultaService.getListadoComboTipoDocumento().subscribe(
+      (rpta)=>{
+        this.comboListadoTpoDcmto = rpta;
+      }
+    )
+  }
+
+  getOficinas(){
+    this.registroPvdService.getComboOficinasDerivadas(0,"",0).subscribe(
+      (rpta) => {
+        this.comboOficinasPVD = rpta.sort((a, b) => (a.nombreOficina > b.nombreOficina) ? 1 : -1);
+      }
+    );
+  }
+
+  getListRegistradores(){
+    this.entradasGeneralesService.getComboRegistrador().subscribe(
+      (rpta)=>{
+        this.comboRegistradores = rpta;
+      }
+    )
+  }
+
+  getlistComboTemas(){
+    this.registroPvdService.getComboTemas().subscribe(
+      (rpta)=>{
+        this.listComboTemas = rpta;
+      }
+    )
+  }
+
+  getListComboOficnsRcc(){
+    this.entradasGeneralesService.getComboOficinasRcc().subscribe(
+      (rpta)=>{
+        this.comboOfinasRcss = rpta;
+      }
+    )
+  }
+
+  private formatFecha(date: Date | null): string {
+    return date ? moment(date).format('DD/MM/YYYY') : '';
+  }
+
+  reset(){
+    this.myFormBandejaEnlace.patchValue({
+      CodigoRegistrador: this.authData ? this.authData.idUsuario : 0,
+      FechaInicio: moment().toDate(),
+      FechaFin: moment().toDate(),
+      HoraIni: "00:00",
+      HoraFin: "23:59",
+      CodigoTipoRegistroDoc: 1,
+      Codificacion: "",
+      Referencia: "",
+      Asunto: "",
+      CodigoTupa: 0,
+      Nombre: "",
+      Remitente: "",
+      CodigoOficinaOrigen: 0,
+      CodigoOficinaDestino: 0,
+      CodigoTipoDocumento:0,
+      NumeroDocumento: "",
+      CodigoTema: 0,
+      CUI: "",
+      Campo: "",
+      Orden: "",
+      NumContrato: "",
+    })
+    this.onConsulta();
+  }
 
 }
