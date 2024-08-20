@@ -1,1 +1,51 @@
-<p>total-pendientes works!</p>
+<div class="p-3">
+  <div style="background-color: #fff" class="rounded p-4">
+    <div class="font-extrabold mt-2 mb-2 text-base">Consulta -  Trámites Pendientes (L)</div>
+    <mat-card class="w-full mt-4" appearance="outlined">
+      <mat-card-content>
+        <div class="mb-2 font-extrabold text-sm text-red-700" >Criterios de Búsqueda</div>
+        <div class="flex gap-4 mt-3">
+          <div class="w-full">
+            <label class="block mb-2 text-xs font-bold text-gray-700">Oficina</label>
+            <input type="text" class="bg-gray-50 border font-semibold border-gray-300 text-gray-500 text-xs rounded-lg focus:ring-red-700 focus:border-red-700 block w-full p-2.5 "/>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-footer class="p-4 rounded-lg flex justify-center gap-2 bg-gray-100 mt-5" >
+        <button type="submit" mat-flat-button style="background-color: #dc2626;" > <mat-icon>search</mat-icon> Buscar</button>
+      </mat-card-footer>
+    </mat-card>
+
+    <mat-card class="mt-4" appearance="outlined">
+      <div class="table-responsive px-3 mt-3">
+        <table mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="oficina">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Oficina</th>
+            <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;" align="center"></td>
+          </ng-container>
+          <ng-container matColumnDef="pendientes">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 13px; background-color: #f5f5f5;"> Pendientes</th>
+            <td mat-cell *matCellDef="let element" style="font-size: 11px; color: #808080; font-weight: 500;" align="center"></td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow >
+            @if (isFetchingData) {
+              <td colspan="6" >
+                  <div style="display: flex; justify-content: center;" class="p-4">
+                      <mat-spinner></mat-spinner>
+                  </div>
+              </td>
+            }@else {
+              <td class="mat-cell p-3 text-red-500" colspan="2"  align="center" style="font-weight: 500;">No se encontraron registros </td>
+            }
+          </tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        aria-label="Select page of periodic elements">
+      </mat-paginator>
+      </div>
+    </mat-card>
+  </div>
+</div>

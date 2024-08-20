@@ -29,6 +29,7 @@ import * as ExcelJS from 'exceljs';
 //PDF
 import pdfMake from '../../../../../core/pdf/pdfmake-config';
 import { MatMenuModule } from '@angular/material/menu';
+import { ConsultaDetalleComponent } from '../../components/consulta-detalle/consulta-detalle.component';
 
 @Component({
   selector: 'app-entradas-generales',
@@ -220,9 +221,17 @@ export class EntradasGeneralesComponent implements OnInit, AfterViewInit{
     this.onConsulta();
   }
 
+  // redirectDetalle(cod_tramite:number){
+  //   const url = this.router.serializeUrl(this.router.createUrlTree([`/std/registro-detalle/${cod_tramite}`]));
+  //   window.open(url, '_blank');
+  // }
   redirectDetalle(cod_tramite:number){
-    const url = this.router.serializeUrl(this.router.createUrlTree([`/std/registro-detalle/${cod_tramite}`]));
-    window.open(url, '_blank');
+    const dialogRef = this.dialog.open(ConsultaDetalleComponent, {
+      // disableClose:true,
+      minWidth: '80vw',
+      data:{cod_tramite},
+      autoFocus: false
+    })
   }
 
   reporte_excel(){
