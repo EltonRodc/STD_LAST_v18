@@ -118,4 +118,30 @@ export interface DataBandejaOficinaDerivado {
 }
 
 
+// Hoja de Tramite
+export interface HojaTramite {
+  recordsTotal:    number;
+  recordsFiltered: number;
+  data:            DataHojaTramite[];
+  error:           string;
+}
 
+export interface DataHojaTramite {
+  rownum:                 number;
+  casunto:                string;
+  cCodTipoDoc:            number;
+  cCodificacion:          string;
+  cNomRemite:             string;
+  cNroDocumento:          string;
+  cObservaciones:         string;
+  iCodIndicacion:         number;
+  iCodOficinaRegistro:    number;
+  iCodRemitente:          number;
+  iCodTupa:               number;
+  iCodMovimiento:         number;
+  iCodTramite:            number;
+  iCodTrabajadorRegistro: number;
+  nFlgTipoDoc:            string;
+  observaciones:          string;
+  archivO_FISICO:         string;
+}

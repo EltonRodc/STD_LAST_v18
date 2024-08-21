@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { BandejaComboOficinaDestino, BandejaComboTipoDocumento, BandejaExcelDerivados, BandejaOficinaDerivado, BandejaTablaDerivados, DataBandejaComboOficinaDestino, DataBandejaComboTipoDocumento, DataBandejaExcelDerivados, DataBandejaOficinaDerivado, DataBandejaTablaDerivados } from '../interfaces/bandeja-derivados.interface';
+import { BandejaComboOficinaDestino, BandejaComboTipoDocumento, BandejaExcelDerivados, BandejaOficinaDerivado, BandejaTablaDerivados, DataBandejaComboOficinaDestino, DataBandejaComboTipoDocumento, DataBandejaExcelDerivados, DataBandejaOficinaDerivado, DataBandejaTablaDerivados, DataHojaTramite, HojaTramite } from '../interfaces/bandeja-derivados.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -87,5 +87,14 @@ export class BandejaDerivadosService {
     );
   }
 
-
+  getDetalleHojaTramite(CodTramite:number):Observable<DataHojaTramite>{
+    const params = new HttpParams()
+      .set('Pagina', 1)
+      .set('RegistrosporPagina', 10)
+      .set('CodTramite', CodTramite)
+    const urlWithParams = `${this.api_primary}/JefeBandejaDerivados/BnjDerivadoHdtraLista`;
+    return this.http.get<HojaTramite>(urlWithParams, { params: params }).pipe(
+      map(rpta => rpta.data[0])
+    )
+  }
 }

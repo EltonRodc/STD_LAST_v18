@@ -12,7 +12,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { provideDateAdapter } from '../../../../../core/providers/date-adapter.provider';
 import { getSpanishPaginatorIntl } from '../../../../../core/providers/custom-paginator-intl';
-import { DataBandejaComboOficinaDestino, DataBandejaComboTipoDocumento, DataBandejaExcelDerivados, DataBandejaTablaDerivados } from '../../interfaces/bandeja-derivados.interface';
+import { DataBandejaComboOficinaDestino, DataBandejaComboTipoDocumento, DataBandejaExcelDerivados, DataBandejaTablaDerivados, DataHojaTramite } from '../../interfaces/bandeja-derivados.interface';
 import { BandejaDerivadosService } from '../../services/bandeja-derivados.service';
 import moment from 'moment';
 //Excel
@@ -21,7 +21,11 @@ import * as ExcelJS from 'exceljs';
 import pdfMake from '../../../../../core/pdf/pdfmake-config';
 import { Router, RouterLink } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
-
+import { ConsultaDetalleComponent } from '../../../../operador/consulta/components/consulta-detalle/consulta-detalle.component';
+import { MatDialog } from '@angular/material/dialog';
+import { content } from 'html2canvas/dist/types/css/property-descriptors/content';
+import { firstValueFrom } from 'rxjs';
+import { RegistroDetalleService } from '../../../../../shared/services/registro-detalle.service';
 
 @Component({
   selector: 'app-derivados',
@@ -83,11 +87,13 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
   public dataSource = new MatTableDataSource<DataBandejaTablaDerivados>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  private registroDetalleService = inject(RegistroDetalleService)
   private bandejaDerivadosService = inject(BandejaDerivadosService)
   private router = inject(Router);
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public dialog: MatDialog
   ){}
 
   ngAfterViewInit() {
@@ -121,8 +127,10 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
     const p14 = Columna ? Columna : "Codigo";
     const p15 = Idir ? Idir : "%%";
 
+    // console.log(fechaDesde)
     this.bandejaDerivadosService.getListadoTablaDerivados(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15).subscribe(
         (rpta)=>{
+          // console.log(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15)
           this.listadoTablaDeribados = rpta;
           this.dataSource.data = this.listadoTablaDeribados;
           this.isFetchingData = false;
@@ -313,6 +321,336 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
     // console.log("Reporte de Excel generado y descargado");
   }
 
+  async redirectHojaTramite(cod_tramite:number,codificacion:number){
+    const datos_principl = await firstValueFrom(this.bandejaDerivadosService.getDetalleHojaTramite(cod_tramite));
+    const datos_tabla = await firstValueFrom(this.registroDetalleService.getDetalleSeguimiento(cod_tramite))
+    const base64Image = await this.convertFileToBase64('/images/logopdf.png');
+    const documentTramite: any ={
+      content:[
+        {
+          columns: [
+            {
+              image: base64Image,
+              width: 180
+            },
+            {
+              stack: [
+                {
+                  text: `Expediente: ${codificacion}`,
+                  fontSize: 12,
+                  bold: true,
+                  margin: [0, 12, 10, 0],
+                }
+              ],
+              alignment: 'right',
+            }
+          ]
+        },
+        {
+          text: 'HOJA DE TRÁMITE',
+          alignment: 'center',
+          fontSize: 16,
+          margin: [0, 15, 0, 0],
+          bold: true,
+        },
+        {
+          text: 'Datos Principales',
+          fontSize: 12, // Ajusta el tamaño de la fuente según sea necesario
+          margin: [0, 5, 0, 0], // Ajusta el margen según sea necesario
+          bold: true, // Opción para hacer el texto en negrita
+        },
+        {
+          canvas: [
+            {
+              type: 'line',
+              x1: 0,
+              y1: 0,
+              x2: 515, // Abarca todo el ancho del documento (ajusta según el tamaño del margen)
+              y2: 0,
+              lineWidth: 2, // Grosor de la línea
+              lineColor: '#777' // Color del borde
+            }
+          ],
+          margin: [0, 3, 0, 7] // Ajusta el margen para posicionar la línea correctamente
+        },
+        {
+          columns: [
+            {
+              text: 'Documento',
+              width: 120,
+              fontSize: 10,
+            },
+            {
+              text: datos_principl.cNroDocumento,
+              width: '*',
+              fontSize: 10,
+              bold:true
+            }
+          ],
+          margin: [0, 0, 0, 3]
+        },
+        {
+          columns: [
+            {
+              text: 'Registrado el',
+              width: 120,
+              fontSize: 10,
+            },
+            {
+              text: '23-AGO-2023 14:57:00',
+              width: '*',
+              fontSize: 10,
+              bold:true
+            }
+          ],
+          margin: [0, 0, 0, 3]
+        },
+        {
+          columns: [
+            {
+              text: 'Remitido por',
+              width: 120,
+              fontSize: 10,
+            },
+            {
+              text: ' PRUEBA',
+              width: '*',
+              fontSize: 10,
+              bold:true
+            }
+          ],
+          margin: [0, 0, 0, 3]
+        },
+        {
+          columns: [
+            {
+              text: 'Derivado el',
+              width: 120,
+              fontSize: 10,
+            },
+            {
+              text: '28-JUL-2024 05:55:00',
+              width: '*',
+              fontSize: 10,
+              bold:true
+            }
+          ],
+          margin: [0, 0, 0, 3]
+        },
+        {
+          columns: [
+            {
+              text: 'Derivado a',
+              width: 120,
+              fontSize: 10,
+            },
+            {
+              text: ' AREA DESARROLLO ',
+              width: '*',
+              fontSize: 10,
+              bold:true
+            }
+          ],
+          margin: [0, 0, 0, 3]
+        },
+        {
+          columns: [
+            {
+              text: 'Observaciones',
+              width: 120,
+              fontSize: 10,
+            },
+            {
+              text: datos_principl.cObservaciones,
+              width: '*',
+              fontSize: 10,
+              bold:true
+            }
+          ],
+          margin: [0, 0, 0, 3]
+        },
+        {
+          text: 'Asunto',
+          fontSize: 12, // Ajusta el tamaño de la fuente según sea necesario
+          margin: [0, 15, 0, 0], // Ajusta el margen según sea necesario
+          bold: true, // Opción para hacer el texto en negrita
+        },
+        {
+          canvas: [
+            {
+              type: 'line',
+              x1: 0,
+              y1: 0,
+              x2: 515, // Abarca todo el ancho del documento (ajusta según el tamaño del margen)
+              y2: 0,
+              lineWidth: 2, // Grosor de la línea
+              lineColor: '#777' // Color del borde
+            }
+          ],
+          margin: [0, 3, 0, 7] // Ajusta el margen para posicionar la línea correctamente
+        },
+        {
+          text: datos_principl.casunto,
+          fontSize: 11,
+          margin: [0, 0, 0, 8]
+        },
+        {
+          table:{
+            headerRows: 1,
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+            body: [
+              // Cabeceras de la tabla
+              [
+                { text: '#',style: 'tableHeader'},
+                { text: 'Origen', style: 'tableHeader' },
+                { text: 'Destino', style: 'tableHeader' },
+                { text: 'Ind', style: 'tableHeader' },
+                { text: 'Fecha Derivo / Fecha Aceptado', style: 'tableHeader' },
+                { text: 'Número de Documento', style: 'tableHeader' },
+                { text: 'Asunto', style: 'tableHeader' },
+                { text: 'Fls', style: 'tableHeader' },
+                { text: 'Observaciones', style: 'tableHeader' },
+                { text: 'Recep', style: 'tableHeader' }
+              ],
+            ]
+          },
+          layout: {
+            hLineColor: function() { return '#d0d0d0'; },
+            vLineColor: function() { return '#d0d0d0'; }
+          }
+        },
+        {
+          text: 'Indicaciones',
+          fontSize: 12, // Ajusta el tamaño de la fuente según sea necesario
+          margin: [0, 15, 0, 0], // Ajusta el margen según sea necesario
+          bold: true, // Opción para hacer el texto en negrita
+        },
+        {
+          canvas: [
+            {
+              type: 'line',
+              x1: 0,
+              y1: 0,
+              x2: 515, // Abarca todo el ancho del documento (ajusta según el tamaño del margen)
+              y2: 0,
+              lineWidth: 2, // Grosor de la línea
+              lineColor: '#777' // Color del borde
+            }
+          ],
+          margin: [0, 3, 0, 7] // Ajusta el margen para posicionar la línea correctamente
+        },
+        {
+          columns: [
+            {
+              stack: [
+                {text:'01 ARCHIVO'},
+                {text:'02 DEVOLUCION'},
+                {text:'03 CONOCIMIENTO'},
+                {text:'04 OPINION'},
+              ],
+              fontSize: 7,
+              width: '*',
+            },
+            {
+              stack: [
+                {text:'05 PARA APROBACION'},
+                {text:'06 POR DEFINIR'},
+                {text:'07 PREP. INFORME'},
+                {text:'08 REINGRESO'},
+              ],
+              fontSize: 7,
+              width: '*',
+            },
+            {
+              stack: [
+                {text:'09 RPTA. DIRECTA'},
+                {text:'10 RPTA. PARA MI FIRMA'},
+                {text:'11 SU ATENCIÓN'},
+                {text:'12 TRAMITE ADMINISTRATIVO'},
+              ],
+              fontSize: 7,
+              width: '*',
+            },
+            {
+              stack: [
+                {text:'13 TRAMITE DE PAGO'},
+                {text:'14 RESPUESTA'},
+                {text:'15 PRESTAMO '},
+                {text:'16 POR CORRESPONDER'},
+              ],
+              fontSize: 7,
+              width: '*',
+            },
+          ],
+        }
+      ],
+      styles: {
+        tableHeader: {
+          fillColor: '#D3D3D3',
+          bold: true,
+          fontSize: 10,
+          alignment: 'center',
+        },
+        tableContent : {
+          fontSize: 9,
+          margin: [0, 2, 0, 0],
+        },
+      },
+      footer: function(currentPage, pageCount, pageSize) {
+        return [
+          {
+            columns: [
+              {
+                text: 'SONIA DIAZ GARCIA',
+                alignment: 'left',
+                fontSize: 10
+              },
+              {
+                text: `Página ${currentPage} de ${pageCount}`,
+                alignment: 'right',
+                fontSize: 10
+              }
+            ],
+            margin: [40, 0]
+          },
+
+        ];
+      }
+
+    }
+    const formatDate = (date: Date) => {
+      return date ? moment(date).format('DD-MM-YYYY HH:mm') : '';
+    };
+
+    datos_tabla.forEach((data, index) => {
+      documentTramite.content[13].table.body.push([
+        { text: (index + 1).toString(),style: 'tableContent',alignment: 'center',},
+        { text: '',style: 'tableContent',alignment: 'center',},
+        { text: data.cSiglaOficinaDerivar,style: 'tableContent',alignment: 'center',},
+        { text: data.iCodIndicacionDerivar,style: 'tableContent',alignment: 'center',},
+        {
+          stack: [
+            {text:formatDate(data.fFecDerivar),style: 'tableContent',alignment: 'center'},
+            {text:formatDate(data.fFecRecepcion),style: 'tableContent',alignment: 'center'},
+          ]
+        },
+        {
+          stack: [
+            {text:data.cDescTipoDoc,style: 'tableContent',alignment: 'center'},
+            {text:data.cCodificacion,style: 'tableContent',alignment: 'center'},
+          ]
+        },
+        { text: '',style: 'tableContent',alignment: 'center',},
+        { text: '',style: 'tableContent',alignment: 'center',},
+        { text: data.cObservacionesDerivar,style: 'tableContent',alignment: 'center',},
+        { text: '',style: 'tableContent',alignment: 'center',},
+      ]);
+    })
+    pdfMake.createPdf(documentTramite).open();
+  }
+
+
+
   async reporte_pdf() {
     const base64Image = await this.convertFileToBase64('/images/logopdf.png');
     const currentDate = new Date();
@@ -473,10 +811,20 @@ export class DerivadosComponent implements OnInit, AfterViewInit{
     });
   }
 
+  // redirectDetalle(cod_tramite:number){
+  //   const url = this.router.serializeUrl(this.router.createUrlTree([`/std/registro-detalle/${cod_tramite}`]));
+  //   window.open(url, '_blank');
+  // }
+
   redirectDetalle(cod_tramite:number){
-    const url = this.router.serializeUrl(this.router.createUrlTree([`/std/registro-detalle/${cod_tramite}`]));
-    window.open(url, '_blank');
+    const dialogRef = this.dialog.open(ConsultaDetalleComponent, {
+      // disableClose:true,
+      minWidth: '80vw',
+      data:{cod_tramite},
+      autoFocus: false
+    })
   }
+
 
 
 }

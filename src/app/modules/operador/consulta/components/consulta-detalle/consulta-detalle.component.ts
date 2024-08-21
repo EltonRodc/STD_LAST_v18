@@ -59,7 +59,7 @@ export class ConsultaDetalleComponent implements OnInit,AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any){
-    console.log(data.cod_tramite)
+    // console.log(data.cod_tramite)
     this.getDetalle1(data.cod_tramite)
     this.getDetalleSeguimiento(data.cod_tramite)
   }
