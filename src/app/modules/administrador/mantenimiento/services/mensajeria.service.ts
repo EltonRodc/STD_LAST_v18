@@ -8,7 +8,7 @@ import { DataDetalleMensajeria, DataListMensajeria, DataListOfcnaDestino, Detall
 })
 export class MensajeriaService {
 
-  public api_primary = "http://10.4.0.30:8084/api";
+  public api_primary = "https://desarrollo02.proviasdes.gob.pe:9122/api";
   private http = inject(HttpClient)
 
   getListMensajeria(EstadoMensaje:number):Observable<DataListMensajeria[]>{

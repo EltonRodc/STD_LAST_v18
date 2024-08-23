@@ -10,7 +10,7 @@ import { map, Observable } from 'rxjs';
 export class LayoutService {
 
   // public api_primary = environment.URL_PRIMARY;
-  public api_primary = "http://10.4.0.30:8084/api";
+  public api_primary = "https://desarrollo02.proviasdes.gob.pe:9122/api";
   private http = inject(HttpClient);
 
   getPerfiles(IdUsuario:number):Observable<DataPerfiles[]>{

@@ -8,7 +8,7 @@ import { Adjuntos, DataAdjuntos, DataDetalleGeneral, DataDetalleSeguimiento, Dat
 })
 export class RegistroDetalleService {
 
-  public api_secondary = "http://10.4.0.30:8085/api";
+  public api_secondary = "https://desarrollo02.proviasdes.gob.pe:9121/api";
 
   private http = inject(HttpClient)
 

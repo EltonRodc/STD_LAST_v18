@@ -8,10 +8,16 @@ import { map, Observable } from 'rxjs';
 })
 export class RegistroPvdService {
 
-  public api_primary = "http://10.4.0.30:8084/api";
-  public api_secondary = "http://10.4.0.30:8085/api";
-  public api_maestra = "http://10.4.0.30:8083/api";
+  public api_primary = "https://desarrollo02.proviasdes.gob.pe:9122/api";
+  public api_secondary = "https://desarrollo02.proviasdes.gob.pe:9121/api";
+  public api_maestra = "https://desarrollo02.proviasdes.gob.pe:9083/api";
   public api_sgd = "http://10.4.0.30:8089/api";
+
+  // Puerto 84 = https://desarrollo02.proviasdes.gob.pe:9122/swagger/index.html
+  // Puerto 85 = https://desarrollo02.proviasdes.gob.pe:9121/swagger/index.html
+
+  //antes: http://10.4.0.30:8084/api/CombosGenerales/ComboIndicacion
+  //ahora: https://desarrollo02.proviasdes.gob.pe:9122/api/CombosGenerales/ComboIndicacion
 
   private http = inject(HttpClient)
 

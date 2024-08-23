@@ -7,8 +7,8 @@ import { ComboColaborador, DataComboColaborador, DataListaColaboradoresInternoPr
 
 export class DocIntProService {
 
-  public api_primary = "http://10.4.0.30:8084/api";
-  public api_secondary = "http://10.4.0.30:8085/api";
+  public api_primary = "https://desarrollo02.proviasdes.gob.pe:9122/api";
+  public api_secondary = "https://desarrollo02.proviasdes.gob.pe:9121/api";
 
   private http = inject(HttpClient)
 

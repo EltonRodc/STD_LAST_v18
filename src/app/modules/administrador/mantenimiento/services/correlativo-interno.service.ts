@@ -8,7 +8,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class CorrelativoInternoService {
 
-    public api_primary = "http://10.4.0.30:8084/api";
+    public api_primary = "https://desarrollo02.proviasdes.gob.pe:9122/api";
     private http = inject(HttpClient)
 
     //Mantenimiento Correlativo Interno

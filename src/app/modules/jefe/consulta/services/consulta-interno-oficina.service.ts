@@ -6,7 +6,7 @@ import { CmbResponsable, CmbSalDireccion, CmbTpoDcmto, CmbTupa, ComboDepartament
 @Injectable({providedIn: 'root'})
 export class ConsultaService {
 
-  public api_primary = "http://10.4.0.30:8084/api";
+  public api_primary = "https://desarrollo02.proviasdes.gob.pe:9122/api";
 
   constructor(private http:HttpClient) { }
 

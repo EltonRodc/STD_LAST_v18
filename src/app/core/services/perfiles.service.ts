@@ -8,8 +8,8 @@ import { DataOficina, DataPerfiles, DataRepresentante, DatosPrincipales, Oficina
 })
 export class PerfilesService {
 
-  public api_primary = "http://10.4.0.30:8084/api";
-  public api_maestra = "http://10.4.0.30:8083/api";
+  public api_primary = "https://desarrollo02.proviasdes.gob.pe:9122/api";
+  public api_maestra = "https://desarrollo02.proviasdes.gob.pe:9083/api";
   private readonly LOCAL_STORAGE_KEY = 'datos_principales';
 
 
